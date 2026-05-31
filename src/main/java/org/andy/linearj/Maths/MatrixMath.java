@@ -25,7 +25,7 @@ public final class MatrixMath {
             }
             return result;
         }
-        catch (ArrayIndexOutOfBoundsException | IllegalAccessError e ){
+        catch (ArrayIndexOutOfBoundsException | IllegalAccessError e ) {
             throw new ArrayIndexOutOfBoundsException("Bad state.");
         }
 
