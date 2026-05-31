@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+
+<TextArea fx:id="inputBox" focusTraversable="false" layoutX="14.0" layoutY="31.0" prefHeight="176.0" prefWidth="229.0" promptText="Please type in a matrix in EXACTLY this format: [a b c; d e f]. Note, no space before AND after the semicolon or else it will throw an error!" wrapText="true" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andy.linearj.Screen.controllers.InputBoxController">
+<cursor>
+    <Cursor fx:constant="DEFAULT" />
+</cursor>
+</TextArea>

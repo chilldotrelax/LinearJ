@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andy.linearj.Screen.controllers.ParentWindowController">
+    <children>
+        <MenuBar VBox.vgrow="NEVER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem disable="true" mnemonicParsing="false" text="(Coming Soon) Import SPICE" />
+                        <MenuItem disable="true" mnemonicParsing="false" text="(Coming Soon) Export SPICE" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem disable="true" mnemonicParsing="false" text="(Coming Soon) Preferences" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#quitApp" text="Quit LinearJ" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="About">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#triggerAboutMenu" text="About LinearJ" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+            <children>
+                <Label layoutX="36.0" layoutY="14.0" prefHeight="17.0" prefWidth="174.0" text="Matrix Input &amp; Calculator" />
+                <fx:include fx:id="inputBox" source="InputBox.fxml" />
+                <fx:include fx:id="outputBox" source="OutputBox.fxml" />
+                <fx:include fx:id="buttonsChildComponentLeft" source="OnscreenButtonsLeft.fxml" />
+                <fx:include fx:id="buttonsChildComponentRight" source="OnscreenButtonsRight.fxml" />
+                <Label layoutX="437.0" layoutY="156.0" prefHeight="17.0" prefWidth="174.0" text="Output" />
+                <Label layoutX="297.0" layoutY="76.0" prefHeight="17.0" prefWidth="314.0" text="Space is reserved for future circuit solver." textFill="#0041e4">
+                    <font>
+                        <Font name="Iosevka Oblique" size="13.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+    </children>
+
+</VBox>
