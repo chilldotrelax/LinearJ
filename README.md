@@ -7,8 +7,6 @@
 
 LinearJ is a desktop matrix calculator and experimental DC circuit solver written in Java. It combines a JavaFX interface with linear-algebra routines and a circuit model based on **modified nodal analysis (MNA)**.
 
-The project began as a way to learn Java by applying it to practical mathematics and circuit theory. Its long-term goal is to let a user describe a circuit as a netlist, turn that circuit into a system of linear equations, solve it, and present the resulting node voltages and source currents in the UI.
-
 > [!IMPORTANT]
 > LinearJ is a work in progress and is not yet a finished engineering tool. Some controls are placeholders, the circuit-solving workflow is not fully connected to the UI, input validation is still being improved, and some matrix operations need more testing. Expect behavior and interfaces to change.
 
