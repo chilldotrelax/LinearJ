@@ -8,7 +8,7 @@
 LinearJ is a desktop matrix calculator and experimental DC circuit solver written in Java. It combines a JavaFX interface with linear-algebra routines and a circuit model based on **modified nodal analysis (MNA)**.
 
 > [!IMPORTANT]
-> LinearJ is a work in progress and is not yet a finished engineering tool. Some controls are placeholders, the circuit-solving workflow is not fully connected to the UI, input validation is still being improved, and some matrix operations need more testing. Expect behavior and interfaces to change.
+> This project is incomplete.
 
 ## Screenshots
 
@@ -20,7 +20,7 @@ LinearJ is a desktop matrix calculator and experimental DC circuit solver writte
 
 ![LinearJ main window with the add-component dialog open](docs/images/linearj-add-component-dialog.png)
 
-## What LinearJ currently contains
+## What to expect?
 
 - A JavaFX/FXML desktop interface
 - Matrix addition, subtraction, multiplication, inversion, determinant, and transpose routines
@@ -29,15 +29,14 @@ LinearJ is a desktop matrix calculator and experimental DC circuit solver writte
 - Models for resistors, independent current sources, independent voltage sources, and circuit nodes
 - Circuit-element stamping for assembling a linear system
 - An LU-decomposition solver for equations of the form `A x = b`
-- Maven Wrapper configuration and initial JUnit test scaffolding
 
 The matrix calculator is the most directly usable part of the application today. The circuit classes and netlist UI represent active development; they should be treated as a preview rather than a complete simulator.
 
-## The theory behind the project
+## Theory
 
 ### Matrices and linear systems
 
-Many engineering problems can be written as:
+Many engineering problems can be express in the form:
 
 ```text
 A x = b
@@ -58,7 +57,7 @@ Current sources contribute to the right-hand-side vector. Ideal voltage sources 
 
 This design is reflected in the code: circuit elements know how to stamp themselves, while `CircuitSolver` assembles the system and `LUDecomposition` performs the numerical solve.
 
-## Getting started
+## Cool, now how do I get my own LinearJ?
 
 ### Requirements
 
@@ -92,13 +91,13 @@ Enter a matrix inside square brackets. Separate values in a row with spaces and 
 [1 2;3 4]
 ```
 
-Operations that take two matrices expect them to be separated by `/`:
+Operations that take two matrices should be separated by `/`:
 
 ```text
 [1 2;3 4]/[5 6;7 8]
 ```
 
-The parser is currently strict about formatting, so avoid spaces immediately before or after the semicolon.
+Unfortunately, the parser is slightly strict about formatting; I understand it's annoying :(
 
 ## Project structure
 
