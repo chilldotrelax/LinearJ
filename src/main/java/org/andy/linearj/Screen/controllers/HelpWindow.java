@@ -22,42 +22,15 @@
  * SOFTWARE.
  */
 
-package org.andy.linearj.FileSystem;
+package org.andy.linearj.Screen.controllers;
 
-import java.nio.file.Path;
-
-public class File {
-    private final String fileName;
-    private final Path filePath;
-    private final Path destinationPath;
-
-    public File(String FILE_NAME, Path filePath, Path destinationPath ){
-        this.fileName = FILE_NAME;
-        this.filePath = filePath;
-        this.destinationPath = destinationPath; //Optional Argument.
+public class HelpWindow extends PopupWindow{
+    public HelpWindow(){
+        super("/org/andy/linearj/HelpPopupWindow.fxml","Input Help");
     }
 
-    public void readFile(){
-
-
-
+    public void openHelpWindow(){
+        super.openWindow();
     }
-
-    public void writeFile(){
-
-
-
-    }
-
-
-    private boolean isValidFormat(final String FILE_NAME){
-        if (this.fileName.contains(".spi") || this.fileName.contains(".spc") ){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
 
 }

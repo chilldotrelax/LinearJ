@@ -1,6 +1,30 @@
+/*
+ * MIT License
+ *
+ * Copyright © 2026 Andy Huang
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package org.andy.linearj.Maths;
 
-import org.andy.linearj.Screen.misc.exception.MatrixNotSquareException;
+import org.andy.linearj.Screen.misc.exception.MatrixNotEquivalentException;
 import org.andy.linearj.Screen.misc.exception.NonMatchingMatricesException;
 import org.ejml.data.SingularMatrixException;
 import org.ejml.simple.SimpleMatrix;
@@ -9,7 +33,6 @@ import java.util.Arrays;
 
 public final class MatrixMath {
     private MatrixMath() {
-        /* This utility class should not be instantiated */
     }
 
     public static double[][] castStringToDouble(String stringToDouble) {
@@ -31,10 +54,10 @@ public final class MatrixMath {
 
     }
 
-    public static double[][] addMatrix(double[][] a, double[][] b) throws MatrixNotSquareException {
-        double[][] result = new double[a.length][a.length];
-    if (a.length != b.length && a[0].length != b[0].length){
-        throw new MatrixNotSquareException("Error: Not a square matrix.");
+    public static double[][] addMatrix(double[][] a, double[][] b) throws MatrixNotEquivalentException {
+        double[][] result = new double[a.length][a[0].length];
+    if (a.length != b.length || a[0].length != b[0].length){
+        throw new MatrixNotEquivalentException("Error: Not an equivalent matrix.");
         }
     else{
         for (int row = 0; row < a.length; row++){
@@ -46,11 +69,11 @@ public final class MatrixMath {
         }
     }
 
-    public static double[][] subtractMatrix(double[][] a, double[][] b) throws MatrixNotSquareException{
+    public static double[][] subtractMatrix(double[][] a, double[][] b) throws MatrixNotEquivalentException{
         double[][] result = new double[a.length][a.length];
 
-        if (a.length != b.length && a[0].length != b[0].length){
-            throw new MatrixNotSquareException("Error: Not a square matrix.");
+        if (a.length != b.length || a[0].length != b[0].length){
+            throw new MatrixNotEquivalentException("Error: Not an equivalent matrix.");
         }
         else{
             for (int row = 0; row < a.length; row++){

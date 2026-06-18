@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import java.lang.String?>
+<AnchorPane prefHeight="308.0" prefWidth="368.0" xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.andy.linearj.Screen.controllers.AddComponentWindowController">
+   <HBox alignment="CENTER" layoutX="3.0" layoutY="261.0" prefHeight="33.0" prefWidth="363.0" spacing="50.0">
+      <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButton" text="Cancel"/>
+      <Button fx:id="okButton" mnemonicParsing="false" onAction="#okButton" prefHeight="26.0" prefWidth="51.0"
+              text="OK"/>
+   </HBox>
+   <HBox alignment="CENTER" layoutX="6.0" layoutY="-2.0" prefHeight="33.0" prefWidth="363.0" spacing="50.0">
+      <Label text="Add Component">
+         <font>
+            <Font size="19.0"/>
+         </font>
+      </Label>
+   </HBox>
+   <VBox layoutX="14.0" layoutY="32.0" prefHeight="135.0" prefWidth="132.0" spacing="25.0">
+      <Label prefHeight="17.0" prefWidth="104.0" text="Select Element"/>
+      <Label layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="128.0" text="Set Beginning Node"/>
+      <Label layoutX="10.0" layoutY="27.0" prefHeight="17.0" prefWidth="128.0" text="Set End Node"/>
+      <Label layoutX="10.0" layoutY="44.0" prefHeight="17.0" prefWidth="128.0" text="Set Value"/>
+   </VBox>
+   <VBox layoutX="187.0" layoutY="35.0" prefHeight="197.0" prefWidth="132.0" spacing="13.0">
+      <ChoiceBox value="Resistor Element" fx:id="elementChoice" focusTraversable="false" prefWidth="150.0">
+      <items>
+         <FXCollections fx:factory = "observableArrayList">
+            <String fx:value="Resistor Element (R)" />
+            <String fx:value="Voltage Source Element (V)" />
+            <String fx:value="Current Source Element (C)" />
+         </FXCollections>
+      </items>
+      </ChoiceBox>
+
+   <TextField fx:id="setBegNode" promptText="e.g 1"/>
+      <TextField fx:id="setEndNode" layoutX="10.0" layoutY="61.0" prefWidth="132.0" promptText="e.g 2"/>
+      <TextField fx:id="setElementValue" layoutX="10.0" layoutY="112.0" prefWidth="132.0" promptText="e.g 300"/>
+   </VBox>
+   <Button layoutX="124.0" layoutY="197.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="128.0" text="Help"/>
+</AnchorPane>

@@ -25,41 +25,36 @@
 package org.andy.linearj.Screen.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
-public class ButtonsController {
+public class NetListController {
+
+    @FXML
+    private TableView<ElementDataModel> circuitElementTableView;
+    @FXML
+    private TableColumn<ElementDataModel, String> componentIDColumn;
+    @FXML
+    private TableColumn<ElementDataModel, Integer> begNodeIDColumn;
+    @FXML
+    private TableColumn<ElementDataModel, Integer> endNodeIDColumn;
+    @FXML
+    private TableColumn<ElementDataModel,Double> componentValueColumn;
+
     private ParentWindowController parentController;
 
-    public void setParentController(ParentWindowController parentController){
-        this.parentController = parentController;
+    public void setParentController(ParentWindowController parent){
+        this.parentController = parent;
     }
 
-    @FXML
-    private void addMatricesClick(){
-        parentController.addMatrix();
-    }
+    public void initialise(){
+        componentIDColumn.setCellValueFactory(cellData -> cellData.getValue().componentIDProperty());
+        begNodeIDColumn.setCellValueFactory(cellData -> cellData.getValue().begNodeIDProperty().asObject());
+        endNodeIDColumn.setCellValueFactory(cellData -> cellData.getValue().endNodeIDProperty().asObject());
+        componentValueColumn.setCellValueFactory(cellData -> cellData.getValue().componentValueProperty().asObject());
 
-    @FXML
-    private void subtractMatricesClick(){
-        parentController.subtractMatrix();
-    }
+        circuitElementTableView.getColumns().addAll(componentIDColumn,begNodeIDColumn,endNodeIDColumn,componentValueColumn);
 
-    @FXML
-    private void multiplyMatricesClick(){
-        parentController.multiplyMatrix();
-    }
 
-    @FXML
-    private void computeInversionClick(){
-        parentController.computeInversion();
     }
-
-    @FXML
-    private void computeDeterminantClick(){
-        parentController.computeDeterminant();
-    }
-    @FXML
-    private void transposeMatrixClick(){
-        parentController.computeTranspose();
-    }
-
 }

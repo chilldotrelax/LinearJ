@@ -2,9 +2,8 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andy.linearj.Screen.controllers.ParentWindowController">
+<VBox prefHeight="451.0" prefWidth="636.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andy.linearj.Screen.controllers.ParentWindowController">
     <children>
         <MenuBar VBox.vgrow="NEVER">
             <menus>
@@ -25,19 +24,28 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+        <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="492.0" prefWidth="636.0" VBox.vgrow="ALWAYS">
             <children>
-                <Label layoutX="36.0" layoutY="14.0" prefHeight="17.0" prefWidth="174.0" text="Matrix Input &amp; Calculator" />
+                <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="227.0" text="Matrix Input &amp; Calculator" />
                 <fx:include fx:id="inputBox" source="InputBox.fxml" />
                 <fx:include fx:id="outputBox" source="OutputBox.fxml" />
                 <fx:include fx:id="buttonsChildComponentLeft" source="OnscreenButtonsLeft.fxml" />
                 <fx:include fx:id="buttonsChildComponentRight" source="OnscreenButtonsRight.fxml" />
-                <Label layoutX="437.0" layoutY="156.0" prefHeight="17.0" prefWidth="174.0" text="Output" />
-                <Label layoutX="297.0" layoutY="76.0" prefHeight="17.0" prefWidth="314.0" text="Space is reserved for future circuit solver." textFill="#0041e4">
-                    <font>
-                        <Font name="Iosevka Oblique" size="13.0" />
-                    </font>
-                </Label>
+                <Label alignment="CENTER" layoutX="286.0" layoutY="156.0" prefHeight="17.0" prefWidth="337.0" text="Console Output" />
+            <HBox alignment="CENTER" layoutX="36.0" layoutY="360.0" prefHeight="57.0" prefWidth="174.0" spacing="30.0">
+               <children>
+                  <Button fx:id="clearButton" alignment="CENTER" mnemonicParsing="false" onAction="#clearInput" prefHeight="26.0" prefWidth="75.0" text="Clear" />
+                  <Button fx:id="helpButton" alignment="CENTER" layoutX="60.0" layoutY="26.0" mnemonicParsing="false" onAction="#triggerHelpMenu" prefHeight="26.0" prefWidth="75.0" text="Calc Help" />
+               </children></HBox>
+            <VBox alignment="CENTER" layoutX="551.0" layoutY="12.0" prefHeight="134.0" prefWidth="168.0" spacing="10.0">
+               <children>
+                  <Button defaultButton="true" mnemonicParsing="false" onAction="#triggerAddElementMenu" prefHeight="26.0" prefWidth="110.0" text="Add Component" />
+                  <Button fx:id="clearNetlist" defaultButton="true" disable="true" layoutX="39.0" layoutY="77.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0" text="Clear Netlist" />
+                  <Button defaultButton="true" disable="true" layoutX="39.0" layoutY="90.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0" text="Solve DC Circuit" />
+               </children>
+            </VBox>
+            <Label alignment="CENTER" layoutX="289.0" layoutY="6.0" prefHeight="17.0" prefWidth="272.0" text="Net List Input" />
+            <fx:include fx:id="netlistTable" source="NetListView.fxml" />
             </children>
         </AnchorPane>
     </children>

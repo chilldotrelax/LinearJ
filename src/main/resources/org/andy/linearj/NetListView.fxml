@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+
+<TableView fx:id="circuitElementTableView" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="org.andy.linearj.Screen.controllers.NetListController" focusTraversable="false" layoutX="276.0" layoutY="22.0" prefHeight="134.0" prefWidth="298.0">
+    <columns>
+        <TableColumn fx:id="componentIDColumn" prefWidth="75.0" text="Element ID" />
+        <TableColumn fx:id="begNodeIDColumn" prefWidth="75.0" sortable="false" text="Beg Node" />
+        <TableColumn fx:id="endNodeIDColumn" prefWidth="75.0" sortable="false" text="End Node" />
+        <TableColumn fx:id="componentValueColumn" prefWidth="75.0" sortable="false" text="Value" />
+    </columns>
+</TableView>
+
+
+
+
+
+
+
+

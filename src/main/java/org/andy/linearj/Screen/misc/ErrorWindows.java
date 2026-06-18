@@ -4,7 +4,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
 public class ErrorWindows {
-
     public static void displayInformative(String dialog){
         Alert informativeGenericMSG = new Alert(Alert.AlertType.INFORMATION, dialog);
         informativeGenericMSG.showAndWait().filter(response -> response == ButtonType.OK);
