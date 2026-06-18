@@ -40,8 +40,8 @@
             <VBox alignment="CENTER" layoutX="551.0" layoutY="12.0" prefHeight="134.0" prefWidth="168.0" spacing="10.0">
                <children>
                   <Button defaultButton="true" mnemonicParsing="false" onAction="#triggerAddElementMenu" prefHeight="26.0" prefWidth="110.0" text="Add Component" />
-                  <Button fx:id="clearNetlist" defaultButton="true" disable="true" layoutX="39.0" layoutY="77.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0" text="Clear Netlist" />
-                  <Button defaultButton="true" disable="true" layoutX="39.0" layoutY="90.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0" text="Solve DC Circuit" />
+                  <Button fx:id="clearNetlist" defaultButton="true" disable="true" layoutX="39.0" layoutY="77.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0" text="COMING SOON" />
+                  <Button fx:id="solveDCCircuit" defaultButton="true" disable="true" layoutX="39.0" layoutY="90.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0" text="COMING SOON" />
                </children>
             </VBox>
             <Label alignment="CENTER" layoutX="289.0" layoutY="6.0" prefHeight="17.0" prefWidth="272.0" text="Net List Input" />

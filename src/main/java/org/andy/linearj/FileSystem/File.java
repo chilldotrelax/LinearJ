@@ -38,17 +38,10 @@ public class File {
     }
 
     public void readFile(){
-
-
-
     }
 
     public void writeFile(){
-
-
-
     }
-
 
     private boolean isValidFormat(final String FILE_NAME){
         if (this.fileName.contains(".spi") || this.fileName.contains(".spc") ){
@@ -58,6 +51,4 @@ public class File {
             return false;
         }
     }
-
-
 }

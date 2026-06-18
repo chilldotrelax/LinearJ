@@ -24,6 +24,7 @@
 
 package org.andy.linearj.Screen.controllers;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -41,20 +42,25 @@ public class NetListController {
     @FXML
     private TableColumn<ElementDataModel,Double> componentValueColumn;
 
+    private ObservableList<ElementDataModel> elementDataModelObservableList;
+
     private ParentWindowController parentController;
 
     public void setParentController(ParentWindowController parent){
         this.parentController = parent;
     }
 
-    public void initialise(){
+    public void setObservableList(ObservableList<ElementDataModel> elmList){
+        this.elementDataModelObservableList = elmList;
+        circuitElementTableView.setItems(this.elementDataModelObservableList);
+    }
+
+    @FXML
+    public void initialize(){
         componentIDColumn.setCellValueFactory(cellData -> cellData.getValue().componentIDProperty());
         begNodeIDColumn.setCellValueFactory(cellData -> cellData.getValue().begNodeIDProperty().asObject());
         endNodeIDColumn.setCellValueFactory(cellData -> cellData.getValue().endNodeIDProperty().asObject());
         componentValueColumn.setCellValueFactory(cellData -> cellData.getValue().componentValueProperty().asObject());
-
-        circuitElementTableView.getColumns().addAll(componentIDColumn,begNodeIDColumn,endNodeIDColumn,componentValueColumn);
-
 
     }
 }

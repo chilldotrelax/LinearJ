@@ -24,6 +24,7 @@
 
 package org.andy.linearj.Screen.controllers;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -31,7 +32,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.andy.linearj.Screen.misc.ErrorWindows;
 
-public class AddComponentWindowController extends PopupWindow {
+public class AddComponentWindowController {
     @FXML
     private Button cancelButton;
     @FXML
@@ -44,37 +45,39 @@ public class AddComponentWindowController extends PopupWindow {
     private TextField setEndNode;
     @FXML
     private TextField setElementValue;
+    private ObservableList<ElementDataModel> elementDataModelObservableList;
 
-    public AddComponentWindowController(){
-        super("/org/andy/linearj/AddComponentWindow.fxml","Add Component");
-    }
-
-    public void openWindow() {
-        super.openWindow();
+    public void setElementDataModelObservableList(ObservableList elementDataModelObservableList) {
+        this.elementDataModelObservableList = elementDataModelObservableList;
     }
 
     @FXML
-    public void cancelButton(){
+    public void cancelButton() {
         Stage currentStage = (Stage) cancelButton.getScene().getWindow();
         currentStage.close();
     }
+
     @FXML
-    public void okButton(){
-        try{
-            String choiceOfElement = elementChoice.getSelectionModel().getSelectedItem().substring(0,1);
+    public void okButton() {
+        //No input validation
+        try {
+            String choiceOfElement = elementChoice.getSelectionModel().getSelectedItem().substring(0, 1);
             Integer begNodeID = Integer.parseInt(setBegNode.getText());
             Integer endNodeID = Integer.parseInt(setEndNode.getText());
             Double componentValue = Double.parseDouble(setElementValue.getText());
 
-
-
+            elementDataModelObservableList.add(new ElementDataModel(choiceOfElement, begNodeID, endNodeID, componentValue));
             Stage currentStage = (Stage) okButton.getScene().getWindow();
             currentStage.close();
-        }
-        catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             ErrorWindows.displayError("Bad arguments. Please try again.");
         }
     }
 
-
+//    private boolean isValidArgument(String choice, Integer beg, Integer end, Double comp) {
+//        if (choice.isEmpty() || beg.toString().isEmpty() || end.toString().isEmpty() || comp.toString().isEmpty()) {
+//            return false;
+//        }
+//        return true;
+//    }
 }

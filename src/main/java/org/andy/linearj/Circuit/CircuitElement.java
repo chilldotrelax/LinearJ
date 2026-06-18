@@ -48,6 +48,4 @@ public abstract class CircuitElement { ;
     public abstract void setComponentID(String newComponentID);
     public abstract double calculateCurrent(double[] voltage);
     public abstract double calculateVoltage(double current);
-
-
 }

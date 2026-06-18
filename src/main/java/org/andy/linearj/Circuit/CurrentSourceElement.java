@@ -30,7 +30,6 @@ public class CurrentSourceElement extends CircuitElement{
 
     public CurrentSourceElement(int begNodeID, int endNodeID, String componentID, double current){
         super(begNodeID, endNodeID);
-
         if (componentID.isEmpty() || Double.toString(current).isEmpty()){
             throw new IllegalArgumentException("Empty input or invalid input!");
         }
@@ -41,36 +40,25 @@ public class CurrentSourceElement extends CircuitElement{
     }
     @Override
     public String getComponentID(){return componentID;}
-
     @Override
     public void setComponentID(String newComponentID){componentID = newComponentID;}
-
     @Override
     public double getElementValue(){return current;}
-
     @Override
     public void setElementValue(double newValue){current = newValue;}
-
-
-    public double[] stampSelf(double[] rightHandSideVector, int begIndex, int endIndex){
-
-        rightHandSideVector[begIndex] -= current;
-        rightHandSideVector[endIndex] += current;
-
-        return rightHandSideVector;
-    }
-
-    //Ignore
     @Override
     public double calculateCurrent(double[] voltage) {
         return current;
     }
-
-
     //Ignore
     @Override
     public double calculateVoltage(double current) {
         return 0;
     }
 
+    public double[] stampSelf(double[] rightHandSideVector, int begIndex, int endIndex){
+        rightHandSideVector[begIndex] -= current;
+        rightHandSideVector[endIndex] += current;
+        return rightHandSideVector;
+    }
 }

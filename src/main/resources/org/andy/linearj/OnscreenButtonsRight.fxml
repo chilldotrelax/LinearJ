@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.andy.linearj.Screen.controllers.ButtonsController" layoutX="134.0" layoutY="215.0"
-      prefHeight="158.0" prefWidth="85.0" spacing="30.0">
-    <Button fx:id="invertMatrix" mnemonicParsing="false" onAction="#computeInversionClick" prefHeight="26.0"
-            prefWidth="92.0" text="Invert"/>
-    <Button fx:id="detMatrix" mnemonicParsing="false" onAction="#computeDeterminantClick" prefHeight="26.0"
-            prefWidth="88.0" text="Determinant"/>
-    <Button fx:id="transposeMatrix" mnemonicParsing="false" onAction="#transposeMatrixClick" prefHeight="26.0"
-            prefWidth="89.0" text="Transpose"/>
+<VBox layoutX="134.0" layoutY="215.0" prefHeight="158.0" prefWidth="85.0" spacing="30.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andy.linearj.Screen.controllers.ButtonsController">
+    <Button fx:id="invertMatrix" mnemonicParsing="false" onAction="#computeInversionClick" prefHeight="26.0" prefWidth="92.0" text="Invert" />
+    <Button fx:id="detMatrix" mnemonicParsing="false" onAction="#computeDeterminantClick" prefHeight="26.0" prefWidth="88.0" text="Determinant" />
+    <Button fx:id="transposeMatrix" disable="true" mnemonicParsing="false" onAction="#transposeMatrixClick" prefHeight="26.0" prefWidth="89.0" text="Transpose" />
 </VBox>

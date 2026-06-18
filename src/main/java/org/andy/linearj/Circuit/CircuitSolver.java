@@ -30,27 +30,6 @@ import org.andy.linearj.Screen.misc.exception.IllegalMatrixException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/*
-* --CHANGE LOG--
-* June 8, 2026: Added some temporary variables in preparation for unit testing using JUnit.
-* June 8, 2026: Verified that the resistor stamping works!
-* June 8, 2026: Verified that the current source stamping works!
-* June 10, 2026: Added more robust node handling (still in prog.)
-* June 11, 2026: Checked and verified node handling is of correct state.
-* June 11, 2026: Added voltage source element functionality (MNA) --> NOT TESTED YET!
-* June 13, 2026: Tested some parts using JUnit, particularly the solve() method.
-* June 13, 2026: The LUDCMP static method is currently broken for some reason.
-* June 14, 2026: LUDCMP is still buggy; Working on a fix as soon as possible (hopefully by the end of monday)
-* June 15, 2026: Fixed LU Decomposition.
- */
-
-/*
-* --PLANS--
-* June 14: Begin JUnit testing again to verify code works correctly.
-* June 15-19: Connect the Circuit package to the JavaFX application
-* June 20-21: Finalize and prepare for publishing to GitHub.
- */
-
 public class CircuitSolver {
     private final ArrayList<CircuitElement> elementList;
     private final HashMap<Integer, Integer> nodesHashMap = new HashMap<>();

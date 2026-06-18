@@ -1,15 +1,23 @@
 package org.andy.linearj.Screen.controllers;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import org.andy.linearj.Maths.MatrixMath;
 import org.andy.linearj.Screen.misc.ErrorWindows;
 import org.andy.linearj.Screen.misc.exception.EmptyInputException;
 import org.andy.linearj.Screen.misc.exception.MatrixNotEquivalentException;
 import org.andy.linearj.Screen.misc.exception.NonMatchingMatricesException;
 import org.ejml.data.SingularMatrixException;
+
+import java.io.IOException;
 import java.util.Arrays;
+
 import static org.andy.linearj.Maths.MatrixMath.castStringToDouble;
 
 public class ParentWindowController {
@@ -26,14 +34,17 @@ public class ParentWindowController {
 
     private ObservableList<ElementDataModel> elementDataModelObservableList;
 
+    public ParentWindowController(){
+        this.elementDataModelObservableList = FXCollections.observableArrayList();
+    }
+
     @FXML
     public void initialize() {
         buttonsChildComponentLeftController.setParentController(this);
         buttonsChildComponentRightController.setParentController(this);
         netlistTableController.setParentController(this);
-        netlistTableController.initialise();
+        netlistTableController.setObservableList(elementDataModelObservableList);
     }
-
 
     public void addMatrix() {
         try {
@@ -100,19 +111,26 @@ public class ParentWindowController {
         }
     }
 
-    //Non-static window
     public void triggerAddElementMenu() {
-        AddComponentWindowController addComponentWindowController = new AddComponentWindowController();
-        addComponentWindowController.openWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/andy/linearj/AddComponentWindow.fxml"));
+        //debug
+        try{
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Add Component -- Debug");
+            stage.setScene(new Scene(root));
+            stage.show();
+            AddComponentWindowController window = loader.getController();
+            window.setElementDataModelObservableList(this.elementDataModelObservableList);
+        } catch (IOException e) {
+            ErrorWindows.displayError("Something went wrong");
+        }
     }
 
-    //Static Window
     public void triggerHelpMenu() {
         HelpWindow helpMenu = new HelpWindow();
         helpMenu.openHelpWindow();
     }
-
-    //Static Window
     public void triggerAboutMenu() {
         AboutWindow aboutMenu = new AboutWindow();
         aboutMenu.openAboutWindow();

@@ -34,7 +34,6 @@ import java.util.Arrays;
 public final class MatrixMath {
     private MatrixMath() {
     }
-
     public static double[][] castStringToDouble(String stringToDouble) {
         try{
             String[] resolvedString = stringToDouble.substring(1,stringToDouble.length()-1).split(";");
@@ -51,7 +50,6 @@ public final class MatrixMath {
         catch (ArrayIndexOutOfBoundsException | IllegalAccessError e ) {
             throw new ArrayIndexOutOfBoundsException("Bad state.");
         }
-
     }
 
     public static double[][] addMatrix(double[][] a, double[][] b) throws MatrixNotEquivalentException {
