@@ -116,20 +116,6 @@ src/main/resources/org/andy/linearj/
 └── *.fxml                JavaFX layouts
 ```
 
-## Roadmap
-
-- [ ] Complete the end-to-end netlist-to-solution workflow
-- [ ] Display solved node voltages and branch currents in the application
-- [ ] Finish or enable placeholder UI controls
-- [ ] Make matrix parsing and component validation more forgiving
-- [ ] Expand assertion-based tests for rectangular matrices, invalid input, and circuit solutions
-- [ ] Improve error reporting and remove debug-only behavior
-- [ ] Package distributable builds for supported desktop platforms
-
-## Contributing
-
-LinearJ is primarily a learning project, but focused bug reports and pull requests are welcome. Please open an issue before proposing a large change so the scope and design can be discussed first.
-
 ## License
 
 LinearJ is available under the [MIT License](LICENSE).
