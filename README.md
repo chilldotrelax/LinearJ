@@ -20,6 +20,10 @@ LinearJ is a desktop matrix calculator and experimental DC circuit solver writte
 
 ![LinearJ main window with the add-component dialog open](docs/images/linearj-add-component-dialog.png)
 
+### Current workspace snapshot
+
+![LinearJ workspace showing the matrix calculator, net list table, and console output area](docs/images/linearj-current-workspace-june-2026.png)
+
 ## What to expect?
 
 - A JavaFX/FXML desktop interface
