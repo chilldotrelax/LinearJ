@@ -34,16 +34,13 @@ public class OutputDisplayController {
     @FXML
     private TextArea outputBox;
 
-    //Red flag: Pass through method
     public void setOutputBox(String desiredText){
         LocalTime time = LocalTime.now();
         DateTimeFormatter formatted = DateTimeFormatter.ofPattern("HH:mm:ss");
         outputBox.appendText("\n"+ "(" + time.format(formatted) + ")" + " "+ desiredText);
     }
 
-    //Red Flag: Pass through method
     public void clearOutputBox(){
-        //Balls
         outputBox.clear();
     }
 
