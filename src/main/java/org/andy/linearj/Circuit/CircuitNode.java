@@ -31,30 +31,21 @@ import java.util.List;
 
 public class CircuitNode {
     private final int nodeID;
-    private boolean isGroundNode;
+    private boolean isGroundNode = false;
     private double nodeVoltage;
-    private final List<CircuitElement> elementsConnected = new ArrayList<>() ;
+    private final List<CircuitElement> elementsConnected = new ArrayList<>();
 
-    public CircuitNode(int nodeID, List<CircuitElement> elements, boolean isGroundNodeFlag) {
+    public CircuitNode(int nodeID, List<CircuitElement> elements) {
         this.nodeID = nodeID;
 
         for (CircuitElement element: elements){
             if (element.getBegNodeID() == nodeID || element.getEndNodeID() == nodeID){
                 elementsConnected.add(element);
             }
-        }
-        this.isGroundNode = isGroundNodeFlag;
-    }
-
-    public CircuitNode(int nodeID, List<CircuitElement> elements, boolean isGroundNodeFlag, double nodeVoltage) {
-        this.nodeID = nodeID;
-        for (CircuitElement element: elements){
-            if (element.getBegNodeID() == nodeID || element.getEndNodeID() == nodeID){
-                elementsConnected.add(element);
+            if (element instanceof GroundElement){
+                this.isGroundNode = true;
             }
         }
-        this.isGroundNode = isGroundNodeFlag;
-        this.nodeVoltage = nodeVoltage;
     }
 
     public final boolean isGroundNode() {return isGroundNode;}
@@ -62,10 +53,7 @@ public class CircuitNode {
     public final double getNodeVoltage(){return nodeVoltage;}
     public final void setNodeVoltage(double newVoltage){nodeVoltage = newVoltage;}
     public final List<CircuitElement> getElementsConnected() {return elementsConnected;}
-
-    public final boolean isFloatingNode() {
-        return elementsConnected.size() <= 1;
-    }
+    public final boolean isFloatingNode() {return elementsConnected.size() <= 1;}
 
     public void removeElement(CircuitElement particularElement) throws IllegalArgumentException {
         for (CircuitElement element : elementsConnected) {
@@ -78,6 +66,7 @@ public class CircuitNode {
     }
 
     public void addElement(CircuitElement particularElement) {
+        //TODO add validation
         elementsConnected.add(particularElement);
     }
 

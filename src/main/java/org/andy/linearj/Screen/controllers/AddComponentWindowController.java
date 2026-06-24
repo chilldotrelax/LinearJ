@@ -30,6 +30,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.andy.linearj.Circuit.CircuitElement;
+import org.andy.linearj.Circuit.CircuitElementFactory;
 import org.andy.linearj.Screen.misc.ErrorWindows;
 
 public class AddComponentWindowController {
@@ -40,15 +42,29 @@ public class AddComponentWindowController {
     @FXML
     private ChoiceBox<String> elementChoice;
     @FXML
+    private TextField setComponentID;
+    @FXML
     private TextField setBegNode;
     @FXML
     private TextField setEndNode;
     @FXML
     private TextField setElementValue;
-    private ObservableList<ElementDataModel> elementDataModelObservableList;
 
-    public void setElementDataModelObservableList(ObservableList elementDataModelObservableList) {
-        this.elementDataModelObservableList = elementDataModelObservableList;
+    private ObservableList<ElementDataModel> elementDataModelObservableList;
+    private ObservableList<CircuitElement> circuitElementObservableList;
+
+    @FXML
+    public void initialize(){
+        elementChoice.setOnAction(event -> {
+            if (elementChoice.getSelectionModel().getSelectedItem().charAt(0) == 'G'){
+                setEndNode.setDisable(true);
+                setElementValue.setDisable(true);
+            }
+            else{
+                setEndNode.setDisable(false);
+                setElementValue.setDisable(false);
+            }
+        });
     }
 
     @FXML
@@ -59,25 +75,61 @@ public class AddComponentWindowController {
 
     @FXML
     public void okButton() {
-        //No input validation
-        try {
             String choiceOfElement = elementChoice.getSelectionModel().getSelectedItem().substring(0, 1);
+
+            //raw form: do not use when creating circuit element objects. Only to be displayed by netlist.
+            String componentID = setComponentID.getText();
+
             Integer begNodeID = Integer.parseInt(setBegNode.getText());
             Integer endNodeID = Integer.parseInt(setEndNode.getText());
             Double componentValue = Double.parseDouble(setElementValue.getText());
 
-            elementDataModelObservableList.add(new ElementDataModel(choiceOfElement, begNodeID, endNodeID, componentValue));
-            Stage currentStage = (Stage) okButton.getScene().getWindow();
-            currentStage.close();
-        } catch (IllegalArgumentException e) {
-            ErrorWindows.displayError("Bad arguments. Please try again.");
+            if (isValidSelection(choiceOfElement,componentID,begNodeID,endNodeID,componentValue)){
+                CircuitElementFactory factory = new CircuitElementFactory();
+                switch (choiceOfElement){
+                    case "R","C","V" ->{
+                        circuitElementObservableList.add(factory.createElement(choiceOfElement,begNodeID,endNodeID,componentValue));
+                        elementDataModelObservableList.add(new ElementDataModel(componentID, begNodeID, endNodeID, componentValue));
+                    }
+                    case "G" -> {
+                        circuitElementObservableList.add(factory.createElement(componentID,begNodeID));
+                        elementDataModelObservableList.add(new ElementDataModel(componentID, begNodeID, endNodeID, componentValue));
+                    }
+                    default ->
+                            ErrorWindows.displayError("Something went wrong");
+                }
+                Stage currentStage = (Stage) okButton.getScene().getWindow();
+                currentStage.close();
+            }
+            else{
+                ErrorWindows.displayError("Invalid arguments detected. Please try again.");
+            }
         }
-    }
+        //TODO confornt "Unchecked assignment" warning
+    public void setElementDataModelObservableList(ObservableList elementDataModelObservableList) {this.elementDataModelObservableList = elementDataModelObservableList;}
+    public void setCircuitElementObservableList(ObservableList circuitElementObservableList){this.circuitElementObservableList = circuitElementObservableList;}
 
-//    private boolean isValidArgument(String choice, Integer beg, Integer end, Double comp) {
-//        if (choice.isEmpty() || beg.toString().isEmpty() || end.toString().isEmpty() || comp.toString().isEmpty()) {
-//            return false;
-//        }
-//        return true;
-//    }
+    private boolean isValidSelection(String choice, String compID, Integer begNodeID, Integer endNodeID, Double val){
+        switch (choice){
+            case "R","C" -> {
+                if (compID.isBlank() || begNodeID.toString().isBlank() || endNodeID.toString().isBlank() || val.toString().isBlank()){
+                    return false;
+                }
+            }
+            case "V" -> {
+                if (compID.isEmpty() || begNodeID.toString().isBlank() || val.toString().isBlank()){
+                    return false;
+                }
+            }
+            case "G" ->{
+                if (compID.isBlank() || begNodeID.toString().isBlank()){
+                    return false;
+                }
+            }
+            default -> {
+                return true;
+            }
+        }
+        return false;
+    }
 }

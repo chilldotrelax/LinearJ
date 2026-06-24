@@ -32,5 +32,4 @@ public class HelpWindow extends PopupWindow{
     public void openHelpWindow(){
         super.openWindow();
     }
-
 }

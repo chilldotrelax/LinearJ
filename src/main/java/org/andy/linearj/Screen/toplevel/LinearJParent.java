@@ -12,7 +12,7 @@ public class LinearJParent extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(LinearJParent.class.getResource("/org/andy/linearj/ParentWindow.fxml"));
 
-        Scene scene = new Scene(fxmlLoader.load(), 761 , 516);
+        Scene scene = new Scene(fxmlLoader.load(), 912 , 517);
         stage.setTitle("LinearJ -- Matrix Solver & Circuit Solver Utility");
         stage.setScene(scene);
         stage.show();

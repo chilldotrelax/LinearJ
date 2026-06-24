@@ -25,7 +25,6 @@
 package org.andy.linearj.Screen.controllers;
 
 public class AboutWindow extends PopupWindow {
-
     public AboutWindow(){
         super("/org/andy/linearj/AboutPopupWindow.fxml","About");
     }

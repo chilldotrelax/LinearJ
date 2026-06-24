@@ -22,6 +22,6 @@
 
       <Label alignment="CENTER" layoutY="142.0" prefHeight="17.0" prefWidth="357.0" text="Version: 0.0.2 Alpha" />
 
-      <Label alignment="CENTER" layoutX="7.0" layoutY="175.0" prefHeight="34.0" prefWidth="350.0" text="&#9;    © 2026 Andy Huang &#10;     Licensed under the MIT License.&#10;" wrapText="true" />
+      <Label alignment="CENTER" layoutY="175.0" prefHeight="34.0" prefWidth="357.0" text="&#9;    © 2026 Andy Huang &#10;     Licensed under the MIT License.&#10;" wrapText="true" />
    </children>
 </AnchorPane>

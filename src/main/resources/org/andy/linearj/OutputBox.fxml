@@ -3,4 +3,4 @@
 <?import javafx.scene.control.*?>
 
 
-<TextArea fx:id="outputBox" editable="false" layoutX="283.0" layoutY="173.0" prefHeight="186.0" prefWidth="342.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andy.linearj.Screen.controllers.OutputDisplayController" />
+<TextArea fx:id="outputBox" editable="false" layoutX="283.0" layoutY="173.0" prefHeight="186.0" prefWidth="342.0" styleClass="console-output" stylesheets="@CSSStyleSheets/IOBoxes.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andy.linearj.Screen.controllers.OutputDisplayController" />

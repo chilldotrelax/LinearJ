@@ -28,6 +28,13 @@ public abstract class CircuitElement { ;
     private Integer beginningNodeID;
     private Integer endNodeID;
 
+    public CircuitElement(Integer begNode){
+        if (begNode.toString().isEmpty()){
+            throw new IllegalArgumentException("Empty arguments");
+        }
+    }
+
+
     public CircuitElement(Integer begNode, Integer endNode){
         if (begNode.toString().isEmpty() || endNode.toString().isEmpty()){
             throw new IllegalArgumentException("Empty arguments @ begNode or endNode.");
@@ -37,6 +44,7 @@ public abstract class CircuitElement { ;
             this.endNodeID = endNode;
         }
     }
+
 
     public final Integer getBegNodeID(){ return beginningNodeID; }
     public final Integer getEndNodeID(){ return endNodeID;}
@@ -48,4 +56,6 @@ public abstract class CircuitElement { ;
     public abstract void setComponentID(String newComponentID);
     public abstract double calculateCurrent(double[] voltage);
     public abstract double calculateVoltage(double current);
+    //public abstract void draw(){};
+
 }

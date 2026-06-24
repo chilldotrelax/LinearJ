@@ -63,4 +63,9 @@ public class NetListController {
         componentValueColumn.setCellValueFactory(cellData -> cellData.getValue().componentValueProperty().asObject());
 
     }
+
+//    public static ArrayList<String> dumpNetlistContentsAsStringList(){
+//        return null;
+//    }
+
 }

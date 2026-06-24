@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.andy.linearj.Screen.controllers.ButtonsController" layoutX="22.0" layoutY="215.0"
-      prefHeight="158.0" prefWidth="85.0" spacing="30.0">
-    <Button fx:id="addButton" mnemonicParsing="false" onAction="#addMatricesClick" prefHeight="26.0" prefWidth="92.0"
-            text="Add"/>
-    <Button fx:id="subtractButton" mnemonicParsing="false" onAction="#subtractMatricesClick" prefHeight="26.0"
-            prefWidth="88.0" text="Subtract"/>
-    <Button fx:id="multiplyButton" mnemonicParsing="false" onAction="#multiplyMatricesClick" prefHeight="26.0"
-            prefWidth="89.0" text="Multiply"/>
+<VBox layoutX="22.0" layoutY="215.0" prefHeight="158.0" prefWidth="85.0" spacing="30.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andy.linearj.Screen.controllers.ButtonsController">
+    <Button fx:id="addButton" mnemonicParsing="false" onAction="#addMatricesClick" prefHeight="26.0" prefWidth="85.0" stylesheets="@CSSStyleSheets/buttons.css" text="Add">
+      <styleClass>
+         <String fx:value="button_main" />
+         <String fx:value="button-primary" />
+      </styleClass></Button>
+    <Button fx:id="subtractButton" mnemonicParsing="false" onAction="#subtractMatricesClick" prefHeight="26.0" prefWidth="85.0" stylesheets="@CSSStyleSheets/buttons.css" text="Subtract">
+      <styleClass>
+         <String fx:value="button_main" />
+         <String fx:value="button-primary" />
+      </styleClass></Button>
+    <Button fx:id="multiplyButton" mnemonicParsing="false" onAction="#multiplyMatricesClick" prefHeight="26.0" prefWidth="85.0" stylesheets="@CSSStyleSheets/buttons.css" text="Multiply">
+      <styleClass>
+         <String fx:value="button_main" />
+         <String fx:value="button-primary" />
+      </styleClass></Button>
 </VBox>

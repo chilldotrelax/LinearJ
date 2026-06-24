@@ -18,8 +18,9 @@
          </font>
       </Label>
    </HBox>
-   <VBox layoutX="14.0" layoutY="32.0" prefHeight="135.0" prefWidth="132.0" spacing="25.0">
+   <VBox layoutX="14.0" layoutY="32.0" prefHeight="186.0" prefWidth="132.0" spacing="25.0">
       <Label prefHeight="17.0" prefWidth="104.0" text="Select Element" />
+      <Label layoutX="10.0" layoutY="52.0" prefHeight="17.0" prefWidth="128.0" text="Set Component ID" />
       <Label layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="128.0" text="Set Beginning Node" />
       <Label layoutX="10.0" layoutY="27.0" prefHeight="17.0" prefWidth="128.0" text="Set End Node" />
       <Label layoutX="10.0" layoutY="44.0" prefHeight="17.0" prefWidth="128.0" text="Set Value" />
@@ -31,13 +32,15 @@
             <String fx:value="Resistor Element (R)" />
             <String fx:value="Voltage Source Element (V)" />
             <String fx:value="Current Source Element (C)" />
+            <String fx:value="Ground Element (G)" />
          </FXCollections>
       </items>
       </ChoiceBox>
+      <TextField fx:id="setComponentID" layoutX="10.0" layoutY="127.0" prefWidth="132.0" promptText="e.g R1, V1" />
 
    <TextField fx:id="setBegNode" promptText="e.g 1" />
       <TextField fx:id="setEndNode" layoutX="10.0" layoutY="61.0" prefWidth="132.0" promptText="e.g 2" />
       <TextField fx:id="setElementValue" layoutX="10.0" layoutY="112.0" prefWidth="132.0" promptText="e.g 300" />
    </VBox>
-   <Button disable="true" layoutX="124.0" layoutY="197.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="128.0" text="Help" />
+   <Button disable="true" layoutX="124.0" layoutY="226.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="128.0" text="Help" />
 </AnchorPane>

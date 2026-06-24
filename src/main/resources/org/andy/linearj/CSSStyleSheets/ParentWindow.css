@@ -1,0 +1,9 @@
+.parent-window{
+    -fx-background-color: #F8FAFC;
+    -fx-font-family: "Inter", "SF Pro Text", "Segoe UI", sans-serif;
+}
+
+.menu-bar{
+    -fx-background-color: #F8FAFC;
+    -fx-border-color: #CBD5E1;
+}

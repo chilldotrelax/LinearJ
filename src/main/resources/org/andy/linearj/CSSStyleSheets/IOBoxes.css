@@ -1,0 +1,4 @@
+.console-output {
+    -fx-font-family: "JetBrains Mono", "Consolas", "Menlo", "Monaco", monospace;
+    -fx-font-size: 10px;
+}

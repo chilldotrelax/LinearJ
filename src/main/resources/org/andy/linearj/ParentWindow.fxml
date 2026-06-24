@@ -1,53 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="451.0" prefWidth="636.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andy.linearj.Screen.controllers.ParentWindowController">
-    <children>
-        <MenuBar VBox.vgrow="NEVER">
-            <menus>
-                <Menu mnemonicParsing="false" text="File">
-                    <items>
-                        <MenuItem disable="true" mnemonicParsing="false" text="(Coming Soon) Import SPICE" />
-                        <MenuItem disable="true" mnemonicParsing="false" text="(Coming Soon) Export SPICE" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem disable="true" mnemonicParsing="false" text="(Coming Soon) Preferences" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#quitApp" text="Quit LinearJ" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="About">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#triggerAboutMenu" text="About LinearJ" />
-                    </items>
-                </Menu>
-            </menus>
-        </MenuBar>
-        <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="492.0" prefWidth="636.0" VBox.vgrow="ALWAYS">
-            <children>
-                <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="227.0" text="Matrix Input &amp; Calculator" />
-                <fx:include fx:id="inputBox" source="InputBox.fxml" />
-                <fx:include fx:id="outputBox" source="OutputBox.fxml" />
-                <fx:include fx:id="buttonsChildComponentLeft" source="OnscreenButtonsLeft.fxml" />
-                <fx:include fx:id="buttonsChildComponentRight" source="OnscreenButtonsRight.fxml" />
-                <Label alignment="CENTER" layoutX="286.0" layoutY="156.0" prefHeight="17.0" prefWidth="337.0" text="Console Output" />
-            <HBox alignment="CENTER" layoutX="36.0" layoutY="360.0" prefHeight="57.0" prefWidth="174.0" spacing="30.0">
-               <children>
-                  <Button fx:id="clearButton" alignment="CENTER" mnemonicParsing="false" onAction="#clearInput" prefHeight="26.0" prefWidth="75.0" text="Clear" />
-                  <Button fx:id="helpButton" alignment="CENTER" layoutX="60.0" layoutY="26.0" mnemonicParsing="false" onAction="#triggerHelpMenu" prefHeight="26.0" prefWidth="75.0" text="Calc Help" />
-               </children></HBox>
-            <VBox alignment="CENTER" layoutX="551.0" layoutY="12.0" prefHeight="134.0" prefWidth="168.0" spacing="10.0">
-               <children>
-                  <Button defaultButton="true" mnemonicParsing="false" onAction="#triggerAddElementMenu" prefHeight="26.0" prefWidth="110.0" text="Add Component" />
-                  <Button fx:id="clearNetlist" defaultButton="true" disable="true" layoutX="39.0" layoutY="77.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0" text="COMING SOON" />
-                  <Button fx:id="solveDCCircuit" defaultButton="true" disable="true" layoutX="39.0" layoutY="90.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0" text="COMING SOON" />
-               </children>
-            </VBox>
-            <Label alignment="CENTER" layoutX="289.0" layoutY="6.0" prefHeight="17.0" prefWidth="272.0" text="Net List Input" />
-            <fx:include fx:id="netlistTable" source="NetListView.fxml" />
-            </children>
-        </AnchorPane>
-    </children>
+<VBox prefHeight="484.0" prefWidth="907.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andy.linearj.Screen.controllers.ParentWindowController">
 
+    <MenuBar stylesheets="@CSSStyleSheets/ParentWindow.css" VBox.vgrow="NEVER">
+        <menus>
+            <Menu mnemonicParsing="false" text="File">
+                <items>
+                    <MenuItem disable="true" mnemonicParsing="false" text="(Coming Soon) Import Netlist" />
+                    <MenuItem disable="true" mnemonicParsing="false" text="(Coming Soon) Export Netlist" />
+                    <SeparatorMenuItem mnemonicParsing="false" />
+                    <MenuItem disable="true" mnemonicParsing="false" text="(Coming Soon) Preferences" />
+                    <SeparatorMenuItem mnemonicParsing="false" />
+                    <MenuItem mnemonicParsing="false" onAction="#quitApp" text="Quit LinearJ" />
+                </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="About">
+                <items>
+                    <MenuItem mnemonicParsing="false" onAction="#triggerAboutMenu" text="About LinearJ" />
+                </items>
+            </Menu>
+        </menus>
+    </MenuBar>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="455.0" prefWidth="903.0" styleClass="parent-window" stylesheets="@CSSStyleSheets/ParentWindow.css" VBox.vgrow="ALWAYS">
+        <children>
+            <Label alignment="CENTER" layoutX="15.0" layoutY="6.0" prefHeight="17.0" prefWidth="229.0" text="Matrix Input &amp; Calculator" />
+            <fx:include fx:id="inputBox" source="InputBox.fxml" />
+            <fx:include fx:id="outputBox" source="OutputBox.fxml" />
+            <fx:include fx:id="buttonsChildComponentLeft" source="OnscreenButtonsLeft.fxml" />
+            <fx:include fx:id="buttonsChildComponentRight" source="OnscreenButtonsRight.fxml" />
+            <Label alignment="CENTER" layoutX="286.0" layoutY="156.0" prefHeight="17.0" prefWidth="337.0" text="Console &amp; Output" />
+            <HBox alignment="CENTER" layoutX="34.0" layoutY="397.0" prefHeight="57.0" prefWidth="174.0" spacing="30.0">
+                <Button fx:id="clearButton" alignment="CENTER" mnemonicParsing="false" onAction="#clearInput" prefHeight="26.0" prefWidth="80.0" stylesheets="@CSSStyleSheets/buttons.css" text="Clear">
+                    <styleClass>
+                        <String fx:value="button_main" />
+                        <String fx:value="button-primary" />
+                    </styleClass>
+                </Button>
+                <Button fx:id="helpButton" alignment="CENTER" layoutX="60.0" layoutY="26.0" mnemonicParsing="false" onAction="#triggerHelpMenu" prefHeight="26.0" prefWidth="75.0" stylesheets="@CSSStyleSheets/buttons.css" text="Help">
+                    <styleClass>
+                        <String fx:value="button_main" />
+                        <String fx:value="button-primary" />
+                    </styleClass>
+                </Button>
+            </HBox>
+            <VBox alignment="CENTER" layoutX="678.0" layoutY="23.0" prefHeight="134.0" prefWidth="168.0" spacing="10.0">
+                <Button defaultButton="true" mnemonicParsing="false" onAction="#triggerAddElementMenu" prefHeight="26.0" prefWidth="110.0" stylesheets="@CSSStyleSheets/buttons.css" text="Add Component">
+                    <styleClass>
+                        <String fx:value="button_main" />
+                        <String fx:value="button-primary" />
+                    </styleClass>
+                </Button>
+                <Button fx:id="solveCircuit" defaultButton="true" disable="true" layoutX="39.0" layoutY="77.0" mnemonicParsing="false" onAction="#solveDCCircuit" prefHeight="26.0" prefWidth="110.0" stylesheets="@CSSStyleSheets/buttons.css" text="Solve Circuit">
+                    <styleClass>
+                        <String fx:value="button_main" />
+                        <String fx:value="button-primary" />
+                    </styleClass>
+                </Button>
+                <Button fx:id="clearNetlist" defaultButton="true" disable="true" layoutX="39.0" layoutY="90.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0" stylesheets="@CSSStyleSheets/buttons.css" text="Clear Netlist">
+                    <styleClass>
+                        <String fx:value="button_main" />
+                        <String fx:value="button-primary" />
+                    </styleClass>
+                </Button>
+            </VBox>
+        <Label alignment="CENTER" layoutX="276.0" layoutY="6.0" prefHeight="17.0" prefWidth="375.0" text="Netlist" />
+        <fx:include fx:id="netlistTable" source="NetListView.fxml" />
+        <ImageView blendMode="DARKEN" fitHeight="120.0" fitWidth="236.0" layoutX="657.0" layoutY="359.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../Assets/applogo_upscaled.png" />
+            </image>
+        </ImageView>
+        <Label alignment="CENTER" layoutX="630.0" layoutY="6.0" prefHeight="17.0" prefWidth="265.0" text="Circuit Operations" />
+        </children>
+    </AnchorPane>
 </VBox>
