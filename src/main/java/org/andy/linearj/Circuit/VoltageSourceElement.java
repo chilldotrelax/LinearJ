@@ -25,21 +25,13 @@
 package org.andy.linearj.Circuit;
 
 public class VoltageSourceElement extends CircuitElement{
-    private final int selfOffset;
     private double voltage;
     private String componentID;
 
-    public VoltageSourceElement(int begNode, int endNode, String componentID, double voltage, int selfOffset){
+    public VoltageSourceElement(int begNode, int endNode, String componentID, double voltage){
         super(begNode, endNode);
-
-        if (componentID.isEmpty() || Double.toString(voltage).isEmpty()){
-            throw new IllegalArgumentException("Empty unput or invalid input");
-        }
-        else{
-            this.componentID = componentID;
-            this.voltage = voltage;
-            this.selfOffset = selfOffset;
-        }
+        this.componentID = componentID;
+        this.voltage = voltage;
     }
 
     @Override
@@ -54,13 +46,12 @@ public class VoltageSourceElement extends CircuitElement{
     @Override
     public void setElementValue(double newValue){voltage = newValue;}
 
-    public double[] stampSelf(double[] rightHandVector,int preShiftedIndex){
+    public double[] stampSelf(double[] rightHandVector,int preShiftedIndex,int selfOffset){
         rightHandVector[preShiftedIndex + selfOffset] += voltage;
         return rightHandVector;
     }
 
-    public double[][] stampToGlobalMatrix(double[][] resistorMatrix, int begNode, int endNode, int preShiftIndex){
-
+    public double[][] stampToGlobalMatrix(double[][] resistorMatrix, int begNode, int endNode, int preShiftIndex, int selfOffset){
         resistorMatrix[preShiftIndex + selfOffset][begNode] += 1;
         resistorMatrix[preShiftIndex + selfOffset][endNode] -= 1;
         resistorMatrix[begNode][preShiftIndex + selfOffset] += 1;

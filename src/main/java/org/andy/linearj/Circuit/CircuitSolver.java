@@ -27,18 +27,17 @@ package org.andy.linearj.Circuit;
 import org.andy.linearj.Maths.LUDecomposition;
 import org.andy.linearj.Screen.misc.exception.IllegalMatrixException;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CircuitSolver {
-    private final ArrayList<CircuitElement> elementList;
+    private final CircuitElement[] elementList;
+    private final CircuitNode[] nodeLists;
     private final HashMap<Integer, Integer> nodesHashMap = new HashMap<>();
-    private final ArrayList<CircuitNode> nodeLists;
     private double[][] resistorMatrix;
     private double[] rightHandVector;
     private final double[] x;
 
-    public CircuitSolver(ArrayList<CircuitElement> elements, ArrayList<CircuitNode> nodeLists ){
+    public CircuitSolver(CircuitElement[] elements, CircuitNode[] nodeLists ){
         this.elementList = elements;
         this.nodeLists = nodeLists;
 
@@ -50,9 +49,9 @@ public class CircuitSolver {
             }
         }
 
-        this.resistorMatrix = new double[this.nodeLists.size()+numberOfVoltageElementsOffSet][this.nodeLists.size()+numberOfVoltageElementsOffSet];
-        this.rightHandVector = new double[this.nodeLists.size()+numberOfVoltageElementsOffSet];
-        this.x = new double[this.nodeLists.size()+numberOfVoltageElementsOffSet];
+        this.resistorMatrix = new double[this.nodeLists.length+numberOfVoltageElementsOffSet][this.nodeLists.length+numberOfVoltageElementsOffSet];
+        this.rightHandVector = new double[this.nodeLists.length+numberOfVoltageElementsOffSet];
+        this.x = new double[this.nodeLists.length+numberOfVoltageElementsOffSet];
 
         int numOfGroundNodes = 0;
         int index = 1;
@@ -71,7 +70,9 @@ public class CircuitSolver {
 
     private Integer getIndex(Integer elementNodeID){return nodesHashMap.get(elementNodeID);}
 
-    public void stampElement() throws IllegalMatrixException {
+    private void stampElement() throws IllegalMatrixException {
+        int offsetsCounter = 1;
+
         for (CircuitElement element: elementList){
             switch (element) {
                 case ResistorElement resistorElement ->
@@ -79,15 +80,18 @@ public class CircuitSolver {
                 case CurrentSourceElement currentSourceElement ->
                     rightHandVector = currentSourceElement.stampSelf(rightHandVector, getIndex(currentSourceElement.getBegNodeID()), getIndex(currentSourceElement.getEndNodeID()));
                 case VoltageSourceElement voltageSourceElement ->{
-                    rightHandVector = voltageSourceElement.stampSelf(rightHandVector, nodeLists.size());
-                    resistorMatrix = voltageSourceElement.stampToGlobalMatrix(resistorMatrix,getIndex(voltageSourceElement.getBegNodeID()), getIndex(voltageSourceElement.getEndNodeID()),nodeLists.size());
+                    if (offsetsCounter <= resistorMatrix.length - nodeLists.length){
+                        rightHandVector = voltageSourceElement.stampSelf(rightHandVector, nodeLists.length,offsetsCounter);
+                        resistorMatrix = voltageSourceElement.stampToGlobalMatrix(resistorMatrix,getIndex(voltageSourceElement.getBegNodeID()), getIndex(voltageSourceElement.getEndNodeID()),nodeLists.length,offsetsCounter);
+                        offsetsCounter++;
+                    }
                 }
-                default -> throw new IllegalMatrixException("Unable to stamp element.");
+                default -> throw new IllegalMatrixException("Unable to stamp element." +"\n"+ "If you see this, this is almost certainly a programming bug and is not your fault.");
             }
         }
     }
 
-    private static double[][] reconstructResistorMatrix(double[][] inputMatrix){
+    private double[][] reconstructResistorMatrix(double[][] inputMatrix){
         double[][] result = new double[inputMatrix.length - 1][inputMatrix.length - 1];
         for (int i = 0; i < result.length; i++){
             System.arraycopy(inputMatrix[i + 1], 1, result[i], 0, result.length);
@@ -95,29 +99,15 @@ public class CircuitSolver {
         return result;
     }
     
-    private static double[] reconstructVector (double[] rightHand){
+    private double[] reconstructVector (double[] rightHand){
         double[] result = new double[rightHand.length - 1];
         System.arraycopy(rightHand, 1, result, 0, result.length);
         return result;
     }
 
-    public void solveCircuit(){
+    public double[] solveCircuit(){
+        stampElement();
         LUDecomposition lu = new LUDecomposition(reconstructResistorMatrix(resistorMatrix));
-        double[] solution = lu.solve(reconstructVector(rightHandVector), reconstructVector(x));
-
-        try{
-            for (int i = 0; i < reconstructVector(x).length; i++){
-                if (i < nodesHashMap.size()){
-                    System.out.println("Solution for V"+ i +" is "+ solution[i]);
-                }
-                else if (i > nodesHashMap.size()){
-                    System.out.println("Solution for I"+ i +" is "+ solution[i]);
-                }
-            }
-        }
-        catch (ArrayIndexOutOfBoundsException e){
-            e.printStackTrace();
-        }
+        return lu.solve(reconstructVector(rightHandVector), reconstructVector(x));
     }
-
 }
