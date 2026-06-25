@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="350.0" prefWidth="350.0" style="-fx-background-color: white;" stylesheets="@CSSStyleSheets/AboutMenu.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andy.linearj.Screen.controllers.AboutWindow">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="237.0" prefWidth="357.0" style="-fx-background-color: white;" stylesheets="@CSSStyleSheets/AboutMenu.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andy.linearj.Screen.controllers.AboutWindow">
 
    <children>
       <ImageView fitHeight="74.0" fitWidth="305.0" layoutX="54.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
@@ -20,7 +20,7 @@
          </font>
       </Label>
 
-      <Label alignment="CENTER" layoutY="142.0" prefHeight="17.0" prefWidth="357.0" text="Version: 0.0.2 Alpha" />
+      <Label alignment="CENTER" layoutY="142.0" prefHeight="17.0" prefWidth="357.0" text="Version: 0.0.3 Alpha" />
 
       <Label alignment="CENTER" layoutY="175.0" prefHeight="34.0" prefWidth="357.0" text="&#9;    © 2026 Andy Huang &#10;     Licensed under the MIT License.&#10;" wrapText="true" />
    </children>

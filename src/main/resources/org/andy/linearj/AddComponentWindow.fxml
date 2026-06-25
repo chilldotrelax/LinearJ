@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.collections.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="308.0" prefWidth="368.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andy.linearj.Screen.controllers.AddComponentWindowController">
-   <HBox alignment="CENTER" layoutX="3.0" layoutY="261.0" prefHeight="33.0" prefWidth="363.0" spacing="50.0">
-      <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButton" text="Cancel" />
-      <Button fx:id="okButton" mnemonicParsing="false" onAction="#okButton" prefHeight="26.0" prefWidth="51.0" text="OK" />
+<AnchorPane prefHeight="333.0" prefWidth="369.0" styleClass="parent-window" stylesheets="@CSSStyleSheets/ParentWindow.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andy.linearj.Screen.controllers.AddComponentWindowController">
+   <HBox alignment="CENTER" layoutX="3.0" layoutY="283.0" prefHeight="33.0" prefWidth="363.0" spacing="50.0">
+      <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButton" stylesheets="@CSSStyleSheets/buttons.css" text="Cancel">
+         <styleClass>
+            <String fx:value="button_main" />
+            <String fx:value="button-primary" />
+         </styleClass></Button>
+      <Button fx:id="okButton" mnemonicParsing="false" onAction="#okButton" prefHeight="26.0" prefWidth="68.0" stylesheets="@CSSStyleSheets/buttons.css" text="OK">
+         <styleClass>
+            <String fx:value="button_main" />
+            <String fx:value="button-primary" />
+         </styleClass></Button>
    </HBox>
    <HBox alignment="CENTER" layoutX="6.0" layoutY="-2.0" prefHeight="33.0" prefWidth="363.0" spacing="50.0">
       <Label text="Add Component">
@@ -18,15 +31,15 @@
          </font>
       </Label>
    </HBox>
-   <VBox layoutX="14.0" layoutY="32.0" prefHeight="186.0" prefWidth="132.0" spacing="25.0">
+   <VBox layoutX="14.0" layoutY="38.0" prefHeight="186.0" prefWidth="132.0" spacing="25.0">
       <Label prefHeight="17.0" prefWidth="104.0" text="Select Element" />
       <Label layoutX="10.0" layoutY="52.0" prefHeight="17.0" prefWidth="128.0" text="Set Component ID" />
       <Label layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="128.0" text="Set Beginning Node" />
       <Label layoutX="10.0" layoutY="27.0" prefHeight="17.0" prefWidth="128.0" text="Set End Node" />
       <Label layoutX="10.0" layoutY="44.0" prefHeight="17.0" prefWidth="128.0" text="Set Value" />
    </VBox>
-   <VBox layoutX="187.0" layoutY="35.0" prefHeight="197.0" prefWidth="132.0" spacing="13.0">
-      <ChoiceBox fx:id="elementChoice" focusTraversable="false" prefWidth="150.0" value="Resistor Element">
+   <VBox layoutX="187.0" layoutY="35.0" prefHeight="186.0" prefWidth="132.0" spacing="13.0">
+      <ChoiceBox fx:id="elementChoice" focusTraversable="false" prefWidth="150.0" styleClass="context-menu" stylesheets="@CSSStyleSheets/ChoiceBox.css" value="Resistor Element">
       <items>
          <FXCollections fx:factory="observableArrayList">
             <String fx:value="Resistor Element (R)" />
@@ -42,5 +55,10 @@
       <TextField fx:id="setEndNode" layoutX="10.0" layoutY="61.0" prefWidth="132.0" promptText="e.g 2" />
       <TextField fx:id="setElementValue" layoutX="10.0" layoutY="112.0" prefWidth="132.0" promptText="e.g 300" />
    </VBox>
-   <Button disable="true" layoutX="124.0" layoutY="226.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="128.0" text="Help" />
+   <Button disable="true" layoutX="124.0" layoutY="236.0" minHeight="26.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="128.0" stylesheets="@CSSStyleSheets/buttons.css" text="Help">
+      <styleClass>
+         <String fx:value="button_main" />
+         <String fx:value="button-primary" />
+      </styleClass>
+   </Button>
 </AnchorPane>

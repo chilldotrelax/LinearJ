@@ -49,7 +49,7 @@
                 </Button>
             </HBox>
             <VBox alignment="CENTER" layoutX="678.0" layoutY="23.0" prefHeight="134.0" prefWidth="168.0" spacing="10.0">
-                <Button defaultButton="true" mnemonicParsing="false" onAction="#triggerAddElementMenu" prefHeight="26.0" prefWidth="110.0" stylesheets="@CSSStyleSheets/buttons.css" text="Add Component">
+                <Button defaultButton="true" mnemonicParsing="false" onAction="#triggerAddElementMenu" prefHeight="26.0" prefWidth="110.0" stylesheets="@CSSStyleSheets/buttons.css" text="Add Element">
                     <styleClass>
                         <String fx:value="button_main" />
                         <String fx:value="button-primary" />
