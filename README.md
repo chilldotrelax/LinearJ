@@ -18,11 +18,11 @@ LinearJ is a desktop matrix calculator and experimental DC circuit solver writte
 
 ### Adding a circuit component
 
-![LinearJ main window with the add-component dialog open](docs/images/linearj-add-component-dialog.png)
+![LinearJ main window with the add-component dialog open](docs/images/linearj-add-component-dialog-NEW.png)
 
 ### Current workspace snapshot
 
-![LinearJ workspace showing the matrix calculator, net list table, and console output area](docs/images/linearj-current-workspace-june-2026.png)
+![LinearJ workspace showing the matrix calculator, net list table, and console output area](docs/images/linearj-current-workspace-june-2026-NEW.png)
 
 ## What to expect?
 
