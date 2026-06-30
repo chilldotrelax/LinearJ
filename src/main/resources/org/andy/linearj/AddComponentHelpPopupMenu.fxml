@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="450.0" prefWidth="871.0" style="-fx-background-color: white;" stylesheets="@CSSStyleSheets/AboutMenu.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andy.linearj.Screen.controllers.ABMHelpWindow">
+    <children>
+        <VBox layoutX="-2.0" layoutY="8.0" prefHeight="71.0" prefWidth="873.0">
+            <children>
+                <HBox alignment="CENTER" prefHeight="71.0" prefWidth="836.0">
+                    <children>
+                        <Label text="Quick Guide">
+                            <font>
+                                <Font name="Arial Bold" size="25.0" />
+                            </font></Label>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+      <ImageView fitHeight="317.0" fitWidth="259.0" layoutX="14.0" layoutY="109.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../../../Assets/AddElmMenu.png" />
+        </image>
+      </ImageView>
+      <VBox layoutX="305.0" layoutY="83.0" prefHeight="327.0" prefWidth="521.0" spacing="20.0">
+         <children>
+            <Label prefHeight="30.0" prefWidth="586.0" text="1) Select your desired element using the dropdown menu">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="586.0" text="2) Type in a component ID of your choice. ">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="60.0" prefHeight="30.0" prefWidth="586.0" text="3) Set a beginning node, the node must be an integer value." wrapText="true">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="110.0" prefHeight="30.0" prefWidth="586.0" text="3) Set an end node, the node must be an integer value." wrapText="true">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="160.0" prefHeight="30.0" prefWidth="586.0" text="4) Type in a value for your component (numbers only)." wrapText="true">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="210.0" prefHeight="30.0" prefWidth="586.0" text="* A node will automatically be created for you." textFill="RED" wrapText="true">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="260.0" prefHeight="30.0" prefWidth="586.0" text="* A ground element does not have an end node or a value." textFill="RED" wrapText="true">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+    </children>
+</AnchorPane>
