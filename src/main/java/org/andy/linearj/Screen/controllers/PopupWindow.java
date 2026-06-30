@@ -30,20 +30,25 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
+
+import static java.lang.System.Logger.Level.INFO;
 
 abstract class PopupWindow {
     private final String resourcePath;
     private final String windowTitle;
     private final Stage stageRoot;
+    private final System.Logger logger;
 
     PopupWindow(String resourcePath, String windowTitle){
         this.resourcePath = resourcePath;
         this.windowTitle = windowTitle;
         this.stageRoot = new Stage();
+        this.logger = System.getLogger("org.andy.linearJ.");
     }
 
     public void openWindow()  {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(this.resourcePath));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Objects.requireNonNull(this.resourcePath)));
 
         try{
             Parent root = loader.load();
@@ -51,8 +56,8 @@ abstract class PopupWindow {
             this.stageRoot.setScene(new Scene(root));
             this.stageRoot.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(INFO,()-> "Unable to load window. This is most likely due to a missing/invalid resource path. Trying again. ");
         }
-        }
+    }
 }
 

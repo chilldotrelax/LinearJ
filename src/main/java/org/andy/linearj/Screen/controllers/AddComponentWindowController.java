@@ -34,6 +34,7 @@ import org.andy.linearj.Circuit.CircuitElement;
 import org.andy.linearj.Circuit.CircuitElementFactory;
 import org.andy.linearj.Screen.misc.ErrorWindows;
 
+
 public class AddComponentWindowController {
     @FXML
     private Button cancelButton;
@@ -75,61 +76,43 @@ public class AddComponentWindowController {
 
     @FXML
     public void okButton() {
+        try{
             String choiceOfElement = elementChoice.getSelectionModel().getSelectedItem().substring(0, 1);
-
-            //raw form: do not use when creating circuit element objects. Only to be displayed by netlist.
             String componentID = setComponentID.getText();
-
             Integer begNodeID = Integer.parseInt(setBegNode.getText());
             Integer endNodeID = Integer.parseInt(setEndNode.getText());
             Double componentValue = Double.parseDouble(setElementValue.getText());
 
-            if (isValidSelection(choiceOfElement,componentID,begNodeID,endNodeID,componentValue)){
-                CircuitElementFactory factory = new CircuitElementFactory();
-                switch (choiceOfElement){
-                    case "R","C","V" ->{
-                        circuitElementObservableList.add(factory.createElement(choiceOfElement,begNodeID,endNodeID,componentValue));
-                        elementDataModelObservableList.add(new ElementDataModel(componentID, begNodeID, endNodeID, componentValue));
-                    }
-                    case "G" -> {
-                        circuitElementObservableList.add(factory.createElement(componentID,begNodeID));
-                        elementDataModelObservableList.add(new ElementDataModel(componentID, begNodeID, endNodeID, componentValue));
-                    }
-                    default ->
-                            ErrorWindows.displayError("Something went wrong");
+            CircuitElementFactory factory = new CircuitElementFactory();
+            switch (choiceOfElement){
+                case "R","C","V" ->{
+                    circuitElementObservableList.add(factory.createElement(choiceOfElement,begNodeID,endNodeID,componentValue));
+                    elementDataModelObservableList.add(new ElementDataModel(componentID, begNodeID, endNodeID, componentValue));
                 }
-                Stage currentStage = (Stage) okButton.getScene().getWindow();
-                currentStage.close();
+                case "G" -> {
+                    circuitElementObservableList.add(factory.createElement(componentID,begNodeID));
+                    elementDataModelObservableList.add(new ElementDataModel(componentID, begNodeID, endNodeID, componentValue));
+                }
+                default ->
+                        ErrorWindows.displayError("Something went wrong while creating objects.");
             }
-            else{
-                ErrorWindows.displayError("Invalid arguments detected. Please try again.");
-            }
+            Stage currentStage = (Stage) okButton.getScene().getWindow();
+            currentStage.close();
         }
-        //TODO confornt "Unchecked assignment" warning
-    public void setElementDataModelObservableList(ObservableList elementDataModelObservableList) {this.elementDataModelObservableList = elementDataModelObservableList;}
-    public void setCircuitElementObservableList(ObservableList circuitElementObservableList){this.circuitElementObservableList = circuitElementObservableList;}
-
-    private boolean isValidSelection(String choice, String compID, Integer begNodeID, Integer endNodeID, Double val){
-        switch (choice){
-            case "R","C" -> {
-                if (compID.isBlank() || begNodeID.toString().isBlank() || endNodeID.toString().isBlank() || val.toString().isBlank()){
-                    return false;
-                }
-            }
-            case "V" -> {
-                if (compID.isEmpty() || begNodeID.toString().isBlank() || val.toString().isBlank()){
-                    return false;
-                }
-            }
-            case "G" ->{
-                if (compID.isBlank() || begNodeID.toString().isBlank()){
-                    return false;
-                }
-            }
-            default -> {
-                return true;
-            }
+        catch (NumberFormatException e){
+            ErrorWindows.displayError("Invalid or empty arguments detected. Please check and try again.");
         }
-        return false;
     }
+    public void setElementDataModelObservableList(ObservableList<ElementDataModel> elementDataModelObservableList) {
+        if (elementDataModelObservableList != null) {
+            this.elementDataModelObservableList = elementDataModelObservableList;
+        }
+    }
+
+    public void setCircuitElementObservableList(ObservableList<CircuitElement> circuitElementObservableList){
+        if (circuitElementObservableList != null){
+            this.circuitElementObservableList = circuitElementObservableList;
+        }
+    }
+
 }

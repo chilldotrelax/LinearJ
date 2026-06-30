@@ -24,7 +24,6 @@
 
 package org.andy.linearj.Circuit;
 
-import org.andy.linearj.Screen.misc.exception.EmptyInputException;
 import org.andy.linearj.Screen.misc.exception.NegativeNumberException;
 
 public class ResistorElement extends CircuitElement{
@@ -35,9 +34,6 @@ public class ResistorElement extends CircuitElement{
         super(begNodeID,endNodeID);
         if (resistanceVal < 0){
             throw new NegativeNumberException("Resistance cannot be negative!");
-        }
-        else if (componentID.isEmpty()){
-            throw new EmptyInputException("Invalid component ID");
         }
         else{
             this.resistance = resistanceVal;
@@ -63,7 +59,6 @@ public class ResistorElement extends CircuitElement{
         resistance = newValue;
     }
 
-    //The two methods should only be used once the circuit has been solved.
     @Override
     public double calculateCurrent(double[] voltage) {
         return (voltage[1] - voltage[0]) / this.resistance;
@@ -79,13 +74,9 @@ public class ResistorElement extends CircuitElement{
 
         matrix[begIndex][begIndex] += conductance;
         matrix[endIndex][endIndex] += conductance;
-
         matrix[begIndex][endIndex] -= conductance;
         matrix[endIndex][begIndex] -= conductance;
 
         return matrix;
     }
-
-
-
 }

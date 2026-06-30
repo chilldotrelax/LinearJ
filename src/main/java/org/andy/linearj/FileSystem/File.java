@@ -27,6 +27,8 @@ package org.andy.linearj.FileSystem;
 import java.nio.file.Path;
 
 public class File {
+    private static final String ACCEPTED_FILE_FORMAT = "JSON";
+
     private final String fileName;
     private final Path filePath;
     private final Path destinationPath;
@@ -38,6 +40,8 @@ public class File {
     }
 
     public void readFile(){
+
+
     }
 
     public void writeFile(){

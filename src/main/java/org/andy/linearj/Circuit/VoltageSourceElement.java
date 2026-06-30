@@ -50,12 +50,12 @@ public class VoltageSourceElement extends CircuitElement{
         rightHandVector[preShiftedIndex + selfOffset] += voltage;
         return rightHandVector;
     }
-
-    public double[][] stampToGlobalMatrix(double[][] resistorMatrix, int begNode, int endNode, int preShiftIndex, int selfOffset){
-        resistorMatrix[preShiftIndex + selfOffset][begNode] += 1;
-        resistorMatrix[preShiftIndex + selfOffset][endNode] -= 1;
-        resistorMatrix[begNode][preShiftIndex + selfOffset] += 1;
-        resistorMatrix[endNode][preShiftIndex + selfOffset] -= 1;
+    
+    public double[][] stampToGlobalMatrix(double[][] resistorMatrix, int begNode, int endNode, int preShiftIndex, int offset){
+        resistorMatrix[preShiftIndex + offset][begNode] += 1;
+        resistorMatrix[preShiftIndex + offset][endNode] -= 1;
+        resistorMatrix[begNode][preShiftIndex + offset] += 1;
+        resistorMatrix[endNode][preShiftIndex + offset] -= 1;
 
         return resistorMatrix;
     }

@@ -24,8 +24,6 @@
 
 package org.andy.linearj.Circuit;
 
-import org.andy.linearj.Screen.misc.exception.FloatingNodeException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,19 +31,11 @@ public class CircuitNode {
     private final int nodeID;
     private boolean isGroundNode = false;
     private double nodeVoltage;
-    private final List<CircuitElement> elementsConnected = new ArrayList<>();
+    private final List<CircuitElement> elementsConnected;
 
-    public CircuitNode(int nodeID, List<CircuitElement> elements) {
+    public CircuitNode(int nodeID) {
         this.nodeID = nodeID;
-
-        for (CircuitElement element: elements){
-            if (element.getBegNodeID() == nodeID || element.getEndNodeID() == nodeID){
-                elementsConnected.add(element);
-            }
-            if (element instanceof GroundElement){
-                this.isGroundNode = true;
-            }
-        }
+        this.elementsConnected = new ArrayList<>();
     }
 
     public final boolean isGroundNode() {return isGroundNode;}
@@ -66,15 +56,14 @@ public class CircuitNode {
     }
 
     public void addElement(CircuitElement particularElement) {
-        //TODO add validation
-        elementsConnected.add(particularElement);
+        if (particularElement instanceof GroundElement){
+            elementsConnected.add(particularElement);
+            this.isGroundNode = true;
+        }
+        else{
+            elementsConnected.add(particularElement);
+        }
+
     }
 
-    public final void setGroundNode(boolean flag) throws FloatingNodeException {
-        if (isFloatingNode()) {
-            isGroundNode = flag;
-        } else {
-            throw new FloatingNodeException("Cannot assign a floating node as ground node ");
-        }
-    }
 }

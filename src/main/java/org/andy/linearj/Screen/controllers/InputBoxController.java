@@ -29,11 +29,10 @@ import javafx.scene.control.TextArea;
 import org.andy.linearj.Screen.misc.exception.EmptyInputException;
 
 public class InputBoxController {
+    public static final String EMPTY_INPUT_BOX_ERROR = "Empty Input Box. Press OK to acknowledge.";
     @FXML
     private TextArea inputBox;
 
-    //Red flag: Pass through method
-    @FXML
     public String getText(){
         if (inputBox.getText().isBlank()){
             throw new EmptyInputException("Empty input.");
@@ -43,7 +42,6 @@ public class InputBoxController {
         }
     }
 
-    //Red flag: Pass through method
     @FXML
     public void clearInputBox(){
         inputBox.clear();

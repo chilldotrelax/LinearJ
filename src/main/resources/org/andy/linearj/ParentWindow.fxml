@@ -49,33 +49,39 @@
                 </Button>
             </HBox>
             <VBox alignment="CENTER" layoutX="678.0" layoutY="23.0" prefHeight="134.0" prefWidth="168.0" spacing="10.0">
-                <Button defaultButton="true" mnemonicParsing="false" onAction="#triggerAddElementMenu" prefHeight="26.0" prefWidth="110.0" stylesheets="@CSSStyleSheets/buttons.css" text="Add Element">
+                <Button defaultButton="true" mnemonicParsing="false" onAction="#triggerAddElementMenu" prefHeight="26.0" prefWidth="148.0" stylesheets="@CSSStyleSheets/buttons.css" text="Add Element">
                     <styleClass>
                         <String fx:value="button_main" />
                         <String fx:value="button-primary" />
                     </styleClass>
                 </Button>
-                <Button fx:id="solveCircuit" defaultButton="true" disable="true" layoutX="39.0" layoutY="77.0" mnemonicParsing="false" onAction="#solveDCCircuit" prefHeight="26.0" prefWidth="110.0" stylesheets="@CSSStyleSheets/buttons.css" text="Solve Circuit">
+                <Button fx:id="solveCircuit" defaultButton="true" disable="true" layoutX="39.0" layoutY="77.0" mnemonicParsing="false" onAction="#solveDCCircuit" prefHeight="26.0" prefWidth="148.0" stylesheets="@CSSStyleSheets/buttons.css" text="Solve Circuit">
                     <styleClass>
                         <String fx:value="button_main" />
                         <String fx:value="button-primary" />
                     </styleClass>
                 </Button>
-                <Button fx:id="clearNetlist" defaultButton="true" disable="true" layoutX="39.0" layoutY="90.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0" stylesheets="@CSSStyleSheets/buttons.css" text="Clear Netlist">
+                <Button fx:id="clearNetlist" defaultButton="true" disable="true" layoutX="39.0" layoutY="90.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="148.0" stylesheets="@CSSStyleSheets/buttons.css" text="Clear Netlist">
                     <styleClass>
                         <String fx:value="button_main" />
                         <String fx:value="button-primary" />
                     </styleClass>
                 </Button>
+            <Button fx:id="removeElement" defaultButton="true" disable="true" layoutX="39.0" layoutY="13.0" mnemonicParsing="false" onAction="#removeItem" prefHeight="26.0" prefWidth="148.0" stylesheets="@CSSStyleSheets/buttons.css" text="Remove Element">
+               <styleClass>
+                  <String fx:value="button_main" />
+                  <String fx:value="button-primary" />
+               </styleClass>
+            </Button>
             </VBox>
-        <Label alignment="CENTER" layoutX="276.0" layoutY="6.0" prefHeight="17.0" prefWidth="375.0" text="Netlist" />
+        <Label alignment="CENTER" layoutX="276.0" layoutY="6.0" prefHeight="17.0" prefWidth="356.0" text="Netlist" />
         <fx:include fx:id="netlistTable" source="NetListView.fxml" />
         <ImageView blendMode="DARKEN" fitHeight="120.0" fitWidth="236.0" layoutX="657.0" layoutY="359.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../../Assets/applogo_upscaled.png" />
             </image>
         </ImageView>
-        <Label alignment="CENTER" layoutX="630.0" layoutY="6.0" prefHeight="17.0" prefWidth="265.0" text="Circuit Operations" />
+        <Label alignment="CENTER" layoutX="630.0" layoutY="6.0" prefHeight="17.0" prefWidth="265.0" text="Circuit &amp; Netlist Operations" />
         </children>
     </AnchorPane>
 </VBox>

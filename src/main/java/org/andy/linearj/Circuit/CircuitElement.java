@@ -24,7 +24,9 @@ package org.andy.linearj.Circuit;
  * SOFTWARE.
  */
 
-public abstract class CircuitElement { ;
+import java.util.Objects;
+
+public abstract class CircuitElement {
     private Integer beginningNodeID;
     private Integer endNodeID;
 
@@ -33,7 +35,6 @@ public abstract class CircuitElement { ;
             throw new IllegalArgumentException("Empty arguments");
         }
     }
-
 
     public CircuitElement(Integer begNode, Integer endNode){
         if (begNode.toString().isEmpty() || endNode.toString().isEmpty()){
@@ -45,9 +46,17 @@ public abstract class CircuitElement { ;
         }
     }
 
-
     public final Integer getBegNodeID(){ return beginningNodeID; }
     public final Integer getEndNodeID(){ return endNodeID;}
+    public final boolean isNodeIDEqual(Integer nodeID){
+        if (Objects.equals(beginningNodeID, nodeID) || Objects.equals(endNodeID, nodeID)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     public final void setBeginningNode(Integer newBegNode){beginningNodeID = newBegNode;}
     public final void setEndNode(Integer newEndNode){endNodeID = newEndNode;}
     public abstract double getElementValue();
@@ -56,6 +65,5 @@ public abstract class CircuitElement { ;
     public abstract void setComponentID(String newComponentID);
     public abstract double calculateCurrent(double[] voltage);
     public abstract double calculateVoltage(double current);
-    //public abstract void draw(){};
 
 }

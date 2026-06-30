@@ -27,19 +27,23 @@ package org.andy.linearj.Circuit;
 import org.andy.linearj.Maths.LUDecomposition;
 import org.andy.linearj.Screen.misc.exception.IllegalMatrixException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class CircuitSolver {
     private final CircuitElement[] elementList;
-    private final CircuitNode[] nodeLists;
-    private final HashMap<Integer, Integer> nodesHashMap = new HashMap<>();
+    private final HashMap<Integer, CircuitNode> nodeHashMap;
     private double[][] resistorMatrix;
     private double[] rightHandVector;
     private final double[] x;
+    private final List<Integer> temporaryListForIndexOnly;
+    private int groundNodeIndex;
 
-    public CircuitSolver(CircuitElement[] elements, CircuitNode[] nodeLists ){
+    public CircuitSolver(CircuitElement[] elements, HashMap<Integer, CircuitNode> nodes ){
         this.elementList = elements;
-        this.nodeLists = nodeLists;
+        this.nodeHashMap = nodes;
+        this.temporaryListForIndexOnly = new ArrayList<>();
 
         int numberOfVoltageElementsOffSet = 0;
 
@@ -49,26 +53,17 @@ public class CircuitSolver {
             }
         }
 
-        this.resistorMatrix = new double[this.nodeLists.length+numberOfVoltageElementsOffSet][this.nodeLists.length+numberOfVoltageElementsOffSet];
-        this.rightHandVector = new double[this.nodeLists.length+numberOfVoltageElementsOffSet];
-        this.x = new double[this.nodeLists.length+numberOfVoltageElementsOffSet];
-
-        int numOfGroundNodes = 0;
-        int index = 1;
-
-        for (CircuitNode node: nodeLists){
-            if (!node.isFloatingNode() && numOfGroundNodes < 1 && node.isGroundNode()){
-                nodesHashMap.put(node.getNodeID(),0);
-                numOfGroundNodes++;
+        nodeHashMap.forEach((integer, circuitNode) -> temporaryListForIndexOnly.add(circuitNode.getNodeID()));
+        nodeHashMap.forEach(((integer, circuitNode) -> {
+            if (circuitNode.isGroundNode()){
+                this.groundNodeIndex = temporaryListForIndexOnly.indexOf(circuitNode.getNodeID());
             }
-            else if (!node.isFloatingNode() && numOfGroundNodes >= 1 && !node.isGroundNode()){
-                nodesHashMap.put(node.getNodeID(),index);
-                index++;
-            }
-        }
+        }));
+
+        this.resistorMatrix = new double[this.nodeHashMap.size()+numberOfVoltageElementsOffSet][this.nodeHashMap.size()+numberOfVoltageElementsOffSet];
+        this.rightHandVector = new double[this.nodeHashMap.size()+numberOfVoltageElementsOffSet];
+        this.x = new double[this.nodeHashMap.size()+numberOfVoltageElementsOffSet];
     }
-
-    private Integer getIndex(Integer elementNodeID){return nodesHashMap.get(elementNodeID);}
 
     private void stampElement() throws IllegalMatrixException {
         int offsetsCounter = 1;
@@ -76,13 +71,13 @@ public class CircuitSolver {
         for (CircuitElement element: elementList){
             switch (element) {
                 case ResistorElement resistorElement ->
-                    resistorMatrix = resistorElement.stampSelf(resistorMatrix, getIndex(resistorElement.getBegNodeID()), getIndex(resistorElement.getEndNodeID()));
+                    resistorMatrix = resistorElement.stampSelf(resistorMatrix, temporaryListForIndexOnly.indexOf(resistorElement.getBegNodeID()), temporaryListForIndexOnly.indexOf(resistorElement.getEndNodeID()));
                 case CurrentSourceElement currentSourceElement ->
-                    rightHandVector = currentSourceElement.stampSelf(rightHandVector, getIndex(currentSourceElement.getBegNodeID()), getIndex(currentSourceElement.getEndNodeID()));
+                    rightHandVector = currentSourceElement.stampSelf(rightHandVector, temporaryListForIndexOnly.indexOf(currentSourceElement.getBegNodeID()), temporaryListForIndexOnly.indexOf(currentSourceElement.getEndNodeID()));
                 case VoltageSourceElement voltageSourceElement ->{
-                    if (offsetsCounter <= resistorMatrix.length - nodeLists.length){
-                        rightHandVector = voltageSourceElement.stampSelf(rightHandVector, nodeLists.length,offsetsCounter);
-                        resistorMatrix = voltageSourceElement.stampToGlobalMatrix(resistorMatrix,getIndex(voltageSourceElement.getBegNodeID()), getIndex(voltageSourceElement.getEndNodeID()),nodeLists.length,offsetsCounter);
+                    if (offsetsCounter <= resistorMatrix.length - this.nodeHashMap.size()){
+                        rightHandVector = voltageSourceElement.stampSelf(rightHandVector, this.nodeHashMap.size(),offsetsCounter);
+                        resistorMatrix = voltageSourceElement.stampToGlobalMatrix(resistorMatrix,temporaryListForIndexOnly.indexOf(voltageSourceElement.getBegNodeID()), temporaryListForIndexOnly.indexOf(voltageSourceElement.getEndNodeID()),this.nodeHashMap.size(),offsetsCounter);
                         offsetsCounter++;
                     }
                 }
@@ -91,20 +86,39 @@ public class CircuitSolver {
         }
     }
 
-    private double[][] reconstructResistorMatrix(double[][] inputMatrix){
+    private double[][] reconstructResistorMatrix(final double[][] inputMatrix){
         double[][] result = new double[inputMatrix.length - 1][inputMatrix.length - 1];
-        for (int i = 0; i < result.length; i++){
-            System.arraycopy(inputMatrix[i + 1], 1, result[i], 0, result.length);
+
+        int resultRow = 0;
+        int resultCol = 0;
+
+        for (int i = 0; i < inputMatrix.length; i++){
+            if (i != groundNodeIndex){ //If the column isn't the same as the index of GND.
+                for (int j = 0; j < inputMatrix.length; j++){
+                    if (j != groundNodeIndex){ //If the row isn't the same as the index of GND.
+                        result[resultRow][resultCol] = inputMatrix[i][j];
+                        resultCol++;
+                    }
+                }
+            }
+            resultRow++;
         }
         return result;
     }
     
-    private double[] reconstructVector (double[] rightHand){
+    private double[] reconstructVector (final double[] rightHand){
         double[] result = new double[rightHand.length - 1];
-        System.arraycopy(rightHand, 1, result, 0, result.length);
+
+        int resultIndex = 0;
+
+        for (int i = 0; i < rightHand.length; i++){
+            if (i != groundNodeIndex && resultIndex < result.length){
+                result[resultIndex] = rightHand[i];
+                resultIndex++;
+            }
+        }
         return result;
     }
-
     public double[] solveCircuit(){
         stampElement();
         LUDecomposition lu = new LUDecomposition(reconstructResistorMatrix(resistorMatrix));

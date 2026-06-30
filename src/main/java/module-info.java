@@ -4,6 +4,7 @@ module org.andy.linearj {
     requires ejml.core;
     requires ejml.simple;
     requires java.sql;
+    requires java.desktop;
 
     exports org.andy.linearj.Screen.controllers;
     opens org.andy.linearj.Screen.controllers to javafx.fxml;

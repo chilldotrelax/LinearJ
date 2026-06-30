@@ -28,9 +28,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
 
 public class NetListController {
-
     @FXML
     private TableView<ElementDataModel> circuitElementTableView;
     @FXML
@@ -57,15 +57,18 @@ public class NetListController {
 
     @FXML
     public void initialize(){
+        circuitElementTableView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            //TODO fix this
+            if (circuitElementTableView.isFocused()){
+                parentController.enableRemoveItemButton();
+            }
+        });
+
         componentIDColumn.setCellValueFactory(cellData -> cellData.getValue().componentIDProperty());
         begNodeIDColumn.setCellValueFactory(cellData -> cellData.getValue().begNodeIDProperty().asObject());
         endNodeIDColumn.setCellValueFactory(cellData -> cellData.getValue().endNodeIDProperty().asObject());
         componentValueColumn.setCellValueFactory(cellData -> cellData.getValue().componentValueProperty().asObject());
 
+        circuitElementTableView.getColumns().forEach(column -> column.setReorderable(false));
     }
-
-//    public static ArrayList<String> dumpNetlistContentsAsStringList(){
-//        return null;
-//    }
-
 }
