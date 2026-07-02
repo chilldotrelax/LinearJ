@@ -63,7 +63,15 @@ public class CircuitNode {
         else{
             elementsConnected.add(particularElement);
         }
+    }
 
+    public boolean contains(CircuitElement particularElement) {
+        if (elementsConnected.contains(particularElement)){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
 }

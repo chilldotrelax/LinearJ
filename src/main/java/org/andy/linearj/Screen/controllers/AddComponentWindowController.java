@@ -55,7 +55,7 @@ public class AddComponentWindowController {
     private ObservableList<CircuitElement> circuitElementObservableList;
 
     @FXML
-    public void initialize(){
+    private void initialize(){
         elementChoice.setOnAction(event -> {
             if (elementChoice.getSelectionModel().getSelectedItem().charAt(0) == 'G'){
                 setEndNode.setDisable(true);
@@ -69,29 +69,30 @@ public class AddComponentWindowController {
     }
 
     @FXML
-    public void cancelButton() {
+    private void cancelButton() {
         Stage currentStage = (Stage) cancelButton.getScene().getWindow();
         currentStage.close();
     }
 
     @FXML
-    public void okButton() {
+    private void okButton() {
         try{
             String choiceOfElement = elementChoice.getSelectionModel().getSelectedItem().substring(0, 1);
             String componentID = setComponentID.getText();
-            Integer begNodeID = Integer.parseInt(setBegNode.getText());
-            Integer endNodeID = Integer.parseInt(setEndNode.getText());
-            Double componentValue = Double.parseDouble(setElementValue.getText());
 
             CircuitElementFactory factory = new CircuitElementFactory();
             switch (choiceOfElement){
                 case "R","C","V" ->{
+                    Integer begNodeID = Integer.parseInt(setBegNode.getText());
+                    Integer endNodeID = Integer.parseInt(setEndNode.getText());
+                    Double componentValue = Double.parseDouble(setElementValue.getText());
                     circuitElementObservableList.add(factory.createElement(choiceOfElement,begNodeID,endNodeID,componentValue));
                     elementDataModelObservableList.add(new ElementDataModel(componentID, begNodeID, endNodeID, componentValue));
                 }
                 case "G" -> {
+                    Integer begNodeID = Integer.parseInt(setBegNode.getText());
                     circuitElementObservableList.add(factory.createElement(componentID,begNodeID));
-                    elementDataModelObservableList.add(new ElementDataModel(componentID, begNodeID, endNodeID, componentValue));
+                    elementDataModelObservableList.add(new ElementDataModel(componentID, begNodeID, 0, 0.0));
                 }
                 default ->
                         ErrorWindows.displayError("Something went wrong while creating objects.");
@@ -103,6 +104,47 @@ public class AddComponentWindowController {
             ErrorWindows.displayError("Invalid or empty arguments detected. Please check and try again.");
         }
     }
+
+    //TODO DEBUG ONLY --REMOVE ASAP AND REPLACE WITH DEDICATED TESTING!
+    @FXML
+    private void setDebugNetlist(){
+        CircuitElementFactory factory = new CircuitElementFactory();
+        //G0
+        circuitElementObservableList.add(factory.createElement("G",0));
+        elementDataModelObservableList.add(new ElementDataModel("G0",0,0,0.0));
+        //I1
+        circuitElementObservableList.add(factory.createElement("C",0,1,1.0));
+        elementDataModelObservableList.add(new ElementDataModel("I1",0,1,1.0));
+        //R2
+        circuitElementObservableList.add(factory.createElement("R",1,0,1.0));
+        elementDataModelObservableList.add(new ElementDataModel("R2",1,0,1.0));
+        //R3
+        circuitElementObservableList.add(factory.createElement("R",1,2,1.0));
+        elementDataModelObservableList.add(new ElementDataModel("R3",1,2,1.0));
+        //R4
+        circuitElementObservableList.add(factory.createElement("R",2,0,1.0));
+        elementDataModelObservableList.add(new ElementDataModel("R4",2,0,1.0));
+        //R5
+        circuitElementObservableList.add(factory.createElement("R",2,3,1.0));
+        elementDataModelObservableList.add(new ElementDataModel("R5",2,3,1.0));
+        //R6
+        circuitElementObservableList.add(factory.createElement("R",3,0,1.0));
+        elementDataModelObservableList.add(new ElementDataModel("R6",3,0,1.0));
+        //R7
+        circuitElementObservableList.add(factory.createElement("R",3,4,1.0));
+        elementDataModelObservableList.add(new ElementDataModel("R7",3,4,1.0));
+        //R8
+        circuitElementObservableList.add(factory.createElement("R",4,0,1.0));
+        elementDataModelObservableList.add(new ElementDataModel("R8",4,0,1.0));
+        //I9
+        circuitElementObservableList.add(factory.createElement("C",0,4,1.0));
+        elementDataModelObservableList.add(new ElementDataModel("I9",0,4,1.0));
+
+        Stage currentStage = (Stage) okButton.getScene().getWindow();
+        currentStage.close();
+    }
+
+
     public void setElementDataModelObservableList(ObservableList<ElementDataModel> elementDataModelObservableList) {
         if (elementDataModelObservableList != null) {
             this.elementDataModelObservableList = elementDataModelObservableList;
@@ -113,6 +155,12 @@ public class AddComponentWindowController {
         if (circuitElementObservableList != null){
             this.circuitElementObservableList = circuitElementObservableList;
         }
+    }
+
+    @FXML
+    private void openHelpWindowABM(){
+        PopupWindow helpMenu = new ABMHelpWindow();
+        helpMenu.openWindow();;
     }
 
 }

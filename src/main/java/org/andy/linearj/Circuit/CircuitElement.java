@@ -1,5 +1,3 @@
-package org.andy.linearj.Circuit;
-
 /*
  * MIT License
  *
@@ -23,6 +21,7 @@ package org.andy.linearj.Circuit;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.andy.linearj.Circuit;
 
 import java.util.Objects;
 
@@ -33,6 +32,9 @@ public abstract class CircuitElement {
     public CircuitElement(Integer begNode){
         if (begNode.toString().isEmpty()){
             throw new IllegalArgumentException("Empty arguments");
+        }
+        else{
+            this.beginningNodeID = begNode;
         }
     }
 

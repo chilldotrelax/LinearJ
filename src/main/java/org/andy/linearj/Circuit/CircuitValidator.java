@@ -22,12 +22,7 @@
  * SOFTWARE.
  */
 
-package org.andy.linearj.Screen.toplevel;
+package org.andy.linearj.Circuit;
 
-import javafx.application.Application;
-
-public class LinearJLauncher {
-    public static void main(String[] args) {
-        Application.launch(LinearJParent.class, args);
-    }
+public class CircuitValidator {
 }

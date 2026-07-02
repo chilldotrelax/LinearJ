@@ -40,7 +40,7 @@ public class CircuitSolver {
     private final List<Integer> temporaryListForIndexOnly;
     private int groundNodeIndex;
 
-    public CircuitSolver(CircuitElement[] elements, HashMap<Integer, CircuitNode> nodes ){
+    public CircuitSolver(final CircuitElement[] elements, final HashMap<Integer, CircuitNode> nodes ){
         this.elementList = elements;
         this.nodeHashMap = nodes;
         this.temporaryListForIndexOnly = new ArrayList<>();
@@ -81,6 +81,7 @@ public class CircuitSolver {
                         offsetsCounter++;
                     }
                 }
+                case GroundElement groundElement ->{} //Here you do nothing.
                 default -> throw new IllegalMatrixException("Unable to stamp element." +"\n"+ "If you see this, this is almost certainly a programming bug and is not your fault.");
             }
         }
@@ -93,15 +94,16 @@ public class CircuitSolver {
         int resultCol = 0;
 
         for (int i = 0; i < inputMatrix.length; i++){
-            if (i != groundNodeIndex){ //If the column isn't the same as the index of GND.
+            if (i != groundNodeIndex){ //If the row isn't the same as the index of GND.
                 for (int j = 0; j < inputMatrix.length; j++){
-                    if (j != groundNodeIndex){ //If the row isn't the same as the index of GND.
+                    if (j != groundNodeIndex){ //If the column isn't the same as the index of GND.
                         result[resultRow][resultCol] = inputMatrix[i][j];
                         resultCol++;
                     }
                 }
+                resultCol = 0;
+                resultRow++;
             }
-            resultRow++;
         }
         return result;
     }
@@ -119,9 +121,12 @@ public class CircuitSolver {
         }
         return result;
     }
+
     public double[] solveCircuit(){
         stampElement();
         LUDecomposition lu = new LUDecomposition(reconstructResistorMatrix(resistorMatrix));
+        double[] temp = lu.solve(reconstructVector(rightHandVector),reconstructVector(x));
+
         return lu.solve(reconstructVector(rightHandVector), reconstructVector(x));
     }
 }

@@ -1,3 +1,27 @@
+/*
+ * MIT License
+ *
+ * Copyright © 2026 Andy Huang
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package org.andy.linearj.Screen.controllers;
 
 import javafx.application.Platform;
@@ -9,10 +33,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.andy.linearj.Circuit.CircuitElement;
 import org.andy.linearj.Circuit.CircuitNode;
 import org.andy.linearj.Circuit.CircuitSolver;
+import org.andy.linearj.Circuit.GroundElement;
 import org.andy.linearj.Maths.MatrixMath;
 import org.andy.linearj.Screen.misc.ErrorWindows;
 import org.andy.linearj.Screen.misc.exception.EmptyInputException;
@@ -45,16 +72,18 @@ public class ParentWindowController {
     private Button clearNetlist;
     @FXML
     private Button removeElement;
+    @FXML
+    private VBox debugVBox;
+    @FXML
+    private CheckBox debugUtilsBox;
 
     private ObservableList<ElementDataModel> elementDataModelObservableList;
     private ObservableList<CircuitElement> circuitElementObservableList;
-    private List<CircuitNode> circuitNodeList;
     private HashMap<Integer, CircuitNode> circuitNodeHashMap;
 
     public ParentWindowController(){
         this.elementDataModelObservableList = FXCollections.observableArrayList();
         this.circuitElementObservableList = FXCollections.observableArrayList();
-        this.circuitNodeList = new ArrayList<>();
         this.circuitNodeHashMap = new HashMap<>();
     }
 
@@ -64,15 +93,18 @@ public class ParentWindowController {
         if (!circuitNodeHashMap.containsKey(elm.getBegNodeID())) {
             circuitNodeHashMap.put(elm.getBegNodeID(), new CircuitNode(elm.getBegNodeID()));
             circuitNodeHashMap.get(elm.getBegNodeID()).addElement(elm);
+            System.out.println(circuitNodeHashMap.toString() + "1");
         }
-        else if (!circuitNodeHashMap.containsKey(elm.getEndNodeID())){
+        if (!circuitNodeHashMap.containsKey(elm.getEndNodeID()) && !(elm instanceof GroundElement)){
             circuitNodeHashMap.put(elm.getEndNodeID(), new CircuitNode(elm.getEndNodeID()));
             circuitNodeHashMap.get(elm.getEndNodeID()).addElement(elm);
+            System.out.println(circuitNodeHashMap.toString() + "2");
         }
-        else{
+        else {
             circuitNodeHashMap.forEach((nodeNumber,circuitNodeElement) ->{
-                if (elm.isNodeIDEqual(nodeNumber)){
+                if (elm.isNodeIDEqual(nodeNumber) && !circuitNodeElement.contains(elm)){
                     circuitNodeElement.addElement(elm);
+                    System.out.println(circuitNodeHashMap.toString() + "3");
                 }
             } );
         }
@@ -117,6 +149,7 @@ public class ParentWindowController {
             }
         });
     }
+
     //TODO Merge the add and subtract matrix to one method.
     public void addMatrix() {
         try {
@@ -187,7 +220,7 @@ public class ParentWindowController {
     }
 
     @FXML
-    public void solveDCCircuit(){
+    private void solveDCCircuit(){
         //TODO fix this part :)
         CircuitElement[] elementsList = circuitElementObservableList.toArray(new CircuitElement[circuitElementObservableList.size()]);
 
@@ -196,10 +229,10 @@ public class ParentWindowController {
         double[] temp = solve.solveCircuit();
 
         for (int i = 0; i < temp.length; i++){
-            if (i < circuitNodeList.size()){
+            if (i < circuitNodeHashMap.size()){
                 outputBoxController.setOutputBox("The voltage across node"+i+" is: "+temp[i]);
             }
-            else if (i > circuitNodeList.size()){
+            else if (i > circuitNodeHashMap.size()){
                 outputBoxController.setOutputBox("The current across "+i+" is: " + temp[i]);
             }
         }
@@ -207,7 +240,7 @@ public class ParentWindowController {
 
     //TODO evaluate if this method is nesccary.
     @FXML
-    public void removeItem(){
+    private void removeItem(){
         //Empty cause can
     }
 
@@ -232,6 +265,16 @@ public class ParentWindowController {
             window.setCircuitElementObservableList(this.circuitElementObservableList);
         } catch (IOException e) { //Generic catch exception; should be altered or removed.
             ErrorWindows.displayError("Something went wrong");
+        }
+    }
+
+    @FXML
+    private void setDebugUtilsVisibility(){
+        if (debugUtilsBox.isSelected()){
+            debugVBox.setVisible(true);
+        }
+        if (!debugUtilsBox.isSelected()){
+            debugVBox.setVisible(false);
         }
     }
 

@@ -144,5 +144,15 @@ public final class MatrixMath {
        }
     }
 
+    public static double[][] reduce2DMatrixToSubmatrix(double[][] input, int removeIndex){
+
+        return null;
+    }
+
+    public static double[] reduceVectorToSubvector(double[] input, int removeIndex){
+
+        return null;
+    }
+
 
 }

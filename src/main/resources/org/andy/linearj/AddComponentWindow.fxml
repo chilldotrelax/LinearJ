@@ -56,4 +56,5 @@
          <String fx:value="button-primary" />
       </styleClass>
    </Button>
+   <Button layoutX="25.0" layoutY="236.0" mnemonicParsing="false" onAction="#setDebugNetlist" prefHeight="25.0" prefWidth="73.0" text="Debug" />
 </AnchorPane>
