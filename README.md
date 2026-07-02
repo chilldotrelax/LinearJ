@@ -21,21 +21,17 @@ LinearJ is a desktop matrix calculator and experimental DC circuit solver writte
 
 ## What to expect?
 
-- A JavaFX/FXML desktop interface
-- Matrix addition, subtraction, multiplication, inversion, determinant, and transpose routines
+- Desktop interface
+- Matrix addition, subtraction, multiplication, inversion, determinant, and transpose
 - A text format for entering one or two matrices
 - A netlist table and an add-component dialog
-- Models for resistors, independent current sources, independent voltage sources, and circuit nodes
 - Circuit-element stamping for assembling a linear system
-- An LU-decomposition solver for equations of the form `A x = b`
-
-The matrix calculator is the most directly usable part of the application today. The circuit classes and netlist UI represent active development; they should be treated as a preview rather than a complete simulator.
 
 ## Theory
 
 ### Matrices and linear systems
 
-Many engineering problems can be express in the form:
+Many engineering problems can be expressed in the form:
 
 ```text
 A x = b
@@ -96,10 +92,11 @@ Operations that take two matrices should be separated by `/`:
 [1 2;3 4]/[5 6;7 8]
 ```
 
-Unfortunately, the parser is slightly strict about formatting; I understand it's annoying :(
+Unfortunately, the parser is slightly strict about formatting, this will be fixed as soon as possible.
+
+There are internal help guides inside the application if you so need it.
 
 ## Project structure
-
 ```text
 src/main/java/org/andy/linearj/
 ├── Circuit/             Circuit elements, nodes, factory, and solver
