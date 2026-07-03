@@ -57,7 +57,7 @@ This design is reflected in the code: circuit elements know how to stamp themsel
 
 - JDK 21
 - Git
-- macOS, Linux, or Windows with a graphical desktop
+- macOS, Linux, or Windows with a graphical desktop (Windows & Linux have not been tested by me, mileage may vary.)
 
 Maven does not need to be installed separately because the repository includes the Maven Wrapper.
 
