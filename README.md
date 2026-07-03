@@ -21,7 +21,7 @@ LinearJ is a desktop matrix calculator and experimental DC circuit solver writte
 
 ## What to expect?
 
-- Desktop interface
+- Desktop interface (CLI only interface soon...)
 - Matrix addition, subtraction, multiplication, inversion, determinant, and transpose
 - A text format for entering one or two matrices
 - A netlist table and an add-component dialog
