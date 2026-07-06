@@ -54,6 +54,7 @@ abstract class PopupWindow {
             Parent root = loader.load();
             this.stageRoot.setTitle(this.windowTitle);
             this.stageRoot.setScene(new Scene(root));
+            this.stageRoot.setResizable(false);
             this.stageRoot.show();
         } catch (IOException e) {
             logger.log(INFO,()-> "Unable to load window. This is most likely due to a missing/invalid resource path. Trying again. ");

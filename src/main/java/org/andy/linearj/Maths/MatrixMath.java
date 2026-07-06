@@ -24,16 +24,24 @@
 
 package org.andy.linearj.Maths;
 
+import org.andy.linearj.Screen.misc.exception.IllegalMatrixException;
 import org.andy.linearj.Screen.misc.exception.MatrixNotEquivalentException;
 import org.andy.linearj.Screen.misc.exception.NonMatchingMatricesException;
 import org.ejml.data.SingularMatrixException;
 import org.ejml.simple.SimpleMatrix;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public final class MatrixMath {
     private MatrixMath() {
     }
+
+    /*
+    castStringToDouble() has a critical flaw where it is unable to process two matrices with the exact same entries.
+     */
+
     public static double[][] castStringToDouble(String stringToDouble) {
         try{
             String[] resolvedString = stringToDouble.substring(1,stringToDouble.length()-1).split(";");
@@ -48,6 +56,27 @@ public final class MatrixMath {
             return result;
         }
         catch (ArrayIndexOutOfBoundsException | IllegalAccessError e ) {
+            throw new ArrayIndexOutOfBoundsException("Bad state.");
+        }
+    }
+
+    public static List<double[][]> castStringToTwoDouble(String stringToTwoDouble){
+        List<double[][]> result = new ArrayList<>(2);
+        try{
+            if (stringToTwoDouble.contains("/")){
+                final String[] temp = stringToTwoDouble.split("/");
+
+                for (String matrix: temp){
+                    result.add(castStringToDouble(matrix));
+                }
+
+                return result;
+            }
+            else{
+                throw new IllegalMatrixException("Not a valid matrix.");
+            }
+        }
+        catch (ArrayIndexOutOfBoundsException e){
             throw new ArrayIndexOutOfBoundsException("Bad state.");
         }
     }
@@ -103,6 +132,7 @@ public final class MatrixMath {
         }
     }
 
+    //Not verified.
     public static double[][] transposeMatrix(double[][] matrix) {
         double[][] result = new double[matrix.length][matrix[0].length];
 
@@ -144,15 +174,48 @@ public final class MatrixMath {
        }
     }
 
-    public static double[][] reduce2DMatrixToSubmatrix(double[][] input, int removeIndex){
+    /*/
+    The following static methods below do not need exception handling as all inputs should have been properly
+    sanitized before these methods are called.
 
-        return null;
+    If this were an independent library (which it sort of is), then yes, it may need to throw exceptions, but they are
+    not of great importance as of now so they will not be implemented.
+
+    P.s N-1 Submatrix :)
+     */
+
+    public static double[][] reduce2DMatrixToSubmatrix(final double[][] input, int removeIndex){
+        double[][] result = new double[input.length - 1][input.length];
+        int resultRow = 0;
+        int resultCol = 0;
+
+        //Remove index is the reference (ground node).
+        for (int i = 0; i < input.length; i++){
+            if (i != removeIndex){
+                for (int j = 0; j < input.length; j++){
+                    if (j != removeIndex){
+                        result[resultRow][resultCol] = input[i][j];
+                        resultCol++;
+                    }
+                }
+                resultCol = 0;
+                resultRow++;
+            }
+        }
+        return result;
     }
 
-    public static double[] reduceVectorToSubvector(double[] input, int removeIndex){
+    public static double[] reduceVectorToSubvector(final double[] input, int removeIndex){
+        double[] result = new double[input.length - 1];
+        int resultIndex = 0;
 
-        return null;
+        //Remove index is the reference (ground node).
+        for (int i = 0; i < input.length; i++){
+            if (i != removeIndex && resultIndex < result.length){
+                result[resultIndex] = input[i];
+                resultIndex++;
+            }
+        }
+        return result;
     }
-
-
 }

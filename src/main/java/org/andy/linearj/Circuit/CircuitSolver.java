@@ -25,6 +25,7 @@
 package org.andy.linearj.Circuit;
 
 import org.andy.linearj.Maths.LUDecomposition;
+import org.andy.linearj.Maths.MatrixMath;
 import org.andy.linearj.Screen.misc.exception.IllegalMatrixException;
 
 import java.util.ArrayList;
@@ -81,52 +82,21 @@ public class CircuitSolver {
                         offsetsCounter++;
                     }
                 }
-                case GroundElement groundElement ->{} //Here you do nothing.
+                case GroundElement groundElement ->{
+                    // Ground element cannot stamp on its own.
+                }
                 default -> throw new IllegalMatrixException("Unable to stamp element." +"\n"+ "If you see this, this is almost certainly a programming bug and is not your fault.");
             }
         }
     }
 
-    private double[][] reconstructResistorMatrix(final double[][] inputMatrix){
-        double[][] result = new double[inputMatrix.length - 1][inputMatrix.length - 1];
-
-        int resultRow = 0;
-        int resultCol = 0;
-
-        for (int i = 0; i < inputMatrix.length; i++){
-            if (i != groundNodeIndex){ //If the row isn't the same as the index of GND.
-                for (int j = 0; j < inputMatrix.length; j++){
-                    if (j != groundNodeIndex){ //If the column isn't the same as the index of GND.
-                        result[resultRow][resultCol] = inputMatrix[i][j];
-                        resultCol++;
-                    }
-                }
-                resultCol = 0;
-                resultRow++;
-            }
-        }
-        return result;
-    }
-    
-    private double[] reconstructVector (final double[] rightHand){
-        double[] result = new double[rightHand.length - 1];
-
-        int resultIndex = 0;
-
-        for (int i = 0; i < rightHand.length; i++){
-            if (i != groundNodeIndex && resultIndex < result.length){
-                result[resultIndex] = rightHand[i];
-                resultIndex++;
-            }
-        }
-        return result;
-    }
-
     public double[] solveCircuit(){
         stampElement();
-        LUDecomposition lu = new LUDecomposition(reconstructResistorMatrix(resistorMatrix));
-        double[] temp = lu.solve(reconstructVector(rightHandVector),reconstructVector(x));
 
-        return lu.solve(reconstructVector(rightHandVector), reconstructVector(x));
+        LUDecomposition lu = new LUDecomposition(MatrixMath.reduce2DMatrixToSubmatrix(resistorMatrix,groundNodeIndex));
+
+        //TODO ensure that the solveCircuit() returns a clean output that can be directly parsed by the controller for display.
+
+        return lu.solve(MatrixMath.reduceVectorToSubvector(rightHandVector,groundNodeIndex), MatrixMath.reduceVectorToSubvector(x,groundNodeIndex));
     }
 }

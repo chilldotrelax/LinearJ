@@ -48,24 +48,21 @@ import org.andy.linearj.Screen.misc.exception.NonMatchingMatricesException;
 import org.ejml.data.SingularMatrixException;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 import static org.andy.linearj.Maths.MatrixMath.castStringToDouble;
 
+//TODO Goal: Run this circuit simulations on background thread.
 public class ParentWindowController {
     @FXML
-    private InputBoxController inputBoxController;
-    @FXML
-    private OutputDisplayController outputBoxController;
-    @FXML
-    private ButtonsController buttonsChildComponentLeftController;
-    @FXML
-    private ButtonsController buttonsChildComponentRightController;
+    private MatrixCalculatorUnitController matrixCalculatorUnitController;
     @FXML
     private NetListController netlistTableController;
+    @FXML
+    private OutputDisplayController outputBoxController;
+    
+    //Exclusive to the parent (not subclassed).
     @FXML
     private Button solveCircuit;
     @FXML
@@ -93,18 +90,15 @@ public class ParentWindowController {
         if (!circuitNodeHashMap.containsKey(elm.getBegNodeID())) {
             circuitNodeHashMap.put(elm.getBegNodeID(), new CircuitNode(elm.getBegNodeID()));
             circuitNodeHashMap.get(elm.getBegNodeID()).addElement(elm);
-            System.out.println(circuitNodeHashMap.toString() + "1");
         }
         if (!circuitNodeHashMap.containsKey(elm.getEndNodeID()) && !(elm instanceof GroundElement)){
             circuitNodeHashMap.put(elm.getEndNodeID(), new CircuitNode(elm.getEndNodeID()));
             circuitNodeHashMap.get(elm.getEndNodeID()).addElement(elm);
-            System.out.println(circuitNodeHashMap.toString() + "2");
         }
         else {
             circuitNodeHashMap.forEach((nodeNumber,circuitNodeElement) ->{
                 if (elm.isNodeIDEqual(nodeNumber) && !circuitNodeElement.contains(elm)){
                     circuitNodeElement.addElement(elm);
-                    System.out.println(circuitNodeHashMap.toString() + "3");
                 }
             } );
         }
@@ -123,9 +117,7 @@ public class ParentWindowController {
 
     @FXML
     public void initialize() {
-        buttonsChildComponentLeftController.setParentController(this);
-        buttonsChildComponentRightController.setParentController(this);
-        netlistTableController.setParentController(this);
+       //TODO remove all these parent controllers and find alternatives (decoupling).
         netlistTableController.setObservableList(elementDataModelObservableList);
 
         circuitElementObservableList.addListener(new ListChangeListener<CircuitElement>(){
@@ -148,75 +140,10 @@ public class ParentWindowController {
                 }
             }
         });
-    }
 
-    //TODO Merge the add and subtract matrix to one method.
-    public void addMatrix() {
-        try {
-            String[] input = inputBoxController.getText().split("/");
-            double[][] result = MatrixMath.addMatrix(castStringToDouble(input[0]), castStringToDouble(input[1]));
-            outputBoxController.setOutputBox("Sum: " + Arrays.deepToString(result));
-        } catch (EmptyInputException e) {
-            ErrorWindows.displayError(InputBoxController.EMPTY_INPUT_BOX_ERROR);
-        } catch (MatrixNotEquivalentException e) {
-            ErrorWindows.displayError("Cannot compute because matrix is not equivalent.");
-        }
-    }
-    //TODO Merge the add and subtract matrix to one method.
-    public void subtractMatrix() {
-        try {
-            String[] input = inputBoxController.getText().split("/");
-            double[][] result = MatrixMath.subtractMatrix(castStringToDouble(input[0]), castStringToDouble(input[1]));
-            outputBoxController.setOutputBox("Difference: " + Arrays.deepToString(result));
-        } catch (EmptyInputException e) {
-            ErrorWindows.displayError("Empty Input Box. Press OK to acknowledge.");
-        } catch (MatrixNotEquivalentException e) {
-            ErrorWindows.displayError("Cannot compute because matrix is not equivalent.");
-        }
-    }
-
-    public void multiplyMatrix() {
-        try {
-            String[] input = inputBoxController.getText().split("/");
-            double[][] result = MatrixMath.multiplyMatrix(castStringToDouble(input[0]), castStringToDouble(input[1]));
-            outputBoxController.setOutputBox("Product: " + Arrays.deepToString(result));
-        } catch (EmptyInputException e) {
-            ErrorWindows.displayError(InputBoxController.EMPTY_INPUT_BOX_ERROR);
-        } catch (NonMatchingMatricesException e) {
-            ErrorWindows.displayError("Cannot compute because row and column of respective matrix is not the same.");
-        }
-    }
-
-    public void computeInversion() {
-        try {
-            double[][] result = MatrixMath.computeInverse(castStringToDouble(inputBoxController.getText()));
-            outputBoxController.setOutputBox("Inverse: " + Arrays.deepToString(result));
-        } catch (EmptyInputException e) {
-            ErrorWindows.displayError(InputBoxController.EMPTY_INPUT_BOX_ERROR);
-        } catch (SingularMatrixException e) {
-            ErrorWindows.displayError("Cannot compute because matrix is singular and has no general solution.");
-        }
-
-    }
-
-    public void computeDeterminant() {
-        try {
-            double result = MatrixMath.computeDeterminant(castStringToDouble(inputBoxController.getText()));
-            outputBoxController.setOutputBox("Determinant: " + result);
-        } catch (EmptyInputException e) {
-            ErrorWindows.displayError(InputBoxController.EMPTY_INPUT_BOX_ERROR);
-        } catch (ArithmeticException e) {
-            ErrorWindows.displayError("Cannot compute because matrix is not a square matrix.");
-        }
-    }
-
-    public void computeTranspose() {
-        try {
-            double[][] result = MatrixMath.transposeMatrix(castStringToDouble(inputBoxController.getText()));
-            outputBoxController.setOutputBox("Transpose: " + Arrays.deepToString(result));
-        } catch (EmptyInputException e) {
-            ErrorWindows.displayError(InputBoxController.EMPTY_INPUT_BOX_ERROR);
-        }
+        matrixCalculatorUnitController.computationResultProperty().addListener(((observable, oldValue, newValue) -> {
+            outputBoxController.setOutputBox(newValue);
+        }));
     }
 
     @FXML
@@ -230,25 +157,13 @@ public class ParentWindowController {
 
         for (int i = 0; i < temp.length; i++){
             if (i < circuitNodeHashMap.size()){
-                outputBoxController.setOutputBox("The voltage across node"+i+" is: "+temp[i]);
+                outputBoxController.setOutputBox("The voltage across node "+i+" is: "+temp[i] +"V");
             }
             else if (i > circuitNodeHashMap.size()){
-                outputBoxController.setOutputBox("The current across "+i+" is: " + temp[i]);
+                outputBoxController.setOutputBox("The current across "+i+" is: " + temp[i]+"A");
             }
         }
     }
-
-    //TODO evaluate if this method is nesccary.
-    @FXML
-    private void removeItem(){
-        //Empty cause can
-    }
-
-    public void enableRemoveItemButton(){
-       removeElement.setDisable(false);
-    }
-
-    public void disableRemoveElementButton(){removeElement.setDisable(true);}
 
     public void triggerAddElementMenu() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/andy/linearj/AddComponentWindow.fxml"));
@@ -263,8 +178,8 @@ public class ParentWindowController {
 
             window.setElementDataModelObservableList(this.elementDataModelObservableList);
             window.setCircuitElementObservableList(this.circuitElementObservableList);
-        } catch (IOException e) { //Generic catch exception; should be altered or removed.
-            ErrorWindows.displayError("Something went wrong");
+        } catch (IOException e) {
+            ErrorWindows.displayError("Resource could not be found.");
         }
     }
 
@@ -278,19 +193,12 @@ public class ParentWindowController {
         }
     }
 
-    public void triggerHelpMenu() {
-        HelpWindow helpMenu = new HelpWindow();
-        helpMenu.openHelpWindow();
-    }
-
     public void triggerAboutMenu() {
         AboutWindow aboutMenu = new AboutWindow();
         aboutMenu.openAboutWindow();
     }
 
-    public void clearInput() {inputBoxController.clearInputBox();}
     public void quitApp() {Platform.exit();}
-
 }
 
 

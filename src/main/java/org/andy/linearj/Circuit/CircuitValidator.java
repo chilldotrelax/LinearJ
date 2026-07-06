@@ -24,5 +24,18 @@
 
 package org.andy.linearj.Circuit;
 
-public class CircuitValidator {
+public final class CircuitValidator {
+    public static boolean isOpen(){
+        return false;
+    }
+
+    public static boolean isShort(){
+        return false;
+    }
+    
+
+
+
+
+
 }

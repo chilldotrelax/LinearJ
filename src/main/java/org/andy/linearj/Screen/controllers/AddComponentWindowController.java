@@ -30,10 +30,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
 import org.andy.linearj.Circuit.CircuitElement;
 import org.andy.linearj.Circuit.CircuitElementFactory;
 import org.andy.linearj.Screen.misc.ErrorWindows;
-
 
 public class AddComponentWindowController {
     @FXML
@@ -144,7 +144,6 @@ public class AddComponentWindowController {
         currentStage.close();
     }
 
-
     public void setElementDataModelObservableList(ObservableList<ElementDataModel> elementDataModelObservableList) {
         if (elementDataModelObservableList != null) {
             this.elementDataModelObservableList = elementDataModelObservableList;
@@ -160,7 +159,6 @@ public class AddComponentWindowController {
     @FXML
     private void openHelpWindowABM(){
         PopupWindow helpMenu = new ABMHelpWindow();
-        helpMenu.openWindow();;
+        helpMenu.openWindow();
     }
-
 }

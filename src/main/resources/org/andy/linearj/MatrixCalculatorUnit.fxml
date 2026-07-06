@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane layoutX="1.0" prefHeight="464.0" prefWidth="260.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andy.linearj.Screen.controllers.MatrixCalculatorUnitController">
+    <children>
+        <Label alignment="CENTER" layoutY="6.0" prefHeight="17.0" prefWidth="253.0" text="Matrix Input &amp; Calculator" />
+
+        <TextArea fx:id="matrixInputBox" focusTraversable="false" layoutX="14.0" layoutY="31.0" prefHeight="176.0" prefWidth="229.0" promptText="Please type in a matrix in EXACTLY this format: [a b c;d e f]. Note, no space before AND after the semicolon or else it will throw an error!" styleClass="console-output" stylesheets="@CSSStyleSheets/IOBoxes.css" wrapText="true">
+            <cursor>
+                <Cursor fx:constant="DEFAULT" />
+            </cursor>
+        </TextArea>
+
+        <VBox layoutX="22.0" layoutY="215.0" prefHeight="158.0" prefWidth="85.0" spacing="30.0">
+            <Button fx:id="addButton" mnemonicParsing="false" onAction="#addMatricesClick" prefHeight="26.0" prefWidth="85.0" stylesheets="@CSSStyleSheets/buttons.css" text="Add">
+                <styleClass>
+                    <String fx:value="button_main" />
+                    <String fx:value="button-primary" />
+                </styleClass></Button>
+            <Button fx:id="subtractButton" mnemonicParsing="false" onAction="#subtractMatricesClick" prefHeight="26.0" prefWidth="85.0" stylesheets="@CSSStyleSheets/buttons.css" text="Subtract">
+                <styleClass>
+                    <String fx:value="button_main" />
+                    <String fx:value="button-primary" />
+                </styleClass></Button>
+            <Button fx:id="multiplyButton" mnemonicParsing="false" onAction="#multiplyMatricesClick" prefHeight="26.0" prefWidth="85.0" stylesheets="@CSSStyleSheets/buttons.css" text="Multiply">
+                <styleClass>
+                    <String fx:value="button_main" />
+                    <String fx:value="button-primary" />
+                </styleClass></Button>
+        </VBox>
+
+        <VBox layoutX="134.0" layoutY="215.0" prefHeight="158.0" prefWidth="85.0" spacing="30.0">
+            <Button fx:id="invertMatrix" mnemonicParsing="false" onAction="#computeInversionClick" prefHeight="26.0" prefWidth="92.0" stylesheets="@CSSStyleSheets/buttons.css" text="Invert">
+                <styleClass>
+                    <String fx:value="button_main" />
+                    <String fx:value="button-primary" />
+                </styleClass></Button>
+            <Button fx:id="detMatrix" mnemonicParsing="false" onAction="#computeDeterminantClick" prefHeight="26.0" prefWidth="88.0" stylesheets="@CSSStyleSheets/buttons.css" text="Det">
+                <styleClass>
+                    <String fx:value="button_main" />
+                    <String fx:value="button-primary" />
+                </styleClass></Button>
+            <Button fx:id="transposeMatrix" disable="true" mnemonicParsing="false" onAction="#transposeMatrixClick" prefHeight="26.0" prefWidth="89.0" stylesheets="@CSSStyleSheets/buttons.css" text="Transpose">
+                <styleClass>
+                    <String fx:value="button_main" />
+                    <String fx:value="button-primary" />
+                </styleClass>
+                <font>
+                    <Font size="10.0" />
+                </font></Button>
+        </VBox>
+
+        <HBox alignment="CENTER" layoutX="23.0" layoutY="393.0" prefHeight="57.0" prefWidth="196.0" spacing="30.0">
+            <Button fx:id="clearButton" alignment="CENTER" mnemonicParsing="false" onAction="#clearInputBox" prefHeight="26.0" prefWidth="80.0" stylesheets="@CSSStyleSheets/buttons.css" text="Clear">
+                <styleClass>
+                    <String fx:value="button_main" />
+                    <String fx:value="button-primary" />
+                </styleClass>
+            </Button>
+            <Button fx:id="helpButton" alignment="CENTER" layoutX="60.0" layoutY="26.0" mnemonicParsing="false" onAction="#openHelpWindow" prefHeight="26.0" prefWidth="75.0" stylesheets="@CSSStyleSheets/buttons.css" text="Help">
+                <styleClass>
+                    <String fx:value="button_main" />
+                    <String fx:value="button-primary" />
+                </styleClass>
+            </Button>
+
+        </HBox>
+
+    </children>
+</AnchorPane>

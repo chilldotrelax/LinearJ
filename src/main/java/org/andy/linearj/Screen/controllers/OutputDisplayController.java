@@ -34,6 +34,8 @@ public class OutputDisplayController {
     @FXML
     private TextArea outputBox;
 
+    //Refactor using StringProperty.
+
     public void setOutputBox(String desiredText){
         LocalTime time = LocalTime.now();
         DateTimeFormatter formatted = DateTimeFormatter.ofPattern("HH:mm:ss");

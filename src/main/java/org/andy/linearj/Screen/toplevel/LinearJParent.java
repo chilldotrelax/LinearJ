@@ -39,7 +39,7 @@ public class LinearJParent extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 912 , 517);
         stage.setTitle("LinearJ");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
-
     }
 }
