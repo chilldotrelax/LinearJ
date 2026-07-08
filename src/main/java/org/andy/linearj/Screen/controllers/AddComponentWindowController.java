@@ -28,6 +28,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -41,7 +42,7 @@ public class AddComponentWindowController {
     @FXML
     private Button okButton;
     @FXML
-    private ChoiceBox<String> elementChoice;
+    private ChoiceBox<String> elementChoiceBox;
     @FXML
     private TextField setComponentID;
     @FXML
@@ -50,14 +51,16 @@ public class AddComponentWindowController {
     private TextField setEndNode;
     @FXML
     private TextField setElementValue;
+    @FXML
+    private Label setBegWarning,setEndWarning,setValueWarning;
 
     private ObservableList<ElementDataModel> elementDataModelObservableList;
     private ObservableList<CircuitElement> circuitElementObservableList;
 
     @FXML
     private void initialize(){
-        elementChoice.setOnAction(event -> {
-            if (elementChoice.getSelectionModel().getSelectedItem().charAt(0) == 'G'){
+        elementChoiceBox.setOnAction(event -> {
+            if (elementChoiceBox.getSelectionModel().getSelectedItem().charAt(0) == 'G'){
                 setEndNode.setDisable(true);
                 setElementValue.setDisable(true);
             }
@@ -66,6 +69,31 @@ public class AddComponentWindowController {
                 setElementValue.setDisable(false);
             }
         });
+
+        setBegNode.setOnKeyPressed(keyPressed -> {
+            setBegWarning.setVisible(false);
+            if (keyPressed.getCode().isLetterKey()){
+                setBegNode.clear();
+                setBegWarning.setVisible(true);
+            }
+        });
+
+        setEndNode.setOnKeyPressed(keyPressed -> {
+            setEndWarning.setVisible(false);
+            if (keyPressed.getCode().isLetterKey()){
+                setEndWarning.setVisible(true);
+                setEndNode.clear();
+            }
+        });
+
+        setElementValue.setOnKeyPressed(keyPressed -> {
+            setValueWarning.setVisible(false);
+            if (keyPressed.getCode().isLetterKey()){
+                setValueWarning.setVisible(true);
+                setElementValue.clear();
+            }
+        });
+
     }
 
     @FXML
@@ -77,15 +105,15 @@ public class AddComponentWindowController {
     @FXML
     private void okButton() {
         try{
-            String choiceOfElement = elementChoice.getSelectionModel().getSelectedItem().substring(0, 1);
-            String componentID = setComponentID.getText();
+            var choiceOfElement = elementChoiceBox.getSelectionModel().getSelectedItem().substring(0, 1);
+            var componentID = setComponentID.getText();
 
             CircuitElementFactory factory = new CircuitElementFactory();
             switch (choiceOfElement){
                 case "R","C","V" ->{
-                    Integer begNodeID = Integer.parseInt(setBegNode.getText());
-                    Integer endNodeID = Integer.parseInt(setEndNode.getText());
-                    Double componentValue = Double.parseDouble(setElementValue.getText());
+                    var begNodeID = Integer.parseInt(setBegNode.getText());
+                    var endNodeID = Integer.parseInt(setEndNode.getText());
+                    var componentValue = Double.parseDouble(setElementValue.getText());
                     circuitElementObservableList.add(factory.createElement(choiceOfElement,begNodeID,endNodeID,componentValue));
                     elementDataModelObservableList.add(new ElementDataModel(componentID, begNodeID, endNodeID, componentValue));
                 }
@@ -94,9 +122,9 @@ public class AddComponentWindowController {
                     circuitElementObservableList.add(factory.createElement(componentID,begNodeID));
                     elementDataModelObservableList.add(new ElementDataModel(componentID, begNodeID, 0, 0.0));
                 }
-                default ->
-                        ErrorWindows.displayError("Something went wrong while creating objects.");
+                default -> ErrorWindows.displayError("Something went wrong while creating objects.");
             }
+
             Stage currentStage = (Stage) okButton.getScene().getWindow();
             currentStage.close();
         }
@@ -104,8 +132,7 @@ public class AddComponentWindowController {
             ErrorWindows.displayError("Invalid or empty arguments detected. Please check and try again.");
         }
     }
-
-    //TODO DEBUG ONLY --REMOVE ASAP AND REPLACE WITH DEDICATED TESTING!
+    // setDebugNetlist() is for debug purposes only. Should only be run once!
     @FXML
     private void setDebugNetlist(){
         CircuitElementFactory factory = new CircuitElementFactory();
@@ -145,15 +172,11 @@ public class AddComponentWindowController {
     }
 
     public void setElementDataModelObservableList(ObservableList<ElementDataModel> elementDataModelObservableList) {
-        if (elementDataModelObservableList != null) {
-            this.elementDataModelObservableList = elementDataModelObservableList;
-        }
+        if (elementDataModelObservableList != null) {this.elementDataModelObservableList = elementDataModelObservableList;}
     }
 
     public void setCircuitElementObservableList(ObservableList<CircuitElement> circuitElementObservableList){
-        if (circuitElementObservableList != null){
-            this.circuitElementObservableList = circuitElementObservableList;
-        }
+        if (circuitElementObservableList != null){this.circuitElementObservableList = circuitElementObservableList;}
     }
 
     @FXML

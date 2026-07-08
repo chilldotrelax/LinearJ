@@ -34,13 +34,13 @@ import java.util.Objects;
 
 import static java.lang.System.Logger.Level.INFO;
 
-abstract class PopupWindow {
+public abstract class PopupWindow {
     private final String resourcePath;
     private final String windowTitle;
     private final Stage stageRoot;
     private final System.Logger logger;
 
-    PopupWindow(String resourcePath, String windowTitle){
+    protected PopupWindow(String resourcePath, String windowTitle){
         this.resourcePath = resourcePath;
         this.windowTitle = windowTitle;
         this.stageRoot = new Stage();

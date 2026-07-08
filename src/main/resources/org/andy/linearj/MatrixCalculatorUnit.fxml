@@ -10,10 +10,14 @@
     <children>
         <Label alignment="CENTER" layoutY="6.0" prefHeight="17.0" prefWidth="253.0" text="Matrix Input &amp; Calculator" />
 
-        <TextArea fx:id="matrixInputBox" focusTraversable="false" layoutX="14.0" layoutY="31.0" prefHeight="176.0" prefWidth="229.0" promptText="Please type in a matrix in EXACTLY this format: [a b c;d e f]. Note, no space before AND after the semicolon or else it will throw an error!" styleClass="console-output" stylesheets="@CSSStyleSheets/IOBoxes.css" wrapText="true">
+        <TextArea fx:id="matrixInputBox" focusTraversable="false" layoutX="14.0" layoutY="31.0" prefHeight="176.0" prefWidth="229.0" promptText="Please type in a matrix in EXACTLY this format: [a b c;d e f]. Note, no space before AND after the semicolon or else it will throw an error!" stylesheets="@CSSStyleSheets/IOBoxes.css" wrapText="true">
             <cursor>
                 <Cursor fx:constant="DEFAULT" />
             </cursor>
+         <styleClass>
+            <String fx:value="io-global" />
+            <String fx:value="matrix-input" />
+         </styleClass>
         </TextArea>
 
         <VBox layoutX="22.0" layoutY="215.0" prefHeight="158.0" prefWidth="85.0" spacing="30.0">

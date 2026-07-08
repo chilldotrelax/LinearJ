@@ -27,6 +27,7 @@ package org.andy.linearj.Maths;
 import org.andy.linearj.Screen.misc.exception.IllegalMatrixException;
 import org.andy.linearj.Screen.misc.exception.MatrixNotEquivalentException;
 import org.andy.linearj.Screen.misc.exception.NonMatchingMatricesException;
+import org.ejml.MatrixDimensionException;
 import org.ejml.data.SingularMatrixException;
 import org.ejml.simple.SimpleMatrix;
 
@@ -35,8 +36,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class MatrixMath {
-    private MatrixMath() {
-    }
+    private MatrixMath() {}
 
     /*
     castStringToDouble() has a critical flaw where it is unable to process two matrices with the exact same entries.
@@ -97,7 +97,7 @@ public final class MatrixMath {
     }
 
     public static double[][] subtractMatrix(double[][] a, double[][] b) throws MatrixNotEquivalentException{
-        double[][] result = new double[a.length][a.length];
+        double[][] result = new double[a.length][a[0].length];
 
         if (a.length != b.length || a[0].length != b[0].length){
             throw new MatrixNotEquivalentException("Error: Not an equivalent matrix.");
@@ -154,13 +154,16 @@ public final class MatrixMath {
     }
 
     //EJWL Library to compute invert & determinant.
-    public static double[][] computeInverse(double[][] matrix) {
+    public static double[][] computeInverse(double[][] matrix){
         SimpleMatrix a  = new SimpleMatrix(matrix);
         try{
             return a.invert().toArray2();
         }
         catch (SingularMatrixException e){
             throw new SingularMatrixException("Cannot compute the inverse of this matrix -- no general solutions found!");
+        }
+        catch (MatrixDimensionException e){
+            throw new MatrixDimensionException("Must be a square matrix.");
         }
     }
 
@@ -173,16 +176,6 @@ public final class MatrixMath {
            return a.determinant();
        }
     }
-
-    /*/
-    The following static methods below do not need exception handling as all inputs should have been properly
-    sanitized before these methods are called.
-
-    If this were an independent library (which it sort of is), then yes, it may need to throw exceptions, but they are
-    not of great importance as of now so they will not be implemented.
-
-    P.s N-1 Submatrix :)
-     */
 
     public static double[][] reduce2DMatrixToSubmatrix(final double[][] input, int removeIndex){
         double[][] result = new double[input.length - 1][input.length];

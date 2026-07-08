@@ -76,9 +76,9 @@ public class CircuitSolver {
                 case CurrentSourceElement currentSourceElement ->
                     rightHandVector = currentSourceElement.stampSelf(rightHandVector, temporaryListForIndexOnly.indexOf(currentSourceElement.getBegNodeID()), temporaryListForIndexOnly.indexOf(currentSourceElement.getEndNodeID()));
                 case VoltageSourceElement voltageSourceElement ->{
-                    if (offsetsCounter <= resistorMatrix.length - this.nodeHashMap.size()){
-                        rightHandVector = voltageSourceElement.stampSelf(rightHandVector, this.nodeHashMap.size(),offsetsCounter);
-                        resistorMatrix = voltageSourceElement.stampToGlobalMatrix(resistorMatrix,temporaryListForIndexOnly.indexOf(voltageSourceElement.getBegNodeID()), temporaryListForIndexOnly.indexOf(voltageSourceElement.getEndNodeID()),this.nodeHashMap.size(),offsetsCounter);
+                    if (offsetsCounter <= resistorMatrix.length - nodeHashMap.size()){
+                        rightHandVector = voltageSourceElement.stampSelf(rightHandVector, nodeHashMap.size(),offsetsCounter);
+                        resistorMatrix = voltageSourceElement.stampToGlobalMatrix(resistorMatrix,temporaryListForIndexOnly.indexOf(voltageSourceElement.getBegNodeID()), temporaryListForIndexOnly.indexOf(voltageSourceElement.getEndNodeID()),nodeHashMap.size(),offsetsCounter);
                         offsetsCounter++;
                     }
                 }

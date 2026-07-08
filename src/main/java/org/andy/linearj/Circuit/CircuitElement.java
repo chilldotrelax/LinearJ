@@ -21,15 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package org.andy.linearj.Circuit;
 
 import java.util.Objects;
+
+@SuppressWarnings("ALL")
 
 public abstract class CircuitElement {
     private Integer beginningNodeID;
     private Integer endNodeID;
 
-    public CircuitElement(Integer begNode){
+    protected CircuitElement(Integer begNode){
         if (begNode.toString().isEmpty()){
             throw new IllegalArgumentException("Empty arguments");
         }
@@ -38,7 +41,7 @@ public abstract class CircuitElement {
         }
     }
 
-    public CircuitElement(Integer begNode, Integer endNode){
+    protected CircuitElement(Integer begNode, Integer endNode){
         if (begNode.toString().isEmpty() || endNode.toString().isEmpty()){
             throw new IllegalArgumentException("Empty arguments @ begNode or endNode.");
         }
@@ -50,15 +53,7 @@ public abstract class CircuitElement {
 
     public final Integer getBegNodeID(){ return beginningNodeID; }
     public final Integer getEndNodeID(){ return endNodeID;}
-    public final boolean isNodeIDEqual(Integer nodeID){
-        if (Objects.equals(beginningNodeID, nodeID) || Objects.equals(endNodeID, nodeID)){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
+    public final boolean isNodeIDEqual(Integer nodeID){return (Objects.equals(beginningNodeID, nodeID) || Objects.equals(endNodeID, nodeID));}
     public final void setBeginningNode(Integer newBegNode){beginningNodeID = newBegNode;}
     public final void setEndNode(Integer newEndNode){endNodeID = newEndNode;}
     public abstract double getElementValue();

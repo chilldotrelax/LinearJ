@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane layoutX="276.0" layoutY="157.0" prefHeight="256.0" prefWidth="356.0"
+            xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.andy.linearj.Screen.controllers.OutputUnitController">
+
+    <Label alignment="CENTER" prefHeight="17.0" prefWidth="356.0" text="Console &amp; Output"/>
+
+    <Button fx:id="clearBtn" disable="true" layoutX="69.0" layoutY="206.0" mnemonicParsing="false"
+            onAction="#clearOutputBox" prefHeight="26.0" prefWidth="219.0" stylesheets="@CSSStyleSheets/buttons.css"
+            text="Clear Console">
+        <styleClass>
+            <String fx:value="button-primary"/>
+            <String fx:value="button_main"/>
+        </styleClass>
+    </Button>
+
+    <TextArea fx:id="outputBox" editable="false" layoutX="14.0" layoutY="17.0" prefHeight="186.0" prefWidth="342.0"
+              stylesheets="@CSSStyleSheets/IOBoxes.css">
+        <styleClass>
+            <String fx:value="io-global"/>
+            <String fx:value="console-output"/>
+        </styleClass>
+    </TextArea>
+
+</AnchorPane>

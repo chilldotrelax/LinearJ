@@ -40,35 +40,25 @@ import org.andy.linearj.Circuit.CircuitElement;
 import org.andy.linearj.Circuit.CircuitNode;
 import org.andy.linearj.Circuit.CircuitSolver;
 import org.andy.linearj.Circuit.GroundElement;
-import org.andy.linearj.Maths.MatrixMath;
 import org.andy.linearj.Screen.misc.ErrorWindows;
-import org.andy.linearj.Screen.misc.exception.EmptyInputException;
-import org.andy.linearj.Screen.misc.exception.MatrixNotEquivalentException;
-import org.andy.linearj.Screen.misc.exception.NonMatchingMatricesException;
-import org.ejml.data.SingularMatrixException;
+
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 
-import static org.andy.linearj.Maths.MatrixMath.castStringToDouble;
-
-//TODO Goal: Run this circuit simulations on background thread.
 public class ParentWindowController {
     @FXML
     private MatrixCalculatorUnitController matrixCalculatorUnitController;
     @FXML
     private NetListController netlistTableController;
     @FXML
-    private OutputDisplayController outputBoxController;
-    
-    //Exclusive to the parent (not subclassed).
+    private OutputUnitController outputConsoleController;
     @FXML
-    private Button solveCircuit;
+    private Button solveCircuitBtn;
     @FXML
-    private Button clearNetlist;
+    private Button clearNetlistBtn;
     @FXML
-    private Button removeElement;
+    private Button removeElementBtn;
     @FXML
     private VBox debugVBox;
     @FXML
@@ -117,7 +107,6 @@ public class ParentWindowController {
 
     @FXML
     public void initialize() {
-       //TODO remove all these parent controllers and find alternatives (decoupling).
         netlistTableController.setObservableList(elementDataModelObservableList);
 
         circuitElementObservableList.addListener(new ListChangeListener<CircuitElement>(){
@@ -125,30 +114,23 @@ public class ParentWindowController {
             public void onChanged(Change<? extends CircuitElement> c) {
                 while (c.next()) {
                     if (!circuitElementObservableList.isEmpty() && c.wasAdded()){
+                        solveCircuitBtn.setDisable(false);
                         handleAddChange(c);
                     }
                     else if (!circuitElementObservableList.isEmpty() && c.wasRemoved()){
+                        solveCircuitBtn.setDisable(false);
                         handleRemoveChange(c);
                     }
-
-                    if ((circuitElementObservableList.size() > 1 && c.wasAdded()) || (circuitElementObservableList.size() > 1 && c.wasRemoved())){
-                        solveCircuit.setDisable(false);
-                    }
-                    else{
-                        solveCircuit.setDisable(true);
-                    }
+                    if ((circuitElementObservableList.size() <= 1)){solveCircuitBtn.setDisable(true);}
                 }
             }
         });
 
-        matrixCalculatorUnitController.computationResultProperty().addListener(((observable, oldValue, newValue) -> {
-            outputBoxController.setOutputBox(newValue);
-        }));
+        matrixCalculatorUnitController.computationResultProperty().addListener(((observable, oldValue, newValue) -> {outputConsoleController.setOutputBox(newValue);}));
     }
 
     @FXML
     private void solveDCCircuit(){
-        //TODO fix this part :)
         CircuitElement[] elementsList = circuitElementObservableList.toArray(new CircuitElement[circuitElementObservableList.size()]);
 
         CircuitSolver solve = new CircuitSolver(elementsList,circuitNodeHashMap);
@@ -157,18 +139,24 @@ public class ParentWindowController {
 
         for (int i = 0; i < temp.length; i++){
             if (i < circuitNodeHashMap.size()){
-                outputBoxController.setOutputBox("The voltage across node "+i+" is: "+temp[i] +"V");
+                outputConsoleController.setOutputBox("The voltage across node "+i+" is: "+temp[i] +"V");
             }
             else if (i > circuitNodeHashMap.size()){
-                outputBoxController.setOutputBox("The current across "+i+" is: " + temp[i]+"A");
+                outputConsoleController.setOutputBox("The current across "+i+" is: " + temp[i]+"A");
             }
         }
     }
 
+    @FXML
+    private void setDebugUtilsVisibility(){
+        debugVBox.setVisible(true);
+        if (!debugUtilsBox.isSelected()){debugVBox.setVisible(false);}
+    }
+
     public void triggerAddElementMenu() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/andy/linearj/AddComponentWindow.fxml"));
         //debug only
         try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/andy/linearj/AddComponentWindow.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Add Component");
@@ -179,23 +167,13 @@ public class ParentWindowController {
             window.setElementDataModelObservableList(this.elementDataModelObservableList);
             window.setCircuitElementObservableList(this.circuitElementObservableList);
         } catch (IOException e) {
-            ErrorWindows.displayError("Resource could not be found.");
-        }
-    }
-
-    @FXML
-    private void setDebugUtilsVisibility(){
-        if (debugUtilsBox.isSelected()){
-            debugVBox.setVisible(true);
-        }
-        if (!debugUtilsBox.isSelected()){
-            debugVBox.setVisible(false);
+            ErrorWindows.displayError("Resource could not be found. This is not a normal, expected error message. Contact developer for help.");
         }
     }
 
     public void triggerAboutMenu() {
-        AboutWindow aboutMenu = new AboutWindow();
-        aboutMenu.openAboutWindow();
+        PopupWindow aboutWindow = new AboutWindow();
+        aboutWindow.openWindow();
     }
 
     public void quitApp() {Platform.exit();}

@@ -29,7 +29,4 @@ public class HelpWindow extends PopupWindow{
         super("/org/andy/linearj/HelpPopupWindow.fxml","Input Help");
     }
 
-    public void openHelpWindow(){
-        super.openWindow();
-    }
 }

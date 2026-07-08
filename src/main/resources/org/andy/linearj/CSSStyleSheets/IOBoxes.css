@@ -1,4 +1,11 @@
-.console-output {
+.io-global{
     -fx-font-family: "JetBrains Mono", "Consolas", "Menlo", "Monaco", monospace;
-    -fx-font-size: 10px;
+}
+
+.matrix-input {
+    -fx-font-size: 14px;
+}
+
+.console-output {
+    -fx-font-size: 12px;
 }

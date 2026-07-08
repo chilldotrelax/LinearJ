@@ -38,13 +38,13 @@ public class VoltageSourceElement extends CircuitElement{
     public String getComponentID(){return componentID;}
 
     @Override
-    public void setComponentID(String newComponentID) {componentID = newComponentID;}
+    public void setComponentID(final String newComponentID) {componentID = newComponentID;}
 
     @Override
     public double getElementValue(){return voltage;}
 
     @Override
-    public void setElementValue(double newValue){voltage = newValue;}
+    public void setElementValue(final double newValue){voltage = newValue;}
 
     public double[] stampSelf(double[] rightHandVector,int preShiftedIndex,int selfOffset){
         rightHandVector[preShiftedIndex + selfOffset] += voltage;
