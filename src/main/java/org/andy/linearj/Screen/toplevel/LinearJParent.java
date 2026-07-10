@@ -36,7 +36,7 @@ public class LinearJParent extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(LinearJParent.class.getResource("/org/andy/linearj/ParentWindow.fxml"));
 
-        Scene scene = new Scene(fxmlLoader.load(), 912 , 517);
+        Scene scene = new Scene(fxmlLoader.load(), 915 , 580);
         stage.setTitle("LinearJ");
         stage.setScene(scene);
         stage.setResizable(false);

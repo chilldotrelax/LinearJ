@@ -29,5 +29,4 @@ public class PreferencesWindow extends PopupWindow {
     public PreferencesWindow(){
         super("/org/andy/linearj/PreferencesPopupMenu.fxml","Preferences");
     }
-
 }

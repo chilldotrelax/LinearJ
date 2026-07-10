@@ -40,7 +40,7 @@ public abstract class PopupWindow {
     private final Stage stageRoot;
     private final System.Logger logger;
 
-    protected PopupWindow(String resourcePath, String windowTitle){
+    protected PopupWindow(final String resourcePath, final String windowTitle){
         this.resourcePath = resourcePath;
         this.windowTitle = windowTitle;
         this.stageRoot = new Stage();

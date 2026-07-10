@@ -27,7 +27,6 @@ package org.andy.linearj.FileSystem;
 import java.nio.file.Path;
 
 public class File {
-    private static final String ACCEPTED_FILE_FORMAT = "JSON";
 
     private final String fileName;
     private final Path filePath;
@@ -36,11 +35,10 @@ public class File {
     public File(String FILE_NAME, Path filePath, Path destinationPath ){
         this.fileName = FILE_NAME;
         this.filePath = filePath;
-        this.destinationPath = destinationPath; //Optional Argument.
+        this.destinationPath = destinationPath;
     }
 
     public void readFile(){
-
 
     }
 
@@ -48,11 +46,6 @@ public class File {
     }
 
     private boolean isValidFormat(final String FILE_NAME){
-        if (this.fileName.contains(".spi") || this.fileName.contains(".spc") ){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return (this.fileName.contains(".spi") || this.fileName.contains(".spc"));
     }
 }

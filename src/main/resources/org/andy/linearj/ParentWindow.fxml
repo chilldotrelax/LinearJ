@@ -8,10 +8,13 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="484.0" prefWidth="907.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andy.linearj.Screen.controllers.ParentWindowController">
+<VBox prefHeight="574.0" prefWidth="907.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andy.linearj.Screen.controllers.ParentWindowController">
 
     <MenuBar stylesheets="@CSSStyleSheets/ParentWindow.css" VBox.vgrow="NEVER">
         <Menu mnemonicParsing="false" text="File">
@@ -27,52 +30,24 @@
         </Menu>
     </MenuBar>
 
-    <AnchorPane prefHeight="455.0" prefWidth="903.0" styleClass="parent-window" stylesheets="@CSSStyleSheets/ParentWindow.css" VBox.vgrow="ALWAYS">
-      <AnchorPane layoutX="276.0" layoutY="159.0" prefHeight="256.0" prefWidth="356.0" />
+    <AnchorPane prefHeight="545.0" prefWidth="867.0" styleClass="parent-window" stylesheets="@CSSStyleSheets/ParentWindow.css" VBox.vgrow="ALWAYS">
         <!-- Single Units are to be declared at the TOP. -->
 
         <fx:include fx:id="matrixCalculatorUnit" source="MatrixCalculatorUnit.fxml" />
 
-        <fx:include fx:id="netlistTable" source="NetListView.fxml" />
-
         <fx:include fx:id="outputConsole" source="OutputConsoleUnit.fxml" />
 
-        <VBox alignment="CENTER" layoutX="678.0" layoutY="23.0" prefHeight="134.0" prefWidth="168.0" spacing="10.0">
-            <Button defaultButton="true" mnemonicParsing="false" onAction="#triggerAddElementMenu" prefHeight="26.0" prefWidth="148.0" stylesheets="@CSSStyleSheets/buttons.css" text="Add Element">
-                <styleClass>
-                    <String fx:value="button_main" />
-                    <String fx:value="button-primary" />
-                </styleClass>
-            </Button>
+        <fx:include fx:id="netlistTable" source="NetListView.fxml" />
 
-            <Button fx:id="solveCircuitBtn" defaultButton="true" disable="true" layoutX="39.0" layoutY="77.0" mnemonicParsing="false" onAction="#solveDCCircuit" prefHeight="26.0" prefWidth="148.0" stylesheets="@CSSStyleSheets/buttons.css" text="Solve Circuit">
-                <styleClass>
-                    <String fx:value="button_main" />
-                    <String fx:value="button-primary" />
-                </styleClass>
-            </Button>
+        <fx:include fx:id="circuitSolverUnit" source="CircuitSolverUnit.fxml" />
 
-            <Button fx:id="clearNetlistBtn" defaultButton="true" disable="true" layoutX="39.0" layoutY="90.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="148.0" stylesheets="@CSSStyleSheets/buttons.css" text="Clear Netlist">
-                <styleClass>
-                    <String fx:value="button_main" />
-                    <String fx:value="button-primary" />
-                </styleClass>
-            </Button>
-
-            <Button fx:id="removeElementBtn" defaultButton="true" disable="true" layoutX="39.0" layoutY="13.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="148.0" stylesheets="@CSSStyleSheets/buttons.css" text="Remove Element">
-                <styleClass>
-                    <String fx:value="button_main" />
-                    <String fx:value="button-primary" />
-                </styleClass>
-            </Button>
-        </VBox>
+        <fx:include fx:id="netlistUnit" source="NetListView.fxml" />
 
         <Label alignment="CENTER" layoutX="276.0" layoutY="6.0" prefHeight="17.0" prefWidth="356.0" text="Netlist" />
-        <Label alignment="CENTER" layoutX="630.0" layoutY="6.0" prefHeight="17.0" prefWidth="265.0" text="Circuit &amp; Netlist Operations" />
 
         <!-- Debug nodes (tools) are temporary and will be removed. -->
 
-        <CheckBox fx:id="debugUtilsBox" layoutX="264.0" layoutY="415.0" mnemonicParsing="false" onAction="#setDebugUtilsVisibility" prefHeight="18.0" prefWidth="441.0" text="Enable Debug Utils (all features are disabled as of this version)" />
+        <CheckBox fx:id="debugUtilsBox" layoutX="276.0" layoutY="485.0" mnemonicParsing="false" onAction="#setDebugUtilsVisibility" prefHeight="18.0" prefWidth="441.0" text="Enable Debug Utils (all features are disabled as of this version)" />
 
         <VBox fx:id="debugVBox" layoutX="685.0" layoutY="215.0" prefHeight="162.0" prefWidth="155.0" spacing="10.0" visible="false">
             <Label alignment="CENTER" prefHeight="17.0" prefWidth="179.0" text="Debug Utilities" />

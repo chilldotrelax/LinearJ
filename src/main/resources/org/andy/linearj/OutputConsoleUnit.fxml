@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane layoutX="276.0" layoutY="157.0" prefHeight="256.0" prefWidth="356.0"
+<AnchorPane layoutX="276.0" layoutY="220.0" prefHeight="256.0" prefWidth="356.0"
             xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.andy.linearj.Screen.controllers.OutputUnitController">
 

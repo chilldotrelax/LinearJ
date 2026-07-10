@@ -27,6 +27,8 @@ package org.andy.linearj.Screen.misc;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
+@SuppressWarnings("ALL")
+
 public class ErrorWindows {
     private ErrorWindows(){
         //Should never be instantiated

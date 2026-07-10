@@ -25,17 +25,15 @@
 package org.andy.linearj.Circuit;
 
 public final class CircuitValidator {
-    public static boolean isOpen(){
-        return false;
-    }
-
-    public static boolean isShort(){
-        return false;
-    }
+   private CircuitValidator(){
+       //Should never be instantiated.
+   }
     
-
-
-
-
+    public static boolean isJunctionOpen(){
+        return false;
+    }
+    public static boolean isPointShort(){
+        return false;
+    }
 
 }

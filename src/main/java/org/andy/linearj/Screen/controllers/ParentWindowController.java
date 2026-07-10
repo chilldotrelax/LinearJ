@@ -26,39 +26,22 @@ package org.andy.linearj.Screen.controllers;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import org.andy.linearj.Circuit.CircuitElement;
-import org.andy.linearj.Circuit.CircuitNode;
-import org.andy.linearj.Circuit.CircuitSolver;
-import org.andy.linearj.Circuit.GroundElement;
-import org.andy.linearj.Screen.misc.ErrorWindows;
-
-
-import java.io.IOException;
-import java.util.HashMap;
 
 public class ParentWindowController {
     @FXML
     private MatrixCalculatorUnitController matrixCalculatorUnitController;
     @FXML
-    private NetListController netlistTableController;
+    private NetlistUnitController netlistUnitController;
     @FXML
     private OutputUnitController outputConsoleController;
     @FXML
-    private Button solveCircuitBtn;
-    @FXML
-    private Button clearNetlistBtn;
-    @FXML
-    private Button removeElementBtn;
+    private CircuitSolverUnitController circuitSolverUnitController;
+
     @FXML
     private VBox debugVBox;
     @FXML
@@ -66,85 +49,19 @@ public class ParentWindowController {
 
     private ObservableList<ElementDataModel> elementDataModelObservableList;
     private ObservableList<CircuitElement> circuitElementObservableList;
-    private HashMap<Integer, CircuitNode> circuitNodeHashMap;
 
     public ParentWindowController(){
         this.elementDataModelObservableList = FXCollections.observableArrayList();
         this.circuitElementObservableList = FXCollections.observableArrayList();
-        this.circuitNodeHashMap = new HashMap<>();
-    }
-
-    private void handleAddChange(ListChangeListener.Change c) {
-        CircuitElement elm = (CircuitElement) c.getAddedSubList().toArray()[0];
-
-        if (!circuitNodeHashMap.containsKey(elm.getBegNodeID())) {
-            circuitNodeHashMap.put(elm.getBegNodeID(), new CircuitNode(elm.getBegNodeID()));
-            circuitNodeHashMap.get(elm.getBegNodeID()).addElement(elm);
-        }
-        if (!circuitNodeHashMap.containsKey(elm.getEndNodeID()) && !(elm instanceof GroundElement)){
-            circuitNodeHashMap.put(elm.getEndNodeID(), new CircuitNode(elm.getEndNodeID()));
-            circuitNodeHashMap.get(elm.getEndNodeID()).addElement(elm);
-        }
-        else {
-            circuitNodeHashMap.forEach((nodeNumber,circuitNodeElement) ->{
-                if (elm.isNodeIDEqual(nodeNumber) && !circuitNodeElement.contains(elm)){
-                    circuitNodeElement.addElement(elm);
-                }
-            } );
-        }
-    }
-
-    private void handleRemoveChange(ListChangeListener.Change c) {
-        CircuitElement elm = (CircuitElement) c.getAddedSubList().toArray()[0];
-
-        if (circuitNodeHashMap.containsKey(elm.getBegNodeID())) {
-            circuitNodeHashMap.get(elm.getBegNodeID()).removeElement(elm);
-        }
-        else if (circuitNodeHashMap.containsKey(elm.getEndNodeID())){
-            circuitNodeHashMap.get(elm.getEndNodeID()).removeElement(elm);
-        }
     }
 
     @FXML
     public void initialize() {
-        netlistTableController.setObservableList(elementDataModelObservableList);
-
-        circuitElementObservableList.addListener(new ListChangeListener<CircuitElement>(){
-            @Override
-            public void onChanged(Change<? extends CircuitElement> c) {
-                while (c.next()) {
-                    if (!circuitElementObservableList.isEmpty() && c.wasAdded()){
-                        solveCircuitBtn.setDisable(false);
-                        handleAddChange(c);
-                    }
-                    else if (!circuitElementObservableList.isEmpty() && c.wasRemoved()){
-                        solveCircuitBtn.setDisable(false);
-                        handleRemoveChange(c);
-                    }
-                    if ((circuitElementObservableList.size() <= 1)){solveCircuitBtn.setDisable(true);}
-                }
-            }
-        });
+        netlistUnitController.setObservableLists(elementDataModelObservableList);
+        circuitSolverUnitController.setDataModel(elementDataModelObservableList,circuitElementObservableList);
 
         matrixCalculatorUnitController.computationResultProperty().addListener(((observable, oldValue, newValue) -> {outputConsoleController.setOutputBox(newValue);}));
-    }
-
-    @FXML
-    private void solveDCCircuit(){
-        CircuitElement[] elementsList = circuitElementObservableList.toArray(new CircuitElement[circuitElementObservableList.size()]);
-
-        CircuitSolver solve = new CircuitSolver(elementsList,circuitNodeHashMap);
-
-        double[] temp = solve.solveCircuit();
-
-        for (int i = 0; i < temp.length; i++){
-            if (i < circuitNodeHashMap.size()){
-                outputConsoleController.setOutputBox("The voltage across node "+i+" is: "+temp[i] +"V");
-            }
-            else if (i > circuitNodeHashMap.size()){
-                outputConsoleController.setOutputBox("The current across "+i+" is: " + temp[i]+"A");
-            }
-        }
+        circuitSolverUnitController.computationOutputProperty().addListener(((observable, oldValue, newValue) -> {outputConsoleController.setOutputBox(newValue);}));
     }
 
     @FXML
@@ -153,23 +70,6 @@ public class ParentWindowController {
         if (!debugUtilsBox.isSelected()){debugVBox.setVisible(false);}
     }
 
-    public void triggerAddElementMenu() {
-        //debug only
-        try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/andy/linearj/AddComponentWindow.fxml"));
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Add Component");
-            stage.setScene(new Scene(root));
-            stage.show();
-            AddComponentWindowController window = loader.getController();
-
-            window.setElementDataModelObservableList(this.elementDataModelObservableList);
-            window.setCircuitElementObservableList(this.circuitElementObservableList);
-        } catch (IOException e) {
-            ErrorWindows.displayError("Resource could not be found. This is not a normal, expected error message. Contact developer for help.");
-        }
-    }
 
     public void triggerAboutMenu() {
         PopupWindow aboutWindow = new AboutWindow();
