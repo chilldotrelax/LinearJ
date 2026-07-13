@@ -9,15 +9,15 @@ LinearJ is a desktop (soon CLI only interface!) matrix calculator and experiment
 
 ### Matrix calculator and netlist workspace
 
-![LinearJ main window showing the matrix calculator and netlist workspace](docs/images/linearj-main-window-july-2026-NEW.png)
+![LinearJ main window showing the matrix calculator and netlist workspace](docs/images/linearj-main-window-july-12-2026-NEW.png)
 
 ### Adding a circuit component
 
-![LinearJ main window with the add-component dialog open](docs/images/linear-j-add-component-dialog-july-2026-NEW.png))
+![LinearJ main window with the add-component dialog open](docs/images/linearj-add-component-dialog-july-12-2026-NEW.png))
 
 ### Current workspace snapshot
 
-![LinearJ workspace showing the matrix calculator, net list table, and console output area](docs/images/linearj-current-workspace-july-2026-NEW.png)
+![LinearJ workspace showing the matrix calculator, net list table, and console output area](docs/images/linearj-current-workspace-july-12-2026-NEW.png)
 
 ## What to expect?
 
