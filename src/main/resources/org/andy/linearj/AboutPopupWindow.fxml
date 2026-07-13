@@ -14,7 +14,7 @@
       <Image url="@../../../Assets/applogo_upscaled.png"/>
    </ImageView>
 
-   <Label alignment="CENTER" layoutY="88.0" prefHeight="17.0" prefWidth="357.0" text="Version 0.0.6 Alpha"/>
+   <Label alignment="CENTER" layoutY="88.0" prefHeight="17.0" prefWidth="357.0" text="Version 0.0.7 Alpha"/>
 
    <Label alignment="CENTER" layoutY="132.0" prefHeight="34.0" prefWidth="357.0"
           text="Copyright 2026 Andy Huang&#10;Licensed under the MIT License.&#10;" wrapText="true"/>

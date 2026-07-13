@@ -72,25 +72,31 @@ public class AddComponentWindowController {
 
         setBegNode.setOnKeyPressed(keyPressed -> {
             setBegWarning.setVisible(false);
+            okButton.setDisable(false);
             if (keyPressed.getCode().isLetterKey()){
                 setBegNode.clear();
                 setBegWarning.setVisible(true);
+                okButton.setDisable(true);
             }
         });
 
         setEndNode.setOnKeyPressed(keyPressed -> {
             setEndWarning.setVisible(false);
+            okButton.setDisable(false);
             if (keyPressed.getCode().isLetterKey()){
                 setEndWarning.setVisible(true);
                 setEndNode.clear();
+                okButton.setDisable(true);
             }
         });
 
         setElementValue.setOnKeyPressed(keyPressed -> {
+            okButton.setDisable(false);
             setValueWarning.setVisible(false);
             if (keyPressed.getCode().isLetterKey()){
                 setValueWarning.setVisible(true);
                 setElementValue.clear();
+                okButton.setDisable(true);
             }
         });
 
@@ -110,7 +116,7 @@ public class AddComponentWindowController {
 
             CircuitElementFactory factory = new CircuitElementFactory();
             switch (choiceOfElement){
-                case "R","C","V" ->{
+                case "R","I","V" ->{
                     var begNodeID = Integer.parseInt(setBegNode.getText());
                     var endNodeID = Integer.parseInt(setEndNode.getText());
                     var componentValue = Double.parseDouble(setElementValue.getText());
@@ -132,39 +138,39 @@ public class AddComponentWindowController {
             ErrorWindows.displayError("Invalid or empty arguments detected. Please check and try again.");
         }
     }
-    // setDebugNetlist() is for debug purposes only. Should only be run once!
+    // setDebugNetlist() is for debug purposes only. Should only be ran once!
     @FXML
     private void setDebugNetlist(){
         CircuitElementFactory factory = new CircuitElementFactory();
         //G0
-        circuitElementObservableList.add(factory.createElement("G",0));
+        circuitElementObservableList.add(factory.createElement("G1",0));
         elementDataModelObservableList.add(new ElementDataModel("G0",0,0,0.0));
         //I1
-        circuitElementObservableList.add(factory.createElement("C",0,1,1.0));
+        circuitElementObservableList.add(factory.createElement("I1",0,1,1.0));
         elementDataModelObservableList.add(new ElementDataModel("I1",0,1,1.0));
         //R2
-        circuitElementObservableList.add(factory.createElement("R",1,0,1.0));
+        circuitElementObservableList.add(factory.createElement("R2",1,0,1.0));
         elementDataModelObservableList.add(new ElementDataModel("R2",1,0,1.0));
         //R3
-        circuitElementObservableList.add(factory.createElement("R",1,2,1.0));
+        circuitElementObservableList.add(factory.createElement("R3",1,2,1.0));
         elementDataModelObservableList.add(new ElementDataModel("R3",1,2,1.0));
         //R4
-        circuitElementObservableList.add(factory.createElement("R",2,0,1.0));
+        circuitElementObservableList.add(factory.createElement("R4",2,0,1.0));
         elementDataModelObservableList.add(new ElementDataModel("R4",2,0,1.0));
         //R5
-        circuitElementObservableList.add(factory.createElement("R",2,3,1.0));
+        circuitElementObservableList.add(factory.createElement("R5",2,3,1.0));
         elementDataModelObservableList.add(new ElementDataModel("R5",2,3,1.0));
         //R6
-        circuitElementObservableList.add(factory.createElement("R",3,0,1.0));
+        circuitElementObservableList.add(factory.createElement("R6",3,0,1.0));
         elementDataModelObservableList.add(new ElementDataModel("R6",3,0,1.0));
         //R7
-        circuitElementObservableList.add(factory.createElement("R",3,4,1.0));
+        circuitElementObservableList.add(factory.createElement("R7",3,4,1.0));
         elementDataModelObservableList.add(new ElementDataModel("R7",3,4,1.0));
         //R8
-        circuitElementObservableList.add(factory.createElement("R",4,0,1.0));
+        circuitElementObservableList.add(factory.createElement("R8",4,0,1.0));
         elementDataModelObservableList.add(new ElementDataModel("R8",4,0,1.0));
         //I9
-        circuitElementObservableList.add(factory.createElement("C",0,4,1.0));
+        circuitElementObservableList.add(factory.createElement("I9",0,4,1.0));
         elementDataModelObservableList.add(new ElementDataModel("I9",0,4,1.0));
 
         Stage currentStage = (Stage) okButton.getScene().getWindow();

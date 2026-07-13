@@ -8,10 +8,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox prefHeight="574.0" prefWidth="907.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andy.linearj.Screen.controllers.ParentWindowController">
@@ -31,7 +28,7 @@
     </MenuBar>
 
     <AnchorPane prefHeight="545.0" prefWidth="867.0" styleClass="parent-window" stylesheets="@CSSStyleSheets/ParentWindow.css" VBox.vgrow="ALWAYS">
-        <!-- Single Units are to be declared at the TOP. -->
+        <!-- Single Units are to be declared below. -->
 
         <fx:include fx:id="matrixCalculatorUnit" source="MatrixCalculatorUnit.fxml" />
 
@@ -47,7 +44,7 @@
 
         <!-- Debug nodes (tools) are temporary and will be removed. -->
 
-        <CheckBox fx:id="debugUtilsBox" layoutX="276.0" layoutY="485.0" mnemonicParsing="false" onAction="#setDebugUtilsVisibility" prefHeight="18.0" prefWidth="441.0" text="Enable Debug Utils (all features are disabled as of this version)" />
+        <CheckBox fx:id="debugUtilsCheckbox" layoutX="276.0" layoutY="485.0" mnemonicParsing="false" onAction="#setDebugUtilsVisibility" prefHeight="18.0" prefWidth="441.0" text="Enable Debug Utils (all features are disabled as of this version)" />
 
         <VBox fx:id="debugVBox" layoutX="685.0" layoutY="215.0" prefHeight="162.0" prefWidth="155.0" spacing="10.0" visible="false">
             <Label alignment="CENTER" prefHeight="17.0" prefWidth="179.0" text="Debug Utilities" />

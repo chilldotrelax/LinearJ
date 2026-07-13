@@ -1,3 +1,27 @@
+/*
+ * MIT License
+ *
+ * Copyright © 2026 Andy Huang
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package org.andy.linearj.Screen.controllers;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -17,6 +41,7 @@ import org.andy.linearj.Screen.misc.ErrorWindows;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 public class CircuitSolverUnitController {
     @FXML
@@ -31,7 +56,7 @@ public class CircuitSolverUnitController {
 
     public CircuitSolverUnitController(){this.circuitNodeHashMap = new HashMap<>();}
 
-    public void setDataModel(ObservableList<ElementDataModel> elmList,ObservableList<CircuitElement> elementObservableList){
+    public void setObservableLists(ObservableList<ElementDataModel> elmList, ObservableList<CircuitElement> elementObservableList){
         this.elmListInUnit = elmList;
         this.circuitElementObservableListInUnit = elementObservableList;
 
@@ -42,12 +67,14 @@ public class CircuitSolverUnitController {
                     if (!circuitElementObservableListInUnit.isEmpty() && c.wasAdded()) {
                         solveCircuitBtn.setDisable(false);
                         handleAddChange((Change<CircuitElement>) c);
-                    } else if (!circuitElementObservableListInUnit.isEmpty() && c.wasRemoved()) {
+                    }
+                    if (!circuitElementObservableListInUnit.isEmpty() && c.wasRemoved()) {
                         solveCircuitBtn.setDisable(false);
                         handleRemoveChange((Change<CircuitElement>) c);
                     }
                     if ((circuitElementObservableListInUnit.size() <= 1)) {
                         solveCircuitBtn.setDisable(true);
+                        handleRemoveChange((Change<CircuitElement>) c);
                     }
                 }
             }
@@ -75,13 +102,17 @@ public class CircuitSolverUnitController {
     }
 
     private void handleRemoveChange(ListChangeListener.Change<CircuitElement> c) {
-        CircuitElement elm = (CircuitElement) c.getAddedSubList().toArray()[0];
+        List<CircuitElement> elm = c.getRemoved();
 
-        if (circuitNodeHashMap.containsKey(elm.getBegNodeID())) {
-            circuitNodeHashMap.get(elm.getBegNodeID()).removeElement(elm);
-        }
-        else if (circuitNodeHashMap.containsKey(elm.getEndNodeID())){
-            circuitNodeHashMap.get(elm.getEndNodeID()).removeElement(elm);
+        if (elm.isEmpty()){return;}
+
+        for (CircuitElement circElm: elm){
+            if (circuitNodeHashMap.containsKey(circElm.getBegNodeID())){
+                circuitNodeHashMap.get(circElm.getBegNodeID()).removeElement(circElm);
+            }
+            if (circuitNodeHashMap.containsKey(circElm.getEndNodeID())){
+                circuitNodeHashMap.get(circElm.getEndNodeID()).removeElement(circElm);
+            }
         }
     }
 

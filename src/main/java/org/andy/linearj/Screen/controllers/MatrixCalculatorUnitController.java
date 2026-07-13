@@ -40,10 +40,10 @@ import java.util.Arrays;
 
 public class MatrixCalculatorUnitController {
     @FXML
-    private TextArea matrixInputBox;
+    private TextArea matrixInputField;
     
-    private static final String EMPTY_INPUT_BOX_ERROR = "Empty Input Box. Press OK to acknowledge.";
-    private static final String DEFAULT_MATRIX_ERROR = "You are either: (1) Missing a second matrix and/or incorrectly formatted matrix. Press HELP for help.";
+    private static final String EMPTY_INPUT_FIELD_ERROR = "The input field must not be empty.";
+    private static final String GENERIC_MATRIX_ERROR = "You are either: (1) Missing a second matrix AND/OR (2) Incorrectly formatted matrix. Click HELP for a formatting guide.";
 
     private final SimpleStringProperty computationResult = new SimpleStringProperty();
     public SimpleStringProperty computationResultProperty(){return computationResult;}
@@ -51,108 +51,115 @@ public class MatrixCalculatorUnitController {
     @FXML
     private void addMatricesClick(){
         try{
-            if (!matrixInputBox.getText().isEmpty()){
-                double[][] result = MatrixMath.addMatrix(MatrixMath.castStringToTwoDouble(matrixInputBox.getText()).get(0),MatrixMath.castStringToTwoDouble(matrixInputBox.getText()).get(1));
+            if (!matrixInputField.getText().isEmpty()){
+                double[][] result = MatrixMath.addMatrix(MatrixMath.castStringToTwoDouble(matrixInputField.getText()).get(0),MatrixMath.castStringToTwoDouble(matrixInputField.getText()).get(1));
                 computationResult.set("Sum: " + Arrays.deepToString(result));
+                computationResult.set("");
             }
             else{
-                ErrorWindows.displayError(EMPTY_INPUT_BOX_ERROR);
+                ErrorWindows.displayError(EMPTY_INPUT_FIELD_ERROR);
             }
         }
         catch (MatrixNotEquivalentException e){
-            ErrorWindows.displayError("Cannot compute because matrix dimensions are not equivalent!");
+            ErrorWindows.displayError("Cannot compute matrices with non-equivalent dimensions.");
         }
         catch (IllegalMatrixException | ArrayIndexOutOfBoundsException e){
-            ErrorWindows.displayError(DEFAULT_MATRIX_ERROR);
+            ErrorWindows.displayError(GENERIC_MATRIX_ERROR);
         }
     }
 
     @FXML
     private void subtractMatricesClick(){
         try{
-            if (!matrixInputBox.getText().isEmpty()){
-                double[][] result = MatrixMath.subtractMatrix(MatrixMath.castStringToTwoDouble(matrixInputBox.getText()).get(0),MatrixMath.castStringToTwoDouble(matrixInputBox.getText()).get(1));
+            if (!matrixInputField.getText().isEmpty()){
+                double[][] result = MatrixMath.subtractMatrix(MatrixMath.castStringToTwoDouble(matrixInputField.getText()).get(0),MatrixMath.castStringToTwoDouble(matrixInputField.getText()).get(1));
                 computationResult.set("Difference: " + Arrays.deepToString(result));
+                computationResult.set("");
             }
             else{
-                ErrorWindows.displayError(EMPTY_INPUT_BOX_ERROR);
+                ErrorWindows.displayError(EMPTY_INPUT_FIELD_ERROR);
             }
         }
         catch (MatrixNotEquivalentException e){
-            ErrorWindows.displayError("Cannot compute because matrix dimensions are not equivalent!");
+            ErrorWindows.displayError("Cannot compute matrices with non-equivalent dimensions.");
         }
         catch (IllegalMatrixException | ArrayIndexOutOfBoundsException e){
-            ErrorWindows.displayError(DEFAULT_MATRIX_ERROR);
+            ErrorWindows.displayError(GENERIC_MATRIX_ERROR);
         }
     }
 
     @FXML
     private void multiplyMatricesClick(){
         try{
-            if (!matrixInputBox.getText().isEmpty()){
-                double[][] result = MatrixMath.multiplyMatrix(MatrixMath.castStringToTwoDouble(matrixInputBox.getText()).get(0),MatrixMath.castStringToTwoDouble(matrixInputBox.getText()).get(1));
+            if (!matrixInputField.getText().isEmpty()){
+                double[][] result = MatrixMath.multiplyMatrix(MatrixMath.castStringToTwoDouble(matrixInputField.getText()).get(0),MatrixMath.castStringToTwoDouble(matrixInputField.getText()).get(1));
                 computationResult.set("Product: " + Arrays.deepToString(result));
+                computationResult.set("");
             }
             else{
-                ErrorWindows.displayError(EMPTY_INPUT_BOX_ERROR);
+                ErrorWindows.displayError(EMPTY_INPUT_FIELD_ERROR);
             }
         }
         catch (NonMatchingMatricesException e){
-            ErrorWindows.displayError("Cannot compute because row and column of respective matrix is not the same.");
+            ErrorWindows.displayError("Cannot compute matrices with non-equivalent dimensions.");
         }
         catch (IllegalMatrixException | ArrayIndexOutOfBoundsException e){
-            ErrorWindows.displayError(DEFAULT_MATRIX_ERROR);
+            ErrorWindows.displayError(GENERIC_MATRIX_ERROR);
         }
     }
     //Disabled as no testing has been done with the transpose method in the MatrixMath class.
     @FXML
     private void transposeMatrixClick(){
-        if (!matrixInputBox.getText().isEmpty()){
-            double[][] result = MatrixMath.transposeMatrix(MatrixMath.castStringToDouble(matrixInputBox.getText()));
+        if (!matrixInputField.getText().isEmpty()){
+            double[][] result = MatrixMath.transposeMatrix(MatrixMath.castStringToDouble(matrixInputField.getText()));
             computationResult.set("Transposition: " + Arrays.deepToString(result));
+            computationResult.set("");
         }
         else{
-            ErrorWindows.displayError(EMPTY_INPUT_BOX_ERROR);
+            ErrorWindows.displayError(EMPTY_INPUT_FIELD_ERROR);
         }
     }
 
     @FXML
     private void computeInversionClick(){
         try{
-            if (!matrixInputBox.getText().isEmpty()){
-                double[][] result = MatrixMath.computeInverse(MatrixMath.castStringToDouble(matrixInputBox.getText()));
+            if (!matrixInputField.getText().isEmpty()){
+                double[][] result = MatrixMath.computeInverse(MatrixMath.castStringToDouble(matrixInputField.getText()));
                 computationResult.set("Inversion: " + Arrays.deepToString(result));
+                computationResult.set("");
             }
             else{
-                ErrorWindows.displayError(EMPTY_INPUT_BOX_ERROR);
+                ErrorWindows.displayError(EMPTY_INPUT_FIELD_ERROR);
             }
         }
         catch (SingularMatrixException e){
-            ErrorWindows.displayError("Cannot compute because matrix is singular and has no general solution.");
+            ErrorWindows.displayError("Cannot compute over singular matrices.");
         }
         catch (MatrixDimensionException e){
-            ErrorWindows.displayError("Cannot compute because matrix is not square.");
+            ErrorWindows.displayError("Cannot compute over non-square matrices.");
         }
     }
 
     @FXML
     private void computeDeterminantClick(){
         try{
-            if (!matrixInputBox.getText().isEmpty()){
-                double result = MatrixMath.computeDeterminant(MatrixMath.castStringToDouble(matrixInputBox.getText()));
+            if (!matrixInputField.getText().isEmpty()){
+                double result = MatrixMath.computeDeterminant(MatrixMath.castStringToDouble(matrixInputField.getText()));
                 computationResult.set("Determinant: " + result);
+                computationResult.set("");
             }
             else{
-                ErrorWindows.displayError(EMPTY_INPUT_BOX_ERROR);
+                ErrorWindows.displayError(EMPTY_INPUT_FIELD_ERROR);
             }
         }
         catch (ArithmeticException e){
-            ErrorWindows.displayError("Cannot compute because matrix is not a square matrix.");
+            ErrorWindows.displayError("Cannot compute over non-square matrices.");
         }
     }
 
     @FXML
-    private void clearInputBox(){matrixInputBox.clear();}
+    private void clearInputField(){
+        matrixInputField.clear();}
 
     @FXML
     private void openHelpWindow(){

@@ -30,6 +30,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
+
 import org.andy.linearj.Circuit.CircuitElement;
 
 public class ParentWindowController {
@@ -41,11 +42,10 @@ public class ParentWindowController {
     private OutputUnitController outputConsoleController;
     @FXML
     private CircuitSolverUnitController circuitSolverUnitController;
-
     @FXML
     private VBox debugVBox;
     @FXML
-    private CheckBox debugUtilsBox;
+    private CheckBox debugUtilsCheckbox;
 
     private ObservableList<ElementDataModel> elementDataModelObservableList;
     private ObservableList<CircuitElement> circuitElementObservableList;
@@ -56,27 +56,29 @@ public class ParentWindowController {
     }
 
     @FXML
-    public void initialize() {
-        netlistUnitController.setObservableLists(elementDataModelObservableList);
-        circuitSolverUnitController.setDataModel(elementDataModelObservableList,circuitElementObservableList);
+    private void initialize() {
+        netlistUnitController.setObservableLists(elementDataModelObservableList,circuitElementObservableList);
+        circuitSolverUnitController.setObservableLists(elementDataModelObservableList,circuitElementObservableList);
 
         matrixCalculatorUnitController.computationResultProperty().addListener(((observable, oldValue, newValue) -> {outputConsoleController.setOutputBox(newValue);}));
         circuitSolverUnitController.computationOutputProperty().addListener(((observable, oldValue, newValue) -> {outputConsoleController.setOutputBox(newValue);}));
+        netlistUnitController.getClrNetlistOutputProperty().addListener((observable, oldValue, newValue) -> {outputConsoleController.setOutputBox(newValue);});
     }
 
     @FXML
     private void setDebugUtilsVisibility(){
         debugVBox.setVisible(true);
-        if (!debugUtilsBox.isSelected()){debugVBox.setVisible(false);}
+        if (!debugUtilsCheckbox.isSelected()){debugVBox.setVisible(false);}
     }
 
-
-    public void triggerAboutMenu() {
+    @FXML
+    private void triggerAboutMenu() {
         PopupWindow aboutWindow = new AboutWindow();
         aboutWindow.openWindow();
     }
 
-    public void quitApp() {Platform.exit();}
+    @FXML
+    private void quitApp() {Platform.exit();}
 }
 
 

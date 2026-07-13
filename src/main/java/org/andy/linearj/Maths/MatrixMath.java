@@ -62,6 +62,7 @@ public final class MatrixMath {
 
     public static List<double[][]> castStringToTwoDouble(String stringToTwoDouble){
         List<double[][]> result = new ArrayList<>(2);
+
         try{
             if (stringToTwoDouble.contains("/")){
                 final String[] temp = stringToTwoDouble.split("/");

@@ -82,7 +82,7 @@ public class CircuitSolver {
                         offsetsCounter++;
                     }
                 }
-                case GroundElement groundElement ->{
+                case GroundElement ignored ->{
                     // Ground element cannot stamp on its own.
                 }
                 default -> throw new IllegalMatrixException("Unable to stamp element." +"\n"+ "If you see this, this is almost certainly a programming bug and is not your fault.");

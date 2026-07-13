@@ -38,6 +38,7 @@ public class LUDecomposition {
         for (int i = 0; i < admittanceMatrix.length; i++){
             this.decomposedLU[i] = admittanceMatrix[i].clone();
         }
+        
         this.numRows = admittanceMatrix.length;
         this.indexOfPermutation = new int[this.numRows]; //Permutation Matrix
 

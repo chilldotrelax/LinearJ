@@ -41,17 +41,17 @@ public class CircuitNode {
     public final boolean isGroundNode() {return isGroundNode;}
     public final int getNodeID() {return nodeID;}
     public final double getNodeVoltage(){return nodeVoltage;}
-    public final void setNodeVoltage(double newVoltage){nodeVoltage = newVoltage;}
-    public final List<CircuitElement> getElementsConnected() {return elementsConnected;}
+    public final void setNodeVoltage(double volt){this.nodeVoltage = volt;}
+
     public final boolean isFloatingNode() {return elementsConnected.size() <= 1;}
 
     public void removeElement(CircuitElement particularElement) throws IllegalArgumentException {
-        for (CircuitElement element : elementsConnected) {
-            if (element == particularElement && (particularElement.getBegNodeID() == nodeID || particularElement.getEndNodeID() == nodeID)) {
-                elementsConnected.remove(element);
-            } else {
-                throw new IllegalArgumentException("Could not find the element in this node");
-            }
+
+        if ((particularElement.getBegNodeID() == nodeID || particularElement.getEndNodeID() == nodeID)){
+            elementsConnected.remove(particularElement);
+        }
+        else{
+            throw new IllegalArgumentException("Could not find the element in this node");
         }
     }
 
