@@ -13,7 +13,7 @@ LinearJ is a desktop (soon CLI only interface!) matrix calculator and experiment
 
 ### Adding a circuit component
 
-![LinearJ main window with the add-component dialog open](docs/images/linearj-add-component-dialog-july-12-2026-NEW.png))
+![LinearJ main window with the add-component dialog open](docs/images/linearj-add-component-dialog-july-12-2026-NEW.png)
 
 ### Current workspace snapshot
 
@@ -30,13 +30,13 @@ LinearJ is a desktop (soon CLI only interface!) matrix calculator and experiment
 
 ### Matrices and linear systems
 
-Many engineering problems can be expressed in the form:
+Our problem can be expressed in the form
 
 ```text
 A x = b
 ```
 
-Here, `A` stores the coefficients of the problem, `x` contains the unknown values, and `b` contains the known inputs. LinearJ includes general matrix operations as well as LU decomposition, which factors a square matrix into lower- and upper-triangular matrices so the system can be solved efficiently by forward and back substitution.
+Here, `A` stores the coefficients of the problem, `x` contains the unknown values, and `b` contains the known inputs. We include general matrix operations as well as LU decomposition, which factors a square matrix into lower- and upper-triangular matrices so the system can be solved efficiently by forward and back substitution.
 
 ### Modified nodal analysis
 
@@ -48,8 +48,6 @@ Nodal analysis applies Kirchhoff's Current Law (KCL): the algebraic sum of curre
 ```
 
 Current sources contribute to the right-hand-side vector. Ideal voltage sources require extra unknown currents and extra rows and columns, which is the modification in **modified** nodal analysis. After every component has “stamped” its contribution into the global matrix and vector, LinearJ solves the resulting system to obtain node voltages and voltage-source currents.
-
-This design is reflected in the code: circuit elements know how to stamp themselves, while `CircuitSolver` assembles the system and `LUDecomposition` performs the numerical solve.
 
 ## Cool, now how do I get my own LinearJ?
 
@@ -93,7 +91,7 @@ Operations that take two matrices should be separated by `/`:
 
 Unfortunately, the parser is slightly strict about formatting, this will be fixed as soon as possible.
 
-There are internal help guides inside the application if you so need it.
+There are internal help guides inside the application if you so need it. They can be accessed by clicking the "Help" button in applicable menus.
 
 ## Project structure
 ```text
