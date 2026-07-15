@@ -19,7 +19,7 @@ LinearJ is a desktop (soon CLI only interface!) matrix calculator and experiment
 
 ![LinearJ workspace showing the matrix calculator, net list table, and console output area](docs/images/linearj-current-workspace-july-12-2026-NEW.png)
 
-## What to expect?
+## What to expect
 
 - Desktop interface (CLI only interface soon...)
 - Matrix addition, subtraction, multiplication, inversion, determinant, and transpose
@@ -49,7 +49,7 @@ Nodal analysis applies Kirchhoff's Current Law (KCL): the algebraic sum of curre
 
 Current sources contribute to the right-hand-side vector. Ideal voltage sources require extra unknown currents and extra rows and columns, which is the modification in **modified** nodal analysis. After every component has “stamped” its contribution into the global matrix and vector, LinearJ solves the resulting system to obtain node voltages and voltage-source currents.
 
-## Cool, now how do I get my own LinearJ?
+## Building LinearJ
 
 ### Requirements
 
