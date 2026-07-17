@@ -138,7 +138,7 @@ public class AddComponentWindowController {
             ErrorWindows.displayError("Invalid or empty arguments detected. Please check and try again.");
         }
     }
-    // setDebugNetlist() is for debug purposes only. Should only be ran once!
+    // setDebugNetlist() is for debug purposes only. Should only be run once!
     @FXML
     private void setDebugNetlist(){
         CircuitElementFactory factory = new CircuitElementFactory();

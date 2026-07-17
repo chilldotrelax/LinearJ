@@ -26,6 +26,7 @@ package org.andy.linearj.Circuit;
 
 public class VoltageSourceElement extends CircuitElement{
     private double voltage;
+    private double current;
     private String componentID;
 
     public VoltageSourceElement(int begNode, int endNode, String componentID, double voltage){
@@ -44,7 +45,11 @@ public class VoltageSourceElement extends CircuitElement{
     public double getElementValue(){return voltage;}
 
     @Override
-    public void setElementValue(final double newValue){voltage = newValue;}
+    public void setElementValue(final double newValue){
+        voltage = newValue;
+    }
+
+    public void setCurrent(final double newCurrent){current = newCurrent;}
 
     public double[] stampSelf(double[] rightHandVector,int preShiftedIndex,int selfOffset){
         rightHandVector[preShiftedIndex + selfOffset] += voltage;
@@ -60,10 +65,4 @@ public class VoltageSourceElement extends CircuitElement{
         return resistorMatrix;
     }
 
-    @Override
-    public double calculateCurrent(double[] voltage){return 0;}
-
-    //Ignore
-    @Override
-    public double calculateVoltage(double current){return voltage;}
 }

@@ -33,10 +33,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import org.andy.linearj.Circuit.CircuitElement;
-import org.andy.linearj.Circuit.CircuitNode;
-import org.andy.linearj.Circuit.CircuitSolver;
-import org.andy.linearj.Circuit.GroundElement;
+import org.andy.linearj.Circuit.*;
 import org.andy.linearj.Screen.misc.ErrorWindows;
 
 import java.io.IOException;
@@ -47,16 +44,21 @@ public class CircuitSolverUnitController {
     @FXML
     private Button solveCircuitBtn;
 
-    private  ObservableList<ElementDataModel> elmListInUnit;
+    private ObservableList<ElementDataModel> elmListInUnit;
     private ObservableList<CircuitElement> circuitElementObservableListInUnit;
     private final HashMap<Integer, CircuitNode> circuitNodeHashMap;
 
     private final SimpleStringProperty computationOutput = new SimpleStringProperty();
-    public SimpleStringProperty computationOutputProperty(){return computationOutput;}
 
-    public CircuitSolverUnitController(){this.circuitNodeHashMap = new HashMap<>();}
+    public SimpleStringProperty computationOutputProperty() {
+        return computationOutput;
+    }
 
-    public void setObservableLists(ObservableList<ElementDataModel> elmList, ObservableList<CircuitElement> elementObservableList){
+    public CircuitSolverUnitController() {
+        this.circuitNodeHashMap = new HashMap<>();
+    }
+
+    public void setObservableLists(ObservableList<ElementDataModel> elmList, ObservableList<CircuitElement> elementObservableList) {
         this.elmListInUnit = elmList;
         this.circuitElementObservableListInUnit = elementObservableList;
 
@@ -66,14 +68,17 @@ public class CircuitSolverUnitController {
                 while (c.next()) {
                     if (!circuitElementObservableListInUnit.isEmpty() && c.wasAdded()) {
                         solveCircuitBtn.setDisable(false);
+                        //Unchecked cast: 'javafx.collections.ListChangeListener.Change<capture<? extends org.andy.linearj.Circuit.CircuitElement>>' to 'javafx.collections.ListChangeListener.Change<org.andy.linearj.Circuit.CircuitElement>'
                         handleAddChange((Change<CircuitElement>) c);
                     }
                     if (!circuitElementObservableListInUnit.isEmpty() && c.wasRemoved()) {
                         solveCircuitBtn.setDisable(false);
+                        //Unchecked cast: 'javafx.collections.ListChangeListener.Change<capture<? extends org.andy.linearj.Circuit.CircuitElement>>' to 'javafx.collections.ListChangeListener.Change<org.andy.linearj.Circuit.CircuitElement>'
                         handleRemoveChange((Change<CircuitElement>) c);
                     }
                     if ((circuitElementObservableListInUnit.size() <= 1)) {
                         solveCircuitBtn.setDisable(true);
+                        //Unchecked cast: 'javafx.collections.ListChangeListener.Change<capture<? extends org.andy.linearj.Circuit.CircuitElement>>' to 'javafx.collections.ListChangeListener.Change<org.andy.linearj.Circuit.CircuitElement>'
                         handleRemoveChange((Change<CircuitElement>) c);
                     }
                 }
@@ -88,37 +93,36 @@ public class CircuitSolverUnitController {
             circuitNodeHashMap.put(elm.getBegNodeID(), new CircuitNode(elm.getBegNodeID()));
             circuitNodeHashMap.get(elm.getBegNodeID()).addElement(elm);
         }
-        if (!circuitNodeHashMap.containsKey(elm.getEndNodeID()) && !(elm instanceof GroundElement)){
+        if (!circuitNodeHashMap.containsKey(elm.getEndNodeID()) && !(elm instanceof GroundElement)) {
             circuitNodeHashMap.put(elm.getEndNodeID(), new CircuitNode(elm.getEndNodeID()));
             circuitNodeHashMap.get(elm.getEndNodeID()).addElement(elm);
-        }
-        else {
-            circuitNodeHashMap.forEach((nodeNumber,circuitNodeElement) ->{
-                if (elm.isNodeIDEqual(nodeNumber) && !circuitNodeElement.contains(elm)){
+        } else {
+            circuitNodeHashMap.forEach((nodeNumber, circuitNodeElement) -> {
+                if (elm.isNodeIDEqual(nodeNumber) && !circuitNodeElement.contains(elm)) {
                     circuitNodeElement.addElement(elm);
                 }
-            } );
+            });
         }
     }
 
     private void handleRemoveChange(ListChangeListener.Change<CircuitElement> c) {
         List<CircuitElement> elm = c.getRemoved();
 
-        if (elm.isEmpty()){return;}
+        if (elm.isEmpty()) {return;}
 
-        for (CircuitElement circElm: elm){
-            if (circuitNodeHashMap.containsKey(circElm.getBegNodeID())){
+        for (CircuitElement circElm : elm) {
+            if (circuitNodeHashMap.containsKey(circElm.getBegNodeID())) {
                 circuitNodeHashMap.get(circElm.getBegNodeID()).removeElement(circElm);
             }
-            if (circuitNodeHashMap.containsKey(circElm.getEndNodeID())){
+            if (circuitNodeHashMap.containsKey(circElm.getEndNodeID())) {
                 circuitNodeHashMap.get(circElm.getEndNodeID()).removeElement(circElm);
             }
         }
     }
 
     @FXML
-    private void triggerAddElementMenu(){
-        try{
+    private void triggerAddElementMenu() {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/andy/linearj/AddComponentWindow.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
@@ -135,21 +139,11 @@ public class CircuitSolverUnitController {
     }
 
     @FXML
-    private void solveDCCircuit(){
+    private void solveDCCircuit() {
         CircuitElement[] elementsList = circuitElementObservableListInUnit.toArray(new CircuitElement[0]);
+        CircuitSolver solve = new CircuitSolver(elementsList, circuitNodeHashMap,computationOutput);
+        solve.solveCircuit();
 
-        CircuitSolver solve = new CircuitSolver(elementsList,circuitNodeHashMap);
-
-        double[] temp = solve.solveCircuit();
-
-        for (int i = 0; i < temp.length; i++){
-            if (i < circuitNodeHashMap.size()){
-                computationOutput.set("The voltage across node "+i+" is: "+temp[i] +"V");
-            }
-            else if (i > circuitNodeHashMap.size()){
-                computationOutput.set("The current across "+i+" is: " + temp[i]+"A");
-            }
-        }
     }
-
 }
+

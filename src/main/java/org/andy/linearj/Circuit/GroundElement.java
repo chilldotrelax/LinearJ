@@ -20,10 +20,4 @@ public class GroundElement extends CircuitElement {
     @Override
     public void setComponentID(String newComponentID) {componentID = newComponentID;}
 
-    //For GROUND element, ignore this.
-    @Override
-    public double calculateCurrent(double[] voltage) {return 0;}
-
-    @Override
-    public double calculateVoltage(double current) {return 0;}
 }

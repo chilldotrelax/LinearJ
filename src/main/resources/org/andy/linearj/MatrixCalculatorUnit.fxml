@@ -10,19 +10,19 @@
     <Label alignment="CENTER" layoutY="6.0" prefHeight="17.0" prefWidth="253.0" text="Matrix Input &amp; Calculator" />
 
     <VBox layoutX="22.0" layoutY="215.0" prefHeight="158.0" prefWidth="85.0" spacing="30.0">
-        <Button mnemonicParsing="false" onAction="#addMatricesClick" prefHeight="26.0" prefWidth="85.0" stylesheets="@CSSStyleSheets/buttons.css" text="Add">
+        <Button mnemonicParsing="false" onAction="#addMatricesClick" prefHeight="26.0" prefWidth="85.0" stylesheets="@CSSStyleSheets/buttons.css" text="ADD">
             <styleClass>
                 <String fx:value="button_main" />
                 <String fx:value="button-primary" />
             </styleClass>
         </Button>
-        <Button mnemonicParsing="false" onAction="#subtractMatricesClick" prefHeight="26.0" prefWidth="85.0" stylesheets="@CSSStyleSheets/buttons.css" text="Subtract">
+        <Button mnemonicParsing="false" onAction="#subtractMatricesClick" prefHeight="26.0" prefWidth="85.0" stylesheets="@CSSStyleSheets/buttons.css" text="SUB">
             <styleClass>
                 <String fx:value="button_main" />
                 <String fx:value="button-primary" />
             </styleClass>
         </Button>
-        <Button mnemonicParsing="false" onAction="#multiplyMatricesClick" prefHeight="26.0" prefWidth="85.0" stylesheets="@CSSStyleSheets/buttons.css" text="Multiply">
+        <Button mnemonicParsing="false" onAction="#multiplyMatricesClick" prefHeight="26.0" prefWidth="85.0" stylesheets="@CSSStyleSheets/buttons.css" text="MULT">
             <styleClass>
                 <String fx:value="button_main" />
                 <String fx:value="button-primary" />
@@ -31,19 +31,19 @@
     </VBox>
 
     <VBox layoutX="134.0" layoutY="215.0" prefHeight="158.0" prefWidth="85.0" spacing="30.0">
-        <Button mnemonicParsing="false" onAction="#computeInversionClick" prefHeight="26.0" prefWidth="92.0" stylesheets="@CSSStyleSheets/buttons.css" text="Invert">
+        <Button mnemonicParsing="false" onAction="#computeInversionClick" prefHeight="26.0" prefWidth="92.0" stylesheets="@CSSStyleSheets/buttons.css" text="INVERT">
             <styleClass>
                 <String fx:value="button_main" />
                 <String fx:value="button-primary" />
             </styleClass>
         </Button>
-        <Button mnemonicParsing="false" onAction="#computeDeterminantClick" prefHeight="26.0" prefWidth="88.0" stylesheets="@CSSStyleSheets/buttons.css" text="Det">
+        <Button mnemonicParsing="false" onAction="#computeDeterminantClick" prefHeight="26.0" prefWidth="88.0" stylesheets="@CSSStyleSheets/buttons.css" text="DET">
             <styleClass>
                 <String fx:value="button_main" />
                 <String fx:value="button-primary" />
             </styleClass>
         </Button>
-        <Button disable="true" mnemonicParsing="false" onAction="#transposeMatrixClick" prefHeight="26.0" prefWidth="89.0" stylesheets="@CSSStyleSheets/buttons.css" text="Transpose">
+        <Button disable="true" mnemonicParsing="false" onAction="#transposeMatrixClick" prefHeight="26.0" prefWidth="89.0" stylesheets="@CSSStyleSheets/buttons.css" text="A^T">
             <styleClass>
                 <String fx:value="button_main" />
                 <String fx:value="button-primary" />
@@ -55,13 +55,13 @@
     </VBox>
 
     <HBox alignment="CENTER" layoutX="23.0" layoutY="393.0" prefHeight="57.0" prefWidth="196.0" spacing="30.0">
-        <Button alignment="CENTER" mnemonicParsing="false" onAction="#clearInputField" prefHeight="26.0" prefWidth="80.0" stylesheets="@CSSStyleSheets/buttons.css" text="Clear">
+        <Button alignment="CENTER" mnemonicParsing="false" onAction="#clearInputField" prefHeight="26.0" prefWidth="80.0" stylesheets="@CSSStyleSheets/buttons.css" text="CLEAR">
             <styleClass>
                 <String fx:value="button_main" />
                 <String fx:value="button-primary" />
             </styleClass>
         </Button>
-        <Button alignment="CENTER" layoutX="60.0" layoutY="26.0" mnemonicParsing="false" onAction="#openHelpWindow" prefHeight="26.0" prefWidth="75.0" stylesheets="@CSSStyleSheets/buttons.css" text="Help">
+        <Button alignment="CENTER" layoutX="60.0" layoutY="26.0" mnemonicParsing="false" onAction="#openHelpWindow" prefHeight="26.0" prefWidth="75.0" stylesheets="@CSSStyleSheets/buttons.css" text="HELP">
             <styleClass>
                 <String fx:value="button_main" />
                 <String fx:value="button-primary" />

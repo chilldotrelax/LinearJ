@@ -24,26 +24,28 @@
 
 package org.andy.linearj.Circuit;
 
+import javafx.beans.property.SimpleStringProperty;
+
 import org.andy.linearj.Maths.LUDecomposition;
 import org.andy.linearj.Maths.MatrixMath;
 import org.andy.linearj.Screen.misc.exception.IllegalMatrixException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class CircuitSolver {
     private final CircuitElement[] elementList;
     private final HashMap<Integer, CircuitNode> nodeHashMap;
     private double[][] resistorMatrix;
     private double[] rightHandVector;
-    private final double[] x;
+    private final double[] x; //Remove this reference later and relegate it to the solve method.
     private final List<Integer> temporaryListForIndexOnly;
-    private int groundNodeIndex;
 
-    public CircuitSolver(final CircuitElement[] elements, final HashMap<Integer, CircuitNode> nodes ){
+    private int groundNodeIndex;
+    private SimpleStringProperty computationResultProperty;
+
+    public CircuitSolver(final CircuitElement[] elements, final Map<Integer, CircuitNode> nodes){
         this.elementList = elements;
-        this.nodeHashMap = nodes;
+        this.nodeHashMap = new HashMap<>(nodes);//Check this
         this.temporaryListForIndexOnly = new ArrayList<>();
 
         int numberOfVoltageElementsOffSet = 0;
@@ -54,8 +56,34 @@ public class CircuitSolver {
             }
         }
 
-        nodeHashMap.forEach((integer, circuitNode) -> temporaryListForIndexOnly.add(circuitNode.getNodeID()));
-        nodeHashMap.forEach(((integer, circuitNode) -> {
+        nodeHashMap.forEach((nodeID, circuitNode) -> temporaryListForIndexOnly.add(circuitNode.getNodeID()));
+        nodeHashMap.forEach(((nodeID, circuitNode) -> {
+            if (circuitNode.isGroundNode()){
+                this.groundNodeIndex = temporaryListForIndexOnly.indexOf(circuitNode.getNodeID());
+            }
+        }));
+
+        this.resistorMatrix = new double[this.nodeHashMap.size()+numberOfVoltageElementsOffSet][this.nodeHashMap.size()+numberOfVoltageElementsOffSet];
+        this.rightHandVector = new double[this.nodeHashMap.size()+numberOfVoltageElementsOffSet];
+        this.x = new double[this.nodeHashMap.size()+numberOfVoltageElementsOffSet];
+    }
+
+    public CircuitSolver(final CircuitElement[] elements, final Map<Integer, CircuitNode> nodes, SimpleStringProperty compResultProp){
+        this.elementList = elements;
+        this.nodeHashMap = new HashMap<>(nodes);//Check this
+        this.computationResultProperty = compResultProp;
+        this.temporaryListForIndexOnly = new ArrayList<>();
+
+        int numberOfVoltageElementsOffSet = 0;
+
+        for (CircuitElement element: elementList){
+            if (element instanceof VoltageSourceElement){
+                numberOfVoltageElementsOffSet++;
+            }
+        }
+
+        nodeHashMap.forEach((nodeID, circuitNode) -> temporaryListForIndexOnly.add(circuitNode.getNodeID()));
+        nodeHashMap.forEach(((nodeID, circuitNode) -> {
             if (circuitNode.isGroundNode()){
                 this.groundNodeIndex = temporaryListForIndexOnly.indexOf(circuitNode.getNodeID());
             }
@@ -70,7 +98,7 @@ public class CircuitSolver {
         int offsetsCounter = 1;
 
         for (CircuitElement element: elementList){
-            switch (element) {
+            switch (element) { 
                 case ResistorElement resistorElement ->
                     resistorMatrix = resistorElement.stampSelf(resistorMatrix, temporaryListForIndexOnly.indexOf(resistorElement.getBegNodeID()), temporaryListForIndexOnly.indexOf(resistorElement.getEndNodeID()));
                 case CurrentSourceElement currentSourceElement ->
@@ -90,13 +118,44 @@ public class CircuitSolver {
         }
     }
 
-    public double[] solveCircuit(){
+
+    public void solveCircuit(){
         stampElement();
 
-        LUDecomposition lu = new LUDecomposition(MatrixMath.reduce2DMatrixToSubmatrix(resistorMatrix,groundNodeIndex));
+        final double[][] twoDInputArray = MatrixMath.reduce2DMatrixToSubmatrix(resistorMatrix,groundNodeIndex);
+        final double[] oneDRightHandVector = MatrixMath.reduceVectorToSubvector(rightHandVector,groundNodeIndex);
+        final double[] oneDBlankSolutionVector = MatrixMath.reduceVectorToSubvector(x,groundNodeIndex);
 
-        //TODO ensure that the solveCircuit() returns a clean output that can be directly parsed by the controller for display.
+        LUDecomposition lu = new LUDecomposition(twoDInputArray);
 
-        return lu.solve(MatrixMath.reduceVectorToSubvector(rightHandVector,groundNodeIndex), MatrixMath.reduceVectorToSubvector(x,groundNodeIndex));
+        //Note: solution vector may contain both node voltages & currents across voltage sources.
+        final double[] solutionVector = lu.solve(oneDRightHandVector, oneDBlankSolutionVector);
+        final Collection<CircuitNode> nodesCollection = nodeHashMap.values();
+
+        int count = 0;
+
+        if (computationResultProperty == null){
+            //As of now, there are no implementations for this particular block.
+        }
+
+        else{
+            for (CircuitNode node: nodesCollection){
+                if (!node.isGroundNode()){
+                    node.setNodeVoltage(solutionVector[count]);
+                    computationResultProperty.set("The voltage at node " + node.getNodeID() + "(w.r.t ground node) is: " + solutionVector[count] + "V");
+                    count++;
+                }
+            }
+            //if there are voltage sources present
+            if (solutionVector.length > nodeHashMap.size() && count == nodeHashMap.size()){
+                for (CircuitElement elmIsVSS: elementList){
+                    if (Objects.requireNonNull(elmIsVSS) instanceof VoltageSourceElement voltElm) {
+                        voltElm.setCurrent(solutionVector[count]);
+                        computationResultProperty.set("The current of the voltage source" + elmIsVSS.getComponentID() + "is: " + solutionVector[count] + "A");
+                        count++;
+                    }
+                }
+            }
+        }
     }
 }

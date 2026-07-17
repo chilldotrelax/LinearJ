@@ -46,15 +46,6 @@ public class CurrentSourceElement extends CircuitElement{
     public double getElementValue(){return current;}
     @Override
     public void setElementValue(double newValue){current = newValue;}
-    @Override
-    public double calculateCurrent(double[] voltage) {
-        return current;
-    }
-    //Ignore
-    @Override
-    public double calculateVoltage(double current) {
-        return 0;
-    }
 
     public double[] stampSelf(double[] rightHandSideVector, int begIndex, int endIndex){
         rightHandSideVector[begIndex] -= current;

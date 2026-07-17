@@ -29,40 +29,36 @@ import java.util.List;
 
 public class CircuitNode {
     private final int nodeID;
-    private boolean isGroundNode = false;
+    private boolean isGroundNode;
     private double nodeVoltage;
     private final List<CircuitElement> elementsConnected;
 
     public CircuitNode(int nodeID) {
         this.nodeID = nodeID;
         this.elementsConnected = new ArrayList<>();
+        this.isGroundNode = false;
     }
 
-    public final boolean isGroundNode() {return isGroundNode;}
     public final int getNodeID() {return nodeID;}
     public final double getNodeVoltage(){return nodeVoltage;}
-    public final void setNodeVoltage(double volt){this.nodeVoltage = volt;}
-
+    public final void setNodeVoltage(double volt){
+        this.nodeVoltage = volt;
+    }
     public final boolean isFloatingNode() {return elementsConnected.size() <= 1;}
+    public final boolean isGroundNode() {return isGroundNode;}
 
     public void removeElement(CircuitElement particularElement) throws IllegalArgumentException {
-
-        if ((particularElement.getBegNodeID() == nodeID || particularElement.getEndNodeID() == nodeID)){
+        if ((particularElement != null) && (particularElement.getBegNodeID() == nodeID || particularElement.getEndNodeID() == nodeID)){
             elementsConnected.remove(particularElement);
         }
         else{
-            throw new IllegalArgumentException("Could not find the element in this node");
+            throw new IllegalArgumentException("Unable to find the element in this node or the element might be null.");
         }
     }
 
     public void addElement(CircuitElement particularElement) {
-        if (particularElement instanceof GroundElement){
-            elementsConnected.add(particularElement);
-            this.isGroundNode = true;
-        }
-        else{
-            elementsConnected.add(particularElement);
-        }
+        if (particularElement instanceof GroundElement) {this.isGroundNode = true;}
+        elementsConnected.add(particularElement);
     }
 
     public boolean contains(CircuitElement particularElement) {return elementsConnected.contains(particularElement);}

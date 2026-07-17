@@ -178,8 +178,9 @@ public final class MatrixMath {
        }
     }
 
-    public static double[][] reduce2DMatrixToSubmatrix(final double[][] input, int removeIndex){
-        double[][] result = new double[input.length - 1][input.length];
+    public static double[][] reduce2DMatrixToSubmatrix(final double[][] input, final int removeIndex){
+        //TODO monitor this change for stability. Initially, the result array's column size was initialized to be the same as the initial input array column size, which is wrong.
+        double[][] result = new double[input.length - 1][input.length - 1]; // N-1 Dimension (row & col)
         int resultRow = 0;
         int resultCol = 0;
 
@@ -199,7 +200,7 @@ public final class MatrixMath {
         return result;
     }
 
-    public static double[] reduceVectorToSubvector(final double[] input, int removeIndex){
+    public static double[] reduceVectorToSubvector(final double[] input, final int removeIndex){
         double[] result = new double[input.length - 1];
         int resultIndex = 0;
 

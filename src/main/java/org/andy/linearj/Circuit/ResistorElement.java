@@ -59,16 +59,6 @@ public class ResistorElement extends CircuitElement{
         resistance = newValue;
     }
 
-    @Override
-    public double calculateCurrent(double[] voltage) {
-        return (voltage[1] - voltage[0]) / this.resistance;
-    }
-
-    @Override
-    public double calculateVoltage(double current){
-        return(current * resistance);
-    }
-
     public double[][] stampSelf(double[][] matrix, int begIndex, int endIndex){
         double conductance = 1/getElementValue();
 

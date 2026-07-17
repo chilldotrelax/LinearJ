@@ -24,7 +24,7 @@
 
 package org.andy.linearj.Circuit;
 
-public class CircuitElementFactory {
+public final class CircuitElementFactory {
 
     public CircuitElement createElement(String compID, Integer nodeBegID){return new GroundElement(nodeBegID,compID);}
 

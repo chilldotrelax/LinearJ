@@ -25,15 +25,22 @@
 package org.andy.linearj.Circuit;
 
 public final class CircuitValidator {
-   private CircuitValidator(){
+    private CircuitValidator(){
        //Should never be instantiated.
    }
-    
-    public static boolean isJunctionOpen(){
-        return false;
+
+   public static boolean isCircValid(){
+       return isJunctionOpen() && isElmShort();
+   }
+
+   // These methods should remain private for now, but they can be set public if useful.
+    private static boolean isJunctionOpen(){
+        return true;
     }
-    public static boolean isPointShort(){
-        return false;
+    private static boolean isElmShort(){
+        return true;
     }
+
+
 
 }
