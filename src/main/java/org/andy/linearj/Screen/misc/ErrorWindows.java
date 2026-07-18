@@ -30,16 +30,16 @@ import javafx.scene.control.ButtonType;
 @SuppressWarnings("ALL")
 
 public class ErrorWindows {
-    private ErrorWindows(){
+    private ErrorWindows() {
         //Should never be instantiated
     }
 
-    public static void displayInformative(String dialog){
+    public static void displayInformative(String dialog) {
         Alert informativeGenericMSG = new Alert(Alert.AlertType.INFORMATION, dialog);
         informativeGenericMSG.showAndWait().filter(response -> response == ButtonType.OK);
     }
 
-    public static void displayError(String dialog){
+    public static void displayError(String dialog) {
         Alert errorGenericMSG = new Alert(Alert.AlertType.ERROR, dialog);
         errorGenericMSG.showAndWait().filter(response -> response == ButtonType.OK);
     }

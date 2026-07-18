@@ -14,17 +14,17 @@ public class OutputUnitController {
     @FXML
     private TextArea outputBox;
 
-    public void setOutputBox(String desiredText){
-        if (!desiredText.isEmpty()){
+    public void setOutputBox(String desiredText) {
+        if (!desiredText.isEmpty()) {
             LocalTime time = LocalTime.now(ZoneId.systemDefault());
             DateTimeFormatter formatted = DateTimeFormatter.ofPattern("HH:mm:ss");
-            outputBox.appendText("\n"+ "(" + time.format(formatted) + ")" + " "+ desiredText);
+            outputBox.appendText("\n" + "(" + time.format(formatted) + ")" + " " + desiredText);
             clearBtn.setDisable(false);
         }
     }
 
     @FXML
-    private void clearOutputBox(){
+    private void clearOutputBox() {
         clearBtn.setDisable(true);
         outputBox.clear();
     }

@@ -40,6 +40,8 @@ public final class CircuitValidator {
     private static boolean isElmShort(){
         return true;
     }
+    private static boolean isElmFloating(){return true;}
+
 
 
 

@@ -32,30 +32,38 @@ public abstract class CircuitElement {
     private Integer beginningNodeID;
     private Integer endNodeID;
 
-    protected CircuitElement(Integer begNode){
-        if (begNode.toString().isEmpty()){
+    protected CircuitElement(Integer begNode) {
+        if (begNode.toString().isEmpty()) {
             throw new IllegalArgumentException("Empty arguments");
-        }
-        else{
+        } else {
             this.beginningNodeID = begNode;
         }
     }
 
-    protected CircuitElement(Integer begNode, Integer endNode){
-        if (begNode.toString().isEmpty() || endNode.toString().isEmpty()){
+    protected CircuitElement(Integer begNode, Integer endNode) {
+        if (begNode.toString().isEmpty() || endNode.toString().isEmpty()) {
             throw new IllegalArgumentException("Empty arguments @ begNode or endNode.");
-        }
-        else{
+        } else {
             this.beginningNodeID = begNode;
             this.endNodeID = endNode;
         }
     }
 
-    public final Integer getBegNodeID(){ return beginningNodeID; }
-    public final Integer getEndNodeID(){ return endNodeID;}
-    public final boolean isNodeIDEqual(Integer nodeID){return (Objects.equals(beginningNodeID, nodeID) || Objects.equals(endNodeID, nodeID));}
-    public final void setBeginningNode(Integer newBegNode){beginningNodeID = newBegNode;}
-    public final void setEndNode(Integer newEndNode){endNodeID = newEndNode;}
+    public final Integer getBegNodeID() {
+        return beginningNodeID;
+    }
+    public final Integer getEndNodeID() {
+        return endNodeID;
+    }
+    public final boolean isNodeIDEqual(Integer nodeID) {
+        return (Objects.equals(beginningNodeID, nodeID) || Objects.equals(endNodeID, nodeID));
+    }
+    public final void setBeginningNode(Integer newBegNode) {
+        beginningNodeID = newBegNode;
+    }
+    public final void setEndNode(Integer newEndNode) {
+        endNodeID = newEndNode;
+    }
     public abstract double getElementValue();
     public abstract void setElementValue(double newValue);
     public abstract String getComponentID();

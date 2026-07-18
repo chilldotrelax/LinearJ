@@ -24,9 +24,8 @@
 
 package org.andy.linearj.Screen.controllers;
 
-public class HelpWindow extends PopupWindow{
-    public HelpWindow(){
-        super("/org/andy/linearj/HelpPopupWindow.fxml","Input Help");
+public class HelpWindow extends PopupWindow {
+    public HelpWindow() {
+        super("/org/andy/linearj/HelpPopupWindow.fxml", "Input Help");
     }
-
 }

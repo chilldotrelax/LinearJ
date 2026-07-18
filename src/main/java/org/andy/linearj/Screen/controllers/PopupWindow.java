@@ -40,25 +40,24 @@ public abstract class PopupWindow {
     private final Stage stageRoot;
     private final System.Logger logger;
 
-    protected PopupWindow(final String resourcePath, final String windowTitle){
+    protected PopupWindow(final String resourcePath, final String windowTitle) {
         this.resourcePath = resourcePath;
         this.windowTitle = windowTitle;
         this.stageRoot = new Stage();
         this.logger = System.getLogger("org.andy.linearJ.");
     }
 
-    public void openWindow()  {
+    public void openWindow() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(Objects.requireNonNull(this.resourcePath)));
 
-        try{
+        try {
             Parent root = loader.load();
             this.stageRoot.setTitle(this.windowTitle);
             this.stageRoot.setScene(new Scene(root));
             this.stageRoot.setResizable(false);
             this.stageRoot.show();
         } catch (IOException e) {
-            logger.log(INFO,()-> "Unable to load window. This is most likely due to a missing/invalid resource path. Trying again. ");
+            logger.log(INFO, () -> "Unable to load window. This is most likely due to a missing/invalid resource path. Trying again. ");
         }
     }
 }
-

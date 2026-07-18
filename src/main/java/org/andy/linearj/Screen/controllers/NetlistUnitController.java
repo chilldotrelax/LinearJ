@@ -35,47 +35,48 @@ import org.andy.linearj.Circuit.CircuitElement;
 
 public class NetlistUnitController {
     @FXML
-    private TableView<ElementDataModel> circuitElementTableView;
+    private TableView < ElementDataModel > circuitElementTableView;
     @FXML
-    private TableColumn<ElementDataModel, String> componentIDColumn;
+    private TableColumn < ElementDataModel, String > componentIDColumn;
     @FXML
-    private TableColumn<ElementDataModel, Integer> begNodeIDColumn;
+    private TableColumn < ElementDataModel, Integer > begNodeIDColumn;
     @FXML
-    private TableColumn<ElementDataModel, Integer> endNodeIDColumn;
+    private TableColumn < ElementDataModel, Integer > endNodeIDColumn;
     @FXML
-    private TableColumn<ElementDataModel,Double> componentValueColumn;
+    private TableColumn < ElementDataModel, Double > componentValueColumn;
     @FXML
     private Button clearNetlistBtn, removeElementBtn;
 
-    private ObservableList<ElementDataModel> elementDataModelObservableList;
-    private ObservableList<CircuitElement> circuitElementObsList;
+    private ObservableList < ElementDataModel > elementDataModelObservableList;
+    private ObservableList < CircuitElement > circuitElementObsList;
 
     private final SimpleStringProperty clrNetlistOutput = new SimpleStringProperty();
-    public SimpleStringProperty getClrNetlistOutputProperty(){ return clrNetlistOutput;}
+    public SimpleStringProperty getClrNetlistOutputProperty() {
+        return clrNetlistOutput;
+    }
 
-
-    public void setObservableLists(ObservableList<ElementDataModel> elmDataModel,ObservableList<CircuitElement> circuitElementObservableList){
+    public void setObservableLists(ObservableList < ElementDataModel > elmDataModel, ObservableList < CircuitElement > circuitElementObservableList) {
         this.elementDataModelObservableList = elmDataModel;
         this.circuitElementObsList = circuitElementObservableList;
 
         circuitElementTableView.setItems(this.elementDataModelObservableList);
 
-        elementDataModelObservableList.addListener(new ListChangeListener<>() {
+        elementDataModelObservableList.addListener(new ListChangeListener < > () {
             @Override
-            public void onChanged(Change<? extends ElementDataModel> c) {
-                while (c.next()){
+            public void onChanged(Change < ? extends ElementDataModel > c) {
+                while (c.next()) {
                     clearNetlistBtn.setDisable(true);
-                    if ((c.wasAdded() && !elementDataModelObservableList.isEmpty()) || (c.wasRemoved() && !elementDataModelObservableList.isEmpty() )){
+                    if ((c.wasAdded() && !elementDataModelObservableList.isEmpty()) || (c.wasRemoved() && !elementDataModelObservableList.isEmpty())) {
                         clearNetlistBtn.setDisable(false);
                     }
                 }
             }
         });
-        
+
     }
 
     @FXML
-    private void initialize(){
+    private void initialize() {
         componentIDColumn.setCellValueFactory(cellData -> cellData.getValue().componentIDProperty());
         begNodeIDColumn.setCellValueFactory(cellData -> cellData.getValue().begNodeIDProperty().asObject());
         endNodeIDColumn.setCellValueFactory(cellData -> cellData.getValue().endNodeIDProperty().asObject());
@@ -86,7 +87,7 @@ public class NetlistUnitController {
     }
 
     @FXML
-    private void clearNetlist(){
+    private void clearNetlist() {
         elementDataModelObservableList.clear();
         circuitElementObsList.clear();
         clrNetlistOutput.set("Cleared netlist.");

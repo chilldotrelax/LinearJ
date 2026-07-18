@@ -47,16 +47,11 @@ public class CircuitSolverUnitController {
     private ObservableList<ElementDataModel> elmListInUnit;
     private ObservableList<CircuitElement> circuitElementObservableListInUnit;
     private final HashMap<Integer, CircuitNode> circuitNodeHashMap;
-
+    private boolean isSolvedAlready = false;
     private final SimpleStringProperty computationOutput = new SimpleStringProperty();
 
-    public SimpleStringProperty computationOutputProperty() {
-        return computationOutput;
-    }
-
-    public CircuitSolverUnitController() {
-        this.circuitNodeHashMap = new HashMap<>();
-    }
+    public SimpleStringProperty computationOutputProperty() {return computationOutput;}
+    public CircuitSolverUnitController() {this.circuitNodeHashMap = new HashMap<>();}
 
     public void setObservableLists(ObservableList<ElementDataModel> elmList, ObservableList<CircuitElement> elementObservableList) {
         this.elmListInUnit = elmList;
@@ -140,9 +135,18 @@ public class CircuitSolverUnitController {
 
     @FXML
     private void solveDCCircuit() {
-        CircuitElement[] elementsList = circuitElementObservableListInUnit.toArray(new CircuitElement[0]);
-        CircuitSolver solve = new CircuitSolver(elementsList, circuitNodeHashMap,computationOutput);
-        solve.solveCircuit();
+        //TODO: finish this implementation so that it actually works right.
+        if (!isSolvedAlready){
+            CircuitElement[] elementsList = circuitElementObservableListInUnit.toArray(new CircuitElement[0]);
+            CircuitSolver solve = new CircuitSolver(elementsList, circuitNodeHashMap,computationOutput);
+            solve.solveCircuit();
+            isSolvedAlready = true;
+        }
+        else{
+            CircuitElement[] elementsList = circuitElementObservableListInUnit.toArray(new CircuitElement[0]);
+            CircuitSolver solve = new CircuitSolver(elementsList, circuitNodeHashMap,computationOutput);
+            solve.solveCircuit();
+        }
 
     }
 }

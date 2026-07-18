@@ -24,20 +24,21 @@
 
 package org.andy.linearj.Screen.controllers;
 
-
 public class AboutWindow extends PopupWindow {
-    public AboutWindow(){super("/org/andy/linearj/AboutPopupWindow.fxml","About");}
+    public AboutWindow() {
+        super("/org/andy/linearj/AboutPopupWindow.fxml", "About");
+    }
 
     //TODO finish this method.
-//    @FXML
-//    private void openLicenseFile() {
-//        Path licenseFilePath = Paths.get("LICENSE");
-//        try {
-//            if (Files.exists(licenseFilePath)) {
-//                Files.newBufferedReader(licenseFilePath);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    //    @FXML
+    //    private void openLicenseFile() {
+    //        Path licenseFilePath = Paths.get("LICENSE");
+    //        try {
+    //            if (Files.exists(licenseFilePath)) {
+    //                Files.newBufferedReader(licenseFilePath);
+    //            }
+    //        } catch (IOException e) {
+    //            e.printStackTrace();
+    //        }
+    //    }
 }

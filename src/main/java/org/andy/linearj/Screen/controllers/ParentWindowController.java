@@ -47,28 +47,36 @@ public class ParentWindowController {
     @FXML
     private CheckBox debugUtilsCheckbox;
 
-    private ObservableList<ElementDataModel> elementDataModelObservableList;
-    private ObservableList<CircuitElement> circuitElementObservableList;
+    private ObservableList < ElementDataModel > elementDataModelObservableList;
+    private ObservableList < CircuitElement > circuitElementObservableList;
 
-    public ParentWindowController(){
+    public ParentWindowController() {
         this.elementDataModelObservableList = FXCollections.observableArrayList();
         this.circuitElementObservableList = FXCollections.observableArrayList();
     }
 
     @FXML
     private void initialize() {
-        netlistUnitController.setObservableLists(elementDataModelObservableList,circuitElementObservableList);
-        circuitSolverUnitController.setObservableLists(elementDataModelObservableList,circuitElementObservableList);
+        netlistUnitController.setObservableLists(elementDataModelObservableList, circuitElementObservableList);
+        circuitSolverUnitController.setObservableLists(elementDataModelObservableList, circuitElementObservableList);
 
-        matrixCalculatorUnitController.computationResultProperty().addListener(((observable, oldValue, newValue) -> {outputConsoleController.setOutputBox(newValue);}));
-        circuitSolverUnitController.computationOutputProperty().addListener(((observable, oldValue, newValue) -> {outputConsoleController.setOutputBox(newValue);}));
-        netlistUnitController.getClrNetlistOutputProperty().addListener((observable, oldValue, newValue) -> {outputConsoleController.setOutputBox(newValue);});
+        matrixCalculatorUnitController.computationResultProperty().addListener(((observable, oldValue, newValue) -> {
+            outputConsoleController.setOutputBox(newValue);
+        }));
+        circuitSolverUnitController.computationOutputProperty().addListener(((observable, oldValue, newValue) -> {
+            outputConsoleController.setOutputBox(newValue);
+        }));
+        netlistUnitController.getClrNetlistOutputProperty().addListener((observable, oldValue, newValue) -> {
+            outputConsoleController.setOutputBox(newValue);
+        });
     }
 
     @FXML
-    private void setDebugUtilsVisibility(){
+    private void setDebugUtilsVisibility() {
         debugVBox.setVisible(true);
-        if (!debugUtilsCheckbox.isSelected()){debugVBox.setVisible(false);}
+        if (!debugUtilsCheckbox.isSelected()) {
+            debugVBox.setVisible(false);
+        }
     }
 
     @FXML
@@ -78,7 +86,7 @@ public class ParentWindowController {
     }
 
     @FXML
-    private void quitApp() {Platform.exit();}
+    private void quitApp() {
+        Platform.exit();
+    }
 }
-
-

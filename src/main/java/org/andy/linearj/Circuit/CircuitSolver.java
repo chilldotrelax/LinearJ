@@ -45,7 +45,7 @@ public class CircuitSolver {
 
     public CircuitSolver(final CircuitElement[] elements, final Map<Integer, CircuitNode> nodes){
         this.elementList = elements;
-        this.nodeHashMap = new HashMap<>(nodes);//Check this
+        this.nodeHashMap = new HashMap<>(nodes);
         this.temporaryListForIndexOnly = new ArrayList<>();
 
         int numberOfVoltageElementsOffSet = 0;
@@ -139,10 +139,11 @@ public class CircuitSolver {
         }
 
         else{
+            computationResultProperty.set("The node number(s) displayed in the results below are the same as the node ID.");
             for (CircuitNode node: nodesCollection){
                 if (!node.isGroundNode()){
                     node.setNodeVoltage(solutionVector[count]);
-                    computationResultProperty.set("The voltage at node " + node.getNodeID() + "(w.r.t ground node) is: " + solutionVector[count] + "V");
+                    computationResultProperty.set("The voltage at node " + node.getNodeID() + " (w.r.t ground node " + this.groundNodeIndex + ") is: " + solutionVector[count] + "V");
                     count++;
                 }
             }
@@ -151,7 +152,7 @@ public class CircuitSolver {
                 for (CircuitElement elmIsVSS: elementList){
                     if (Objects.requireNonNull(elmIsVSS) instanceof VoltageSourceElement voltElm) {
                         voltElm.setCurrent(solutionVector[count]);
-                        computationResultProperty.set("The current of the voltage source" + elmIsVSS.getComponentID() + "is: " + solutionVector[count] + "A");
+                        computationResultProperty.set("The current of the voltage source " + elmIsVSS.getComponentID() + " is: " + solutionVector[count] + "A");
                         count++;
                     }
                 }

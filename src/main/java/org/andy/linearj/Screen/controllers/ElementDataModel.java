@@ -34,18 +34,34 @@ public class ElementDataModel {
     private final SimpleIntegerProperty endNodeID;
     private final SimpleDoubleProperty componentValue;
 
-    public ElementDataModel(String componentID, Integer begNodeID, Integer endNodeID, Double componentValue ){
+    public ElementDataModel(String componentID, Integer begNodeID, Integer endNodeID, Double componentValue) {
         this.componentID = new SimpleStringProperty(componentID);
         this.begNodeID = new SimpleIntegerProperty(begNodeID);
         this.endNodeID = new SimpleIntegerProperty(endNodeID);
         this.componentValue = new SimpleDoubleProperty(componentValue);
     }
-    public final SimpleStringProperty componentIDProperty(){return componentID;}
-    public final SimpleIntegerProperty begNodeIDProperty(){return begNodeID;}
-    public final SimpleIntegerProperty endNodeIDProperty(){return endNodeID;}
-    public final SimpleDoubleProperty componentValueProperty(){return componentValue;}
-    public final void setComponentID(String newID){componentID.set(newID);}
-    public final void setBegNodeID(Integer newID){begNodeID.set(newID);}
-    public final void setEndNodeID(Integer newID){endNodeID.set(newID);}
-    public final void setComponentValue(Double newID){componentValue.set(newID);}
+    public final SimpleStringProperty componentIDProperty() {
+        return componentID;
+    }
+    public final SimpleIntegerProperty begNodeIDProperty() {
+        return begNodeID;
+    }
+    public final SimpleIntegerProperty endNodeIDProperty() {
+        return endNodeID;
+    }
+    public final SimpleDoubleProperty componentValueProperty() {
+        return componentValue;
+    }
+    public final void setComponentID(String newID) {
+        componentID.set(newID);
+    }
+    public final void setBegNodeID(Integer newID) {
+        begNodeID.set(newID);
+    }
+    public final void setEndNodeID(Integer newID) {
+        endNodeID.set(newID);
+    }
+    public final void setComponentValue(Double newID) {
+        componentValue.set(newID);
+    }
 }

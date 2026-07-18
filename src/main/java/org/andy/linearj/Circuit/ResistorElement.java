@@ -26,31 +26,32 @@ package org.andy.linearj.Circuit;
 
 import org.andy.linearj.Screen.misc.exception.NegativeNumberException;
 
-public class ResistorElement extends CircuitElement{
+public class ResistorElement extends CircuitElement {
     private double resistance;
     private String componentID;
 
-    public ResistorElement(Integer begNodeID, Integer endNodeID, String componentID, double resistanceVal){
-        super(begNodeID,endNodeID);
-        if (resistanceVal < 0){
+    public ResistorElement(Integer begNodeID, Integer endNodeID, String componentID, double resistanceVal) {
+        super(begNodeID, endNodeID);
+        if (resistanceVal < 0) {
             throw new NegativeNumberException("Resistance cannot be negative!");
-        }
-        else{
+        } else {
             this.resistance = resistanceVal;
             this.componentID = componentID;
         }
     }
 
     @Override
-    public String getComponentID(){
+    public String getComponentID() {
         return componentID;
     }
 
     @Override
-    public void setComponentID(String newComponentID){componentID = newComponentID;}
+    public void setComponentID(String newComponentID) {
+        componentID = newComponentID;
+    }
 
     @Override
-    public double getElementValue(){
+    public double getElementValue() {
         return resistance;
     }
 
@@ -59,8 +60,8 @@ public class ResistorElement extends CircuitElement{
         resistance = newValue;
     }
 
-    public double[][] stampSelf(double[][] matrix, int begIndex, int endIndex){
-        double conductance = 1/getElementValue();
+    public double[][] stampSelf(double[][] matrix, int begIndex, int endIndex) {
+        double conductance = 1 / getElementValue();
 
         matrix[begIndex][begIndex] += conductance;
         matrix[endIndex][endIndex] += conductance;

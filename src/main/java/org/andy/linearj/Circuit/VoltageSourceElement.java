@@ -24,39 +24,47 @@
 
 package org.andy.linearj.Circuit;
 
-public class VoltageSourceElement extends CircuitElement{
+public class VoltageSourceElement extends CircuitElement {
     private double voltage;
     private double current;
     private String componentID;
 
-    public VoltageSourceElement(int begNode, int endNode, String componentID, double voltage){
+    public VoltageSourceElement(int begNode, int endNode, String componentID, double voltage) {
         super(begNode, endNode);
         this.componentID = componentID;
         this.voltage = voltage;
     }
 
     @Override
-    public String getComponentID(){return componentID;}
+    public String getComponentID() {
+        return componentID;
+    }
 
     @Override
-    public void setComponentID(final String newComponentID) {componentID = newComponentID;}
+    public void setComponentID(final String newComponentID) {
+        componentID = newComponentID;
+    }
 
     @Override
-    public double getElementValue(){return voltage;}
+    public double getElementValue() {
+        return voltage;
+    }
 
     @Override
-    public void setElementValue(final double newValue){
+    public void setElementValue(final double newValue) {
         voltage = newValue;
     }
 
-    public void setCurrent(final double newCurrent){current = newCurrent;}
+    public void setCurrent(final double newCurrent) {
+        current = newCurrent;
+    }
 
-    public double[] stampSelf(double[] rightHandVector,int preShiftedIndex,int selfOffset){
+    public double[] stampSelf(double[] rightHandVector, int preShiftedIndex, int selfOffset) {
         rightHandVector[preShiftedIndex + selfOffset] += voltage;
         return rightHandVector;
     }
-    
-    public double[][] stampToGlobalMatrix(double[][] resistorMatrix, int begNode, int endNode, int preShiftIndex, int offset){
+
+    public double[][] stampToGlobalMatrix(double[][] resistorMatrix, int begNode, int endNode, int preShiftIndex, int offset) {
         resistorMatrix[preShiftIndex + offset][begNode] += 1;
         resistorMatrix[preShiftIndex + offset][endNode] -= 1;
         resistorMatrix[begNode][preShiftIndex + offset] += 1;

@@ -24,30 +24,37 @@
 
 package org.andy.linearj.Circuit;
 
-public class CurrentSourceElement extends CircuitElement{
+public class CurrentSourceElement extends CircuitElement {
     private double current;
     private String componentID;
 
-    public CurrentSourceElement(int begNodeID, int endNodeID, String componentID, double current){
+    public CurrentSourceElement(int begNodeID, int endNodeID, String componentID, double current) {
         super(begNodeID, endNodeID);
-        if (componentID.isEmpty() || Double.toString(current).isEmpty()){
+        if (componentID.isEmpty() || Double.toString(current).isEmpty()) {
             throw new IllegalArgumentException("Empty input or invalid input!");
-        }
-        else{
+        } else {
             this.componentID = componentID;
             this.current = current;
         }
     }
     @Override
-    public String getComponentID(){return componentID;}
+    public String getComponentID() {
+        return componentID;
+    }
     @Override
-    public void setComponentID(String newComponentID){componentID = newComponentID;}
+    public void setComponentID(String newComponentID) {
+        componentID = newComponentID;
+    }
     @Override
-    public double getElementValue(){return current;}
+    public double getElementValue() {
+        return current;
+    }
     @Override
-    public void setElementValue(double newValue){current = newValue;}
+    public void setElementValue(double newValue) {
+        current = newValue;
+    }
 
-    public double[] stampSelf(double[] rightHandSideVector, int begIndex, int endIndex){
+    public double[] stampSelf(double[] rightHandSideVector, int begIndex, int endIndex) {
         rightHandSideVector[begIndex] -= current;
         rightHandSideVector[endIndex] += current;
         return rightHandSideVector;
