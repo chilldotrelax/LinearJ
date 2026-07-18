@@ -52,15 +52,16 @@ public class VoltageSourceElement extends CircuitElement {
 
     @Override
     public void setElementValue(final double newValue) {
-        voltage = newValue;
+        this.voltage = newValue;
     }
 
     public void setCurrent(final double newCurrent) {
-        current = newCurrent;
+        this.current = newCurrent;
     }
+    public double getVoltageSourceCurrent(){return this.current;}
 
     public double[] stampSelf(double[] rightHandVector, int preShiftedIndex, int selfOffset) {
-        rightHandVector[preShiftedIndex + selfOffset] += voltage;
+        rightHandVector[preShiftedIndex + selfOffset] += this.voltage;
         return rightHandVector;
     }
 

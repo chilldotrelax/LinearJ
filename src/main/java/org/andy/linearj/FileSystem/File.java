@@ -26,6 +26,8 @@ package org.andy.linearj.FileSystem;
 
 import java.nio.file.Path;
 
+//For now
+@SuppressWarnings("all")
 public class File {
 
     private final String fileName;

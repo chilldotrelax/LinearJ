@@ -47,8 +47,8 @@ public class ParentWindowController {
     @FXML
     private CheckBox debugUtilsCheckbox;
 
-    private ObservableList < ElementDataModel > elementDataModelObservableList;
-    private ObservableList < CircuitElement > circuitElementObservableList;
+    private final ObservableList < ElementDataModel > elementDataModelObservableList;
+    private final ObservableList < CircuitElement > circuitElementObservableList;
 
     public ParentWindowController() {
         this.elementDataModelObservableList = FXCollections.observableArrayList();

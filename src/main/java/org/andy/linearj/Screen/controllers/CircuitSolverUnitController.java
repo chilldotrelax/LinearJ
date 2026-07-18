@@ -59,12 +59,14 @@ public class CircuitSolverUnitController {
 
         circuitElementObservableListInUnit.addListener(new ListChangeListener<>() {
             @Override
+            @SuppressWarnings("unchecked") //Fine here, should be safe enough.
             public void onChanged(Change<? extends CircuitElement> c) {
                 while (c.next()) {
                     if (!circuitElementObservableListInUnit.isEmpty() && c.wasAdded()) {
                         solveCircuitBtn.setDisable(false);
                         //Unchecked cast: 'javafx.collections.ListChangeListener.Change<capture<? extends org.andy.linearj.Circuit.CircuitElement>>' to 'javafx.collections.ListChangeListener.Change<org.andy.linearj.Circuit.CircuitElement>'
                         handleAddChange((Change<CircuitElement>) c);
+
                     }
                     if (!circuitElementObservableListInUnit.isEmpty() && c.wasRemoved()) {
                         solveCircuitBtn.setDisable(false);
@@ -135,7 +137,7 @@ public class CircuitSolverUnitController {
 
     @FXML
     private void solveDCCircuit() {
-        //TODO: finish this implementation so that it actually works right.
+        //Finish this implementation so that it actually works right.
         if (!isSolvedAlready){
             CircuitElement[] elementsList = circuitElementObservableListInUnit.toArray(new CircuitElement[0]);
             CircuitSolver solve = new CircuitSolver(elementsList, circuitNodeHashMap,computationOutput);

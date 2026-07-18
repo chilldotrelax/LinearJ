@@ -98,42 +98,40 @@ public class LUDecomposition {
     }
 
     //For A * x = b with n linear equations, return sol vector x.
-    public double[] solve(double[] RHS, double[] X) {
+    public double[] solve(double[] rightHandSide, double[] x) {
         int ip;
         int ii = 0;
         double sum;
 
-        if (RHS.length != this.numRows || X.length != this.numRows) {
+        if (rightHandSide.length != this.numRows || x.length != this.numRows) {
             throw new IllegalMatrixException("Bad sizes");
         }
 
-        for (int i = 0; i < this.numRows; i++) {
-            X[i] = RHS[i];
-        }
+        System.arraycopy(rightHandSide, 0, x, 0, this.numRows);
 
         for (int i = 0; i < this.numRows; i++) {
             ip = this.indexOfPermutation[i];
-            sum = X[ip];
-            X[ip] = X[i];
+            sum = x[ip];
+            x[ip] = x[i];
 
             if (ii != 0) {
                 for (int j = ii - 1; j < i; j++) {
-                    sum -= this.decomposedLU[i][j] * X[j];
+                    sum -= this.decomposedLU[i][j] * x[j];
                 }
             } else if (sum != 0.0) {
                 ii = i + 1;
             }
-            X[i] = sum;
+            x[i] = sum;
         }
 
         //Perform a back substitution
         for (int i = this.numRows - 1; i >= 0; i--) {
-            sum = X[i];
+            sum = x[i];
             for (int j = i + 1; j < this.numRows; j++) {
-                sum -= this.decomposedLU[i][j] * X[j];
+                sum -= this.decomposedLU[i][j] * x[j];
             }
-            X[i] = sum / this.decomposedLU[i][i];
+            x[i] = sum / this.decomposedLU[i][i];
         }
-        return X;
+        return x;
     }
 }
