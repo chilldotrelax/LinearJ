@@ -41,5 +41,6 @@ public class LinearJParent extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+
     }
 }

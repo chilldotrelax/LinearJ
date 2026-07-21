@@ -29,6 +29,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.SelectionModel;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import org.andy.linearj.Circuit.CircuitElement;
@@ -49,6 +50,8 @@ public class NetlistUnitController {
 
     private ObservableList < ElementDataModel > elementDataModelObservableList;
     private ObservableList < CircuitElement > circuitElementObsList;
+
+    private SelectionModel < ElementDataModel > circuitSelectionModel;
 
     private final SimpleStringProperty clrNetlistOutput = new SimpleStringProperty();
     public SimpleStringProperty getClrNetlistOutputProperty() {
@@ -72,7 +75,6 @@ public class NetlistUnitController {
                 }
             }
         });
-
     }
 
     @FXML
@@ -82,8 +84,25 @@ public class NetlistUnitController {
         endNodeIDColumn.setCellValueFactory(cellData -> cellData.getValue().endNodeIDProperty().asObject());
         componentValueColumn.setCellValueFactory(cellData -> cellData.getValue().componentValueProperty().asObject());
 
-        circuitElementTableView.getColumns().forEach(column -> column.setReorderable(false));
+        this.circuitSelectionModel = circuitElementTableView.getSelectionModel();
 
+        circuitElementTableView.getColumns().forEach(column ->
+                column.setReorderable(false)
+        );
+
+        circuitElementTableView.setOnMouseClicked(click -> {
+            if (!circuitSelectionModel.isEmpty()) {
+                removeElementBtn.setDisable(false);
+            }
+        });
+    }
+
+    @FXML
+    private void removeNetlistElement() {
+        if (!circuitElementTableView.getSelectionModel().isEmpty()) {
+            elementDataModelObservableList.remove(circuitSelectionModel.getSelectedItem());
+            circuitElementObsList.removeIf(circuitElement -> circuitElement.getComponentID().equals(circuitSelectionModel.getSelectedItem().componentIDProperty().get()));
+        }
     }
 
     @FXML

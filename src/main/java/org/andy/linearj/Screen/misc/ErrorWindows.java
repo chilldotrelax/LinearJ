@@ -29,7 +29,7 @@ import javafx.scene.control.ButtonType;
 
 @SuppressWarnings("ALL")
 
-public class ErrorWindows {
+public final class ErrorWindows {
     private ErrorWindows() {
         //Should never be instantiated
     }

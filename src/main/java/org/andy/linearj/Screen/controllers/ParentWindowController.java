@@ -28,8 +28,6 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.layout.VBox;
 
 import org.andy.linearj.Circuit.CircuitElement;
 
@@ -43,9 +41,7 @@ public class ParentWindowController {
     @FXML
     private CircuitSolverUnitController circuitSolverUnitController;
     @FXML
-    private VBox debugVBox;
-    @FXML
-    private CheckBox debugUtilsCheckbox;
+    private MenuBarUnitController menuBarUnitController;
 
     private final ObservableList < ElementDataModel > elementDataModelObservableList;
     private final ObservableList < CircuitElement > circuitElementObservableList;
@@ -71,22 +67,4 @@ public class ParentWindowController {
         });
     }
 
-    @FXML
-    private void setDebugUtilsVisibility() {
-        debugVBox.setVisible(true);
-        if (!debugUtilsCheckbox.isSelected()) {
-            debugVBox.setVisible(false);
-        }
-    }
-
-    @FXML
-    private void triggerAboutMenu() {
-        PopupWindow aboutWindow = new AboutWindow();
-        aboutWindow.openWindow();
-    }
-
-    @FXML
-    private void quitApp() {
-        Platform.exit();
-    }
 }

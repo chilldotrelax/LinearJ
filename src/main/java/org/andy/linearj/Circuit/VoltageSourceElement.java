@@ -58,7 +58,9 @@ public class VoltageSourceElement extends CircuitElement {
     public void setCurrent(final double newCurrent) {
         this.current = newCurrent;
     }
-    public double getVoltageSourceCurrent(){return this.current;}
+    public double getVoltageSourceCurrent() {
+        return this.current;
+    }
 
     public double[] stampSelf(double[] rightHandVector, int preShiftedIndex, int selfOffset) {
         rightHandVector[preShiftedIndex + selfOffset] += this.voltage;

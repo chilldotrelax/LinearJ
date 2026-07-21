@@ -33,6 +33,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+
 import org.andy.linearj.Circuit.*;
 import org.andy.linearj.Screen.misc.ErrorWindows;
 
@@ -47,7 +48,6 @@ public class CircuitSolverUnitController {
     private ObservableList<ElementDataModel> elmListInUnit;
     private ObservableList<CircuitElement> circuitElementObservableListInUnit;
     private final HashMap<Integer, CircuitNode> circuitNodeHashMap;
-    private boolean isSolvedAlready = false;
     private final SimpleStringProperty computationOutput = new SimpleStringProperty();
 
     public SimpleStringProperty computationOutputProperty() {return computationOutput;}
@@ -64,18 +64,14 @@ public class CircuitSolverUnitController {
                 while (c.next()) {
                     if (!circuitElementObservableListInUnit.isEmpty() && c.wasAdded()) {
                         solveCircuitBtn.setDisable(false);
-                        //Unchecked cast: 'javafx.collections.ListChangeListener.Change<capture<? extends org.andy.linearj.Circuit.CircuitElement>>' to 'javafx.collections.ListChangeListener.Change<org.andy.linearj.Circuit.CircuitElement>'
                         handleAddChange((Change<CircuitElement>) c);
-
                     }
                     if (!circuitElementObservableListInUnit.isEmpty() && c.wasRemoved()) {
                         solveCircuitBtn.setDisable(false);
-                        //Unchecked cast: 'javafx.collections.ListChangeListener.Change<capture<? extends org.andy.linearj.Circuit.CircuitElement>>' to 'javafx.collections.ListChangeListener.Change<org.andy.linearj.Circuit.CircuitElement>'
                         handleRemoveChange((Change<CircuitElement>) c);
                     }
                     if ((circuitElementObservableListInUnit.size() <= 1)) {
                         solveCircuitBtn.setDisable(true);
-                        //Unchecked cast: 'javafx.collections.ListChangeListener.Change<capture<? extends org.andy.linearj.Circuit.CircuitElement>>' to 'javafx.collections.ListChangeListener.Change<org.andy.linearj.Circuit.CircuitElement>'
                         handleRemoveChange((Change<CircuitElement>) c);
                     }
                 }
@@ -137,18 +133,10 @@ public class CircuitSolverUnitController {
 
     @FXML
     private void solveDCCircuit() {
-        //Finish this implementation so that it actually works right.
-        if (!isSolvedAlready){
             CircuitElement[] elementsList = circuitElementObservableListInUnit.toArray(new CircuitElement[0]);
+
             CircuitSolver solve = new CircuitSolver(elementsList, circuitNodeHashMap,computationOutput);
             solve.solveCircuit();
-            isSolvedAlready = true;
-        }
-        else{
-            CircuitElement[] elementsList = circuitElementObservableListInUnit.toArray(new CircuitElement[0]);
-            CircuitSolver solve = new CircuitSolver(elementsList, circuitNodeHashMap,computationOutput);
-            solve.solveCircuit();
-        }
 
     }
 }

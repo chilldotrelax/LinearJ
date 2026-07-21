@@ -24,21 +24,32 @@
 
 package org.andy.linearj.Screen.controllers;
 
+import javafx.fxml.FXML;
+import org.andy.linearj.Screen.misc.ErrorWindows;
+
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Paths;
+
 public class AboutWindow extends PopupWindow {
+
     public AboutWindow() {
         super("/org/andy/linearj/AboutPopupWindow.fxml", "About");
     }
 
-    //TODO finish this method.
-    //    @FXML
-    //    private void openLicenseFile() {
-    //        Path licenseFilePath = Paths.get("LICENSE");
-    //        try {
-    //            if (Files.exists(licenseFilePath)) {
-    //                Files.newBufferedReader(licenseFilePath);
-    //            }
-    //        } catch (IOException e) {
-    //            e.printStackTrace();
-    //        }
-    //    }
+    @FXML
+    private void openLicenseFile() {
+        try {
+            File licenseFile = new File(Paths.get("License").toUri());
+            if (licenseFile.exists()) {
+                Desktop.getDesktop().open(licenseFile);
+            }
+        } catch (InvalidPathException e) {
+            ErrorWindows.displayError("Could not find the file path for LICENSES");
+        } catch (IOException e) {
+            ErrorWindows.displayError("Could not find the file LICENSES");
+        }
+    }
 }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<MenuBar xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"  fx:controller="org.andy.linearj.Screen.controllers.MenuBarUnitController" stylesheets="@CSSStyleSheets/ParentWindow.css" VBox.vgrow="NEVER">
+    <Menu mnemonicParsing="false" text="File">
+
+        <MenuItem disable="true" mnemonicParsing="false" text="(Coming Soon) Import Netlist" />
+
+        <MenuItem disable="true" mnemonicParsing="false" text="(Coming Soon) Export Netlist" />
+
+        <SeparatorMenuItem mnemonicParsing="false" />
+
+        <MenuItem disable="true" mnemonicParsing="false" text="(Coming Soon) Preferences" />
+
+        <SeparatorMenuItem mnemonicParsing="false" />
+
+        <MenuItem mnemonicParsing="false" onAction="#quitApp" text="Quit LinearJ" />
+    </Menu>
+
+    <Menu mnemonicParsing="false" text="About">
+        <MenuItem mnemonicParsing="false" onAction="#triggerAboutMenu" text="About LinearJ" />
+    </Menu>
+
+</MenuBar>

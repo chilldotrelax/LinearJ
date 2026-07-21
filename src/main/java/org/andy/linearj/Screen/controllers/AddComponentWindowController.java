@@ -140,6 +140,8 @@ public class AddComponentWindowController {
     @FXML
     private void setDebugNetlist() {
         CircuitElementFactory factory = new CircuitElementFactory();
+        //Sample circuit
+
         //G0
         circuitElementObservableList.add(factory.createElement("G1", 0));
         elementDataModelObservableList.add(new ElementDataModel("G0", 0, 0, 0.0));

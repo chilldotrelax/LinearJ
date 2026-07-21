@@ -29,7 +29,7 @@
             </styleClass>
         </Button>
 
-        <Button fx:id="removeElementBtn" defaultButton="true" disable="true" mnemonicParsing="false" prefWidth="150.0" stylesheets="@CSSStyleSheets/buttons.css" text="Remove Element">
+        <Button fx:id="removeElementBtn" defaultButton="true" disable="true" mnemonicParsing="false" prefWidth="150.0" stylesheets="@CSSStyleSheets/buttons.css" text="Remove Element" onAction="#removeNetlistElement">
             <styleClass>
                 <String fx:value="button_main" />
                 <String fx:value="button-primary" />

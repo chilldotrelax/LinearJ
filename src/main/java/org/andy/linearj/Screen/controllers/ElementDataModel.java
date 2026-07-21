@@ -52,16 +52,13 @@ public class ElementDataModel {
     public final SimpleDoubleProperty componentValueProperty() {
         return componentValue;
     }
-    public final void setComponentID(String newID) {
-        componentID.set(newID);
-    }
+    public final void setComponentID(String newID) {componentID.set(newID);}
     public final void setBegNodeID(Integer newID) {
         begNodeID.set(newID);
     }
-    public final void setEndNodeID(Integer newID) {
-        endNodeID.set(newID);
-    }
+    public final void setEndNodeID(Integer newID) {endNodeID.set(newID);}
     public final void setComponentValue(Double newID) {
         componentValue.set(newID);
     }
+
 }

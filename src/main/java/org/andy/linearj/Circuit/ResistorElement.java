@@ -30,7 +30,7 @@ public class ResistorElement extends CircuitElement {
     private double resistance;
     private String componentID;
 
-    public ResistorElement(Integer begNodeID, Integer endNodeID, String componentID, double resistanceVal) {
+    public ResistorElement(final Integer begNodeID, final Integer endNodeID, final String componentID, final double resistanceVal) {
         super(begNodeID, endNodeID);
         if (resistanceVal < 0) {
             throw new NegativeNumberException("Resistance cannot be negative!");
@@ -46,7 +46,7 @@ public class ResistorElement extends CircuitElement {
     }
 
     @Override
-    public void setComponentID(String newComponentID) {
+    public void setComponentID(final String newComponentID) {
         componentID = newComponentID;
     }
 
@@ -56,7 +56,7 @@ public class ResistorElement extends CircuitElement {
     }
 
     @Override
-    public void setElementValue(double newValue) {
+    public void setElementValue(final double newValue) {
         resistance = newValue;
     }
 

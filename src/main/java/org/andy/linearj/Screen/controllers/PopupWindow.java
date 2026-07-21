@@ -57,7 +57,7 @@ public abstract class PopupWindow {
             this.stageRoot.setResizable(false);
             this.stageRoot.show();
         } catch (IOException e) {
-            logger.log(INFO, () -> "Unable to load window. This is most likely due to a missing/invalid resource path. Trying again. ");
+            logger.log(INFO, () -> "Unable to load window. This is most likely due to a missing/invalid resource path." + e);
         }
     }
 }

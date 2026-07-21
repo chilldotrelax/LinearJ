@@ -14,7 +14,8 @@ public class GroundElement extends CircuitElement {
     }
 
     @Override
-    public void setElementValue(double newValue) {}
+    public void setElementValue(double newValue) {
+    }
 
     @Override
     public String getComponentID() {

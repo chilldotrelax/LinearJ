@@ -42,7 +42,7 @@ public abstract class CircuitElement {
 
     protected CircuitElement(Integer begNode, Integer endNode) {
         if (begNode.toString().isEmpty() || endNode.toString().isEmpty()) {
-            throw new IllegalArgumentException("Empty arguments @ begNode or endNode.");
+            throw new IllegalArgumentException("Empty arguments at beginning node or end node.");
         } else {
             this.beginningNodeID = begNode;
             this.endNodeID = endNode;
@@ -68,5 +68,7 @@ public abstract class CircuitElement {
     public abstract void setElementValue(double newValue);
     public abstract String getComponentID();
     public abstract void setComponentID(String newComponentID);
+
+    // Self-Validation methods
 
 }
