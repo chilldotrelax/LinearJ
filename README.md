@@ -19,13 +19,6 @@ LinearJ is a desktop (soon CLI only interface!) matrix calculator and experiment
 
 ![LinearJ workspace showing the matrix calculator, net list table, and console output area](docs/images/linearj-current-workspace-july-16-2026-NEW.png)
 
-## What to expect
-
-- Desktop interface (CLI only interface soon...)
-- Matrix addition, subtraction, multiplication, inversion, determinant, and transpose
-- A text format for entering one or two matrices
-- A netlist table and an add-component dialog
-
 ## Theory
 
 ### Matrices and linear systems
