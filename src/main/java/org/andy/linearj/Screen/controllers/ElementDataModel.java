@@ -28,7 +28,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class ElementDataModel {
+public final class ElementDataModel {
     private final SimpleStringProperty componentID;
     private final SimpleIntegerProperty begNodeID;
     private final SimpleIntegerProperty endNodeID;
@@ -40,24 +40,24 @@ public class ElementDataModel {
         this.endNodeID = new SimpleIntegerProperty(endNodeID);
         this.componentValue = new SimpleDoubleProperty(componentValue);
     }
-    public final SimpleStringProperty componentIDProperty() {
+    public SimpleStringProperty componentIDProperty() {
         return componentID;
     }
-    public final SimpleIntegerProperty begNodeIDProperty() {
+    public SimpleIntegerProperty begNodeIDProperty() {
         return begNodeID;
     }
-    public final SimpleIntegerProperty endNodeIDProperty() {
+    public SimpleIntegerProperty endNodeIDProperty() {
         return endNodeID;
     }
-    public final SimpleDoubleProperty componentValueProperty() {
+    public SimpleDoubleProperty componentValueProperty() {
         return componentValue;
     }
-    public final void setComponentID(String newID) {componentID.set(newID);}
-    public final void setBegNodeID(Integer newID) {
+    public void setComponentID(String newID) {componentID.set(newID);}
+    public void setBegNodeID(Integer newID) {
         begNodeID.set(newID);
     }
-    public final void setEndNodeID(Integer newID) {endNodeID.set(newID);}
-    public final void setComponentValue(Double newID) {
+    public void setEndNodeID(Integer newID) {endNodeID.set(newID);}
+    public void setComponentValue(Double newID) {
         componentValue.set(newID);
     }
 

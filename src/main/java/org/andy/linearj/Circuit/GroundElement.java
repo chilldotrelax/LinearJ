@@ -1,6 +1,6 @@
 package org.andy.linearj.Circuit;
 
-public class GroundElement extends CircuitElement {
+public final class GroundElement extends CircuitElement {
     private String componentID;
 
     public GroundElement(Integer begNodeID, String componentID) {

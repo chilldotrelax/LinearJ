@@ -32,50 +32,39 @@ import org.ejml.data.SingularMatrixException;
 import org.ejml.simple.SimpleMatrix;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public final class MatrixMath {
     private MatrixMath() {}
 
-  /*
-  castStringToDouble() has a critical flaw where it is unable to process two matrices with the exact same entries.
-   */
-
     public static double[][] castStringToDouble(String stringToDouble) {
-        try {
-            String[] resolvedString = stringToDouble.substring(1, stringToDouble.length() - 1).split(";");
-            double[][] result = new double[resolvedString.length][resolvedString[0].length() - resolvedString[0].replaceAll("\\s+", "").length() + 1];
+        String[] resolvedString = stringToDouble.substring(1, stringToDouble.length() - 1).split(";");
+        double[][] result = new double[resolvedString.length][resolvedString[0].length() - resolvedString[0].replaceAll("\\s+", "").length() + 1];
 
-            for (String inv: resolvedString) {
-                String[] cleaned = inv.split(" ");
-                for (int i = 0; i < cleaned.length; i++) {
-                    result[Arrays.asList(resolvedString).indexOf(inv)][i] = Double.parseDouble(cleaned[i]);
-                }
+        int count = 0;
+
+        for (String inv: resolvedString) {
+            String[] cleaned = inv.split(" ");
+            for (int i = 0; i < cleaned.length; i++) {
+                result[count][i] = Double.parseDouble(cleaned[i]);
             }
-            return result;
-        } catch (ArrayIndexOutOfBoundsException | IllegalAccessError e) {
-            throw new ArrayIndexOutOfBoundsException("Bad state.");
+            count++;
         }
+        return result;
     }
 
     public static List < double[][] > castStringToTwoDouble(String stringToTwoDouble) {
         List < double[][] > result = new ArrayList < > (2);
+        if (stringToTwoDouble.contains("/")) {
+            final String[] temp = stringToTwoDouble.split("/");
 
-        try {
-            if (stringToTwoDouble.contains("/")) {
-                final String[] temp = stringToTwoDouble.split("/");
-
-                for (String matrix: temp) {
-                    result.add(castStringToDouble(matrix));
-                }
-
-                return result;
-            } else {
-                throw new IllegalMatrixException("Not a valid matrix.");
+            for (String matrix: temp) {
+                result.add(castStringToDouble(matrix));
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new ArrayIndexOutOfBoundsException("Bad state.");
+
+            return result;
+        } else {
+            throw new IllegalMatrixException("Not a valid matrix.");
         }
     }
 
@@ -127,7 +116,6 @@ public final class MatrixMath {
         }
     }
 
-    //Not verified.
     public static double[][] transposeMatrix(double[][] matrix) {
         double[][] result = new double[matrix.length][matrix[0].length];
 
@@ -173,7 +161,7 @@ public final class MatrixMath {
         int resultRow = 0;
         int resultCol = 0;
 
-        //Remove index is the reference (ground node).
+        //removeIndex is the reference (ground node).
         for (int i = 0; i < input.length; i++) {
             if (i != removeIndex) {
                 for (int j = 0; j < input.length; j++) {
@@ -190,10 +178,10 @@ public final class MatrixMath {
     }
 
     public static double[] reduceVectorToSubvector(final double[] input, final int removeIndex) {
-        double[] result = new double[input.length - 1];
+        double[] result = new double[input.length - 1]; // N-1 Dimension (col)
         int resultIndex = 0;
 
-        //Remove index is the reference (ground node).
+        //removeIndex is the reference (ground node).
         for (int i = 0; i < input.length; i++) {
             if (i != removeIndex && resultIndex < result.length) {
                 result[resultIndex] = input[i];

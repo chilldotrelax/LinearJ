@@ -28,7 +28,7 @@ import java.util.Objects;
 
 @SuppressWarnings("ALL")
 
-public abstract class CircuitElement {
+public abstract class CircuitElement  {
     private Integer beginningNodeID;
     private Integer endNodeID;
 
@@ -68,7 +68,6 @@ public abstract class CircuitElement {
     public abstract void setElementValue(double newValue);
     public abstract String getComponentID();
     public abstract void setComponentID(String newComponentID);
-
-    // Self-Validation methods
+//    public abstract boolean isElmFloating();
 
 }

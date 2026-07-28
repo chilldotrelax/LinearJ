@@ -41,45 +41,49 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-public class CircuitSolverUnitController {
+public final class CircuitSolverUnitController {
     @FXML
     private Button solveCircuitBtn;
 
-    private ObservableList<ElementDataModel> elmListInUnit;
-    private ObservableList<CircuitElement> circuitElementObservableListInUnit;
-    private final HashMap<Integer, CircuitNode> circuitNodeHashMap;
+    private ObservableList < ElementDataModel > elmListInUnit;
+    private ObservableList < CircuitElement > circuitElementObservableListInUnit;
+    private final HashMap < Integer, CircuitNode > circuitNodeHashMap;
     private final SimpleStringProperty computationOutput = new SimpleStringProperty();
 
-    public SimpleStringProperty computationOutputProperty() {return computationOutput;}
-    public CircuitSolverUnitController() {this.circuitNodeHashMap = new HashMap<>();}
+    public SimpleStringProperty computationOutputProperty() {
+        return computationOutput;
+    }
+    public CircuitSolverUnitController() {
+        this.circuitNodeHashMap = new HashMap < > ();
+    }
 
-    public void setObservableLists(ObservableList<ElementDataModel> elmList, ObservableList<CircuitElement> elementObservableList) {
+    public void setObservableLists(ObservableList < ElementDataModel > elmList, ObservableList < CircuitElement > elementObservableList) {
         this.elmListInUnit = elmList;
         this.circuitElementObservableListInUnit = elementObservableList;
 
-        circuitElementObservableListInUnit.addListener(new ListChangeListener<>() {
+        circuitElementObservableListInUnit.addListener(new ListChangeListener < > () {
             @Override
             @SuppressWarnings("unchecked") //Fine here, should be safe enough.
-            public void onChanged(Change<? extends CircuitElement> c) {
+            public void onChanged(Change < ? extends CircuitElement > c) {
                 while (c.next()) {
                     if (!circuitElementObservableListInUnit.isEmpty() && c.wasAdded()) {
                         solveCircuitBtn.setDisable(false);
-                        handleAddChange((Change<CircuitElement>) c);
+                        handleAddChange((Change < CircuitElement > ) c);
                     }
                     if (!circuitElementObservableListInUnit.isEmpty() && c.wasRemoved()) {
                         solveCircuitBtn.setDisable(false);
-                        handleRemoveChange((Change<CircuitElement>) c);
+                        handleRemoveChange((Change < CircuitElement > ) c);
                     }
                     if ((circuitElementObservableListInUnit.size() <= 1)) {
                         solveCircuitBtn.setDisable(true);
-                        handleRemoveChange((Change<CircuitElement>) c);
+                        handleRemoveChange((Change < CircuitElement > ) c);
                     }
                 }
             }
         });
     }
 
-    private void handleAddChange(ListChangeListener.Change<CircuitElement> c) {
+    private void handleAddChange(ListChangeListener.Change < CircuitElement > c) {
         CircuitElement elm = (CircuitElement) c.getAddedSubList().toArray()[0];
 
         if (!circuitNodeHashMap.containsKey(elm.getBegNodeID())) {
@@ -98,12 +102,14 @@ public class CircuitSolverUnitController {
         }
     }
 
-    private void handleRemoveChange(ListChangeListener.Change<CircuitElement> c) {
-        List<CircuitElement> elm = c.getRemoved();
+    private void handleRemoveChange(ListChangeListener.Change < CircuitElement > c) {
+        List < CircuitElement > elm = c.getRemoved();
 
-        if (elm.isEmpty()) {return;}
+        if (elm.isEmpty()) {
+            return;
+        }
 
-        for (CircuitElement circElm : elm) {
+        for (CircuitElement circElm: elm) {
             if (circuitNodeHashMap.containsKey(circElm.getBegNodeID())) {
                 circuitNodeHashMap.get(circElm.getBegNodeID()).removeElement(circElm);
             }
@@ -133,11 +139,14 @@ public class CircuitSolverUnitController {
 
     @FXML
     private void solveDCCircuit() {
-            CircuitElement[] elementsList = circuitElementObservableListInUnit.toArray(new CircuitElement[0]);
+        CircuitElement[] elementsList = circuitElementObservableListInUnit.toArray(new CircuitElement[0]);
+        CircuitSolver solve = new CircuitSolver(elementsList, circuitNodeHashMap, computationOutput);
 
-            CircuitSolver solve = new CircuitSolver(elementsList, circuitNodeHashMap,computationOutput);
+        try {
             solve.solveCircuit();
+        } catch (IllegalStateException e) {
+            ErrorWindows.displayError("Unable to solve circuit because the circuit has some invalid properties (e.g shorts).");
+        }
 
     }
 }
-

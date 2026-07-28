@@ -27,10 +27,8 @@ package org.andy.linearj.Screen.controllers;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
-
 import org.andy.linearj.Maths.MatrixMath;
 import org.andy.linearj.Screen.misc.ErrorWindows;
-import org.andy.linearj.Screen.misc.exception.IllegalMatrixException;
 import org.andy.linearj.Screen.misc.exception.MatrixNotEquivalentException;
 import org.andy.linearj.Screen.misc.exception.NonMatchingMatricesException;
 import org.ejml.MatrixDimensionException;
@@ -38,12 +36,11 @@ import org.ejml.data.SingularMatrixException;
 
 import java.util.Arrays;
 
-public class MatrixCalculatorUnitController {
+public final class MatrixCalculatorUnitController {
     @FXML
-    private TextArea matrixInputField;
+    private TextArea matrixInputTextArea;
 
     private static final String EMPTY_INPUT_FIELD_ERROR = "The input field must not be empty.";
-    private static final String GENERIC_MATRIX_ERROR = "You are either: (1) Missing a second matrix AND/OR (2) Incorrectly formatted matrix. Click HELP for a formatting guide.";
 
     private final SimpleStringProperty computationResult = new SimpleStringProperty();
     public SimpleStringProperty computationResultProperty() {
@@ -53,8 +50,10 @@ public class MatrixCalculatorUnitController {
     @FXML
     private void addMatricesClick() {
         try {
-            if (!matrixInputField.getText().isEmpty()) {
-                double[][] result = MatrixMath.addMatrix(MatrixMath.castStringToTwoDouble(matrixInputField.getText()).get(0), MatrixMath.castStringToTwoDouble(matrixInputField.getText()).get(1));
+            final String input =  matrixInputTextArea.getText();
+
+            if (!input.isEmpty()) {
+                double[][] result = MatrixMath.addMatrix(MatrixMath.castStringToTwoDouble(input).get(0), MatrixMath.castStringToTwoDouble(input).get(1));
                 computationResult.set("Sum: " + Arrays.deepToString(result));
                 computationResult.set("");
             } else {
@@ -62,16 +61,16 @@ public class MatrixCalculatorUnitController {
             }
         } catch (MatrixNotEquivalentException e) {
             ErrorWindows.displayError("Cannot compute matrices with non-equivalent dimensions.");
-        } catch (IllegalMatrixException | ArrayIndexOutOfBoundsException e) {
-            ErrorWindows.displayError(GENERIC_MATRIX_ERROR);
         }
     }
 
     @FXML
     private void subtractMatricesClick() {
         try {
-            if (!matrixInputField.getText().isEmpty()) {
-                double[][] result = MatrixMath.subtractMatrix(MatrixMath.castStringToTwoDouble(matrixInputField.getText()).get(0), MatrixMath.castStringToTwoDouble(matrixInputField.getText()).get(1));
+            final String input =  matrixInputTextArea.getText();
+
+            if (input.isEmpty()) {
+                double[][] result = MatrixMath.subtractMatrix(MatrixMath.castStringToTwoDouble(input).get(0), MatrixMath.castStringToTwoDouble(input).get(1));
                 computationResult.set("Difference: " + Arrays.deepToString(result));
                 computationResult.set("");
             } else {
@@ -79,16 +78,16 @@ public class MatrixCalculatorUnitController {
             }
         } catch (MatrixNotEquivalentException e) {
             ErrorWindows.displayError("Cannot compute matrices with non-equivalent dimensions.");
-        } catch (IllegalMatrixException | ArrayIndexOutOfBoundsException e) {
-            ErrorWindows.displayError(GENERIC_MATRIX_ERROR);
         }
     }
 
     @FXML
     private void multiplyMatricesClick() {
         try {
-            if (!matrixInputField.getText().isEmpty()) {
-                double[][] result = MatrixMath.multiplyMatrix(MatrixMath.castStringToTwoDouble(matrixInputField.getText()).get(0), MatrixMath.castStringToTwoDouble(matrixInputField.getText()).get(1));
+            final String input =  matrixInputTextArea.getText();
+
+            if (!matrixInputTextArea.getText().isEmpty()) {
+                double[][] result = MatrixMath.multiplyMatrix(MatrixMath.castStringToTwoDouble(input).get(0), MatrixMath.castStringToTwoDouble(input).get(1));
                 computationResult.set("Product: " + Arrays.deepToString(result));
                 computationResult.set("");
             } else {
@@ -96,15 +95,15 @@ public class MatrixCalculatorUnitController {
             }
         } catch (NonMatchingMatricesException e) {
             ErrorWindows.displayError("Cannot compute matrices with non-equivalent dimensions.");
-        } catch (IllegalMatrixException | ArrayIndexOutOfBoundsException e) {
-            ErrorWindows.displayError(GENERIC_MATRIX_ERROR);
         }
     }
     //Disabled as no testing has been done with the transpose method in the MatrixMath class.
     @FXML
     private void transposeMatrixClick() {
-        if (!matrixInputField.getText().isEmpty()) {
-            double[][] result = MatrixMath.transposeMatrix(MatrixMath.castStringToDouble(matrixInputField.getText()));
+        final String input =  matrixInputTextArea.getText();
+
+        if (!input.isEmpty()) {
+            double[][] result = MatrixMath.transposeMatrix(MatrixMath.castStringToDouble(input));
             computationResult.set("Transposition: " + Arrays.deepToString(result));
             computationResult.set("");
         } else {
@@ -115,8 +114,10 @@ public class MatrixCalculatorUnitController {
     @FXML
     private void computeInversionClick() {
         try {
-            if (!matrixInputField.getText().isEmpty()) {
-                double[][] result = MatrixMath.computeInverse(MatrixMath.castStringToDouble(matrixInputField.getText()));
+            final String input =  matrixInputTextArea.getText();
+
+            if (!input.isEmpty()) {
+                double[][] result = MatrixMath.computeInverse(MatrixMath.castStringToDouble(input));
                 computationResult.set("Inversion: " + Arrays.deepToString(result));
                 computationResult.set("");
             } else {
@@ -132,8 +133,10 @@ public class MatrixCalculatorUnitController {
     @FXML
     private void computeDeterminantClick() {
         try {
-            if (!matrixInputField.getText().isEmpty()) {
-                double result = MatrixMath.computeDeterminant(MatrixMath.castStringToDouble(matrixInputField.getText()));
+            final String input = matrixInputTextArea.getText();
+
+            if (!input.isEmpty()) {
+                double result = MatrixMath.computeDeterminant(MatrixMath.castStringToDouble(input));
                 computationResult.set("Determinant: " + result);
                 computationResult.set("");
             } else {
@@ -146,7 +149,7 @@ public class MatrixCalculatorUnitController {
 
     @FXML
     private void clearInputField() {
-        matrixInputField.clear();
+        matrixInputTextArea.clear();
     }
 
     @FXML

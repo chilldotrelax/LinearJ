@@ -24,7 +24,7 @@
 
 package org.andy.linearj.Circuit;
 
-public class CurrentSourceElement extends CircuitElement {
+public final class CurrentSourceElement extends CircuitElement {
     private double current;
     private String componentID;
 

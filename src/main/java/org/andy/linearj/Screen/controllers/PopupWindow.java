@@ -32,19 +32,15 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-import static java.lang.System.Logger.Level.INFO;
-
 public abstract class PopupWindow {
     private final String resourcePath;
     private final String windowTitle;
     private final Stage stageRoot;
-    private final System.Logger logger;
 
     protected PopupWindow(final String resourcePath, final String windowTitle) {
         this.resourcePath = resourcePath;
         this.windowTitle = windowTitle;
         this.stageRoot = new Stage();
-        this.logger = System.getLogger("org.andy.linearJ.");
     }
 
     public void openWindow() {
@@ -57,7 +53,7 @@ public abstract class PopupWindow {
             this.stageRoot.setResizable(false);
             this.stageRoot.show();
         } catch (IOException e) {
-            logger.log(INFO, () -> "Unable to load window. This is most likely due to a missing/invalid resource path." + e);
+            //
         }
     }
 }

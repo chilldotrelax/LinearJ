@@ -24,14 +24,13 @@
 
 package org.andy.linearj.Screen.controllers;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 
 import org.andy.linearj.Circuit.CircuitElement;
 
-public class ParentWindowController {
+public final class ParentWindowController {
     @FXML
     private MatrixCalculatorUnitController matrixCalculatorUnitController;
     @FXML

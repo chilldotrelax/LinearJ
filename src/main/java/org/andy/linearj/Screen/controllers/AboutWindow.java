@@ -33,7 +33,7 @@ import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 
-public class AboutWindow extends PopupWindow {
+public final class AboutWindow extends PopupWindow {
 
     public AboutWindow() {
         super("/org/andy/linearj/AboutPopupWindow.fxml", "About");

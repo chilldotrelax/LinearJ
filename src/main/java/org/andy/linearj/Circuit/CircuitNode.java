@@ -27,7 +27,7 @@ package org.andy.linearj.Circuit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CircuitNode {
+public final class CircuitNode {
     private final int nodeID;
     private boolean isGroundNode;
     private double nodeVoltage;

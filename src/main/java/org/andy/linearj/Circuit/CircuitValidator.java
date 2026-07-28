@@ -24,33 +24,28 @@
 
 package org.andy.linearj.Circuit;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 
-/*
- * This class was designed to help users evaluate complete circuit designs statically before the solver runs.
- * It is designed to catch basic mistakes such as shorts, opens, or floating elements.
- * The reason why there are several methods is that they can be used in the future to perform one-off checks as needed.
- * You might ask: why can't the elements check themselves at run time? The answer is: I don't know!
- * This is a **very** early implementation; and will be heavily improved upon as time goes on!
- */
-
 public final class CircuitValidator {
     private CircuitValidator() {}
-    // right now, there are NO checks for the node hash map; they will be added in later.
+
     public static boolean passesStaticCircuitInspection(CircuitElement[] elementsArray, Map < Integer, CircuitNode > circuitNodeMap) {
         int count = 0;
 
-        // check no. 1
         if (circuitAtLeastOneGroundNode(elementsArray)) {
             count += 1;
         }
 
-        // check no. 2
         for (CircuitElement element: elementsArray) {
-            if (!isElmShort(element) && !isElmFloating(element) && circuitAtLeastOneGroundNode(elementsArray)) {
+            if (!isElmShort(element) && circuitAtLeastOneGroundNode(elementsArray)) {
                 count++;
             }
+        }
+
+        if (noFloatingNodes(circuitNodeMap)) {
+            count += 1;
         }
 
         return (count > 0);
@@ -60,11 +55,6 @@ public final class CircuitValidator {
         return (Objects.equals(element.getBegNodeID(), element.getEndNodeID()));
     }
 
-    private static boolean isElmFloating(CircuitElement element) {
-        return (element.getBegNodeID() == null || element.getEndNodeID() == null);
-    }
-
-    // but no more than one!
     private static boolean circuitAtLeastOneGroundNode(CircuitElement[] elementsArray) {
         int groundNodesInElementArray = 0;
 
@@ -75,4 +65,16 @@ public final class CircuitValidator {
         }
         return (groundNodesInElementArray == 1);
     }
+
+    private static boolean noFloatingNodes(Map < Integer, CircuitNode > circuitNodeMap) {
+        final Collection < CircuitNode > nodeCollection = circuitNodeMap.values();
+
+        for (CircuitNode node: nodeCollection) {
+            if (node.isFloatingNode()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

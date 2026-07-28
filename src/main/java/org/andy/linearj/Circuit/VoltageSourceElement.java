@@ -24,12 +24,12 @@
 
 package org.andy.linearj.Circuit;
 
-public class VoltageSourceElement extends CircuitElement {
+public final class VoltageSourceElement extends CircuitElement {
     private double voltage;
     private double current;
     private String componentID;
 
-    public VoltageSourceElement(int begNode, int endNode, String componentID, double voltage) {
+    public VoltageSourceElement(final int begNode, final int endNode, final String componentID, final double voltage) {
         super(begNode, endNode);
         this.componentID = componentID;
         this.voltage = voltage;
@@ -62,12 +62,12 @@ public class VoltageSourceElement extends CircuitElement {
         return this.current;
     }
 
-    public double[] stampSelf(double[] rightHandVector, int preShiftedIndex, int selfOffset) {
+    public double[] stampSelf(double[] rightHandVector, final int preShiftedIndex, final int selfOffset) {
         rightHandVector[preShiftedIndex + selfOffset] += this.voltage;
         return rightHandVector;
     }
 
-    public double[][] stampToGlobalMatrix(double[][] resistorMatrix, int begNode, int endNode, int preShiftIndex, int offset) {
+    public double[][] stampToGlobalMatrix(double[][] resistorMatrix, final int begNode, final int endNode, final int preShiftIndex, final int offset) {
         resistorMatrix[preShiftIndex + offset][begNode] += 1;
         resistorMatrix[preShiftIndex + offset][endNode] -= 1;
         resistorMatrix[begNode][preShiftIndex + offset] += 1;

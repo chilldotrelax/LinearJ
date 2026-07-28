@@ -34,7 +34,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import org.andy.linearj.Circuit.CircuitElement;
 
-public class NetlistUnitController {
+public final class NetlistUnitController {
     @FXML
     private TableView < ElementDataModel > circuitElementTableView;
     @FXML
@@ -99,9 +99,14 @@ public class NetlistUnitController {
 
     @FXML
     private void removeNetlistElement() {
-        if (!circuitElementTableView.getSelectionModel().isEmpty()) {
-            elementDataModelObservableList.remove(circuitSelectionModel.getSelectedItem());
-            circuitElementObsList.removeIf(circuitElement -> circuitElement.getComponentID().equals(circuitSelectionModel.getSelectedItem().componentIDProperty().get()));
+        if (!circuitSelectionModel.isEmpty()) {
+            var elmDataModelParticular = circuitSelectionModel.getSelectedItem();
+
+            elementDataModelObservableList.remove(elmDataModelParticular);
+            circuitElementObsList.removeIf(circuitElement -> circuitElement.getComponentID().equals(elmDataModelParticular.componentIDProperty().get()));
+
+            clrNetlistOutput.set("Removed the element: " + elmDataModelParticular.componentIDProperty().get());
+            clrNetlistOutput.set("");
         }
     }
 

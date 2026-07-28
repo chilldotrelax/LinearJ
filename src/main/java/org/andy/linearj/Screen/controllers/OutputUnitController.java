@@ -8,7 +8,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-public class OutputUnitController {
+public final class OutputUnitController {
     @FXML
     private Button clearBtn;
     @FXML

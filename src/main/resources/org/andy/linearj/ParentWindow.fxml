@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="494.0" prefWidth="907.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andy.linearj.Screen.controllers.ParentWindowController">
+<VBox prefHeight="506.0" prefWidth="884.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andy.linearj.Screen.controllers.ParentWindowController">
     <fx:include source="MenuBarUnit.fxml" />
     <AnchorPane prefHeight="493.0" prefWidth="907.0" styleClass="parent-window" stylesheets="@CSSStyleSheets/ParentWindow.css" VBox.vgrow="ALWAYS">
         <!-- Single "units" are to be declared below. -->
