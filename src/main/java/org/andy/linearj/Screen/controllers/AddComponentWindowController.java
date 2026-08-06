@@ -32,8 +32,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.andy.linearj.Circuit.CircuitElement;
-import org.andy.linearj.Circuit.CircuitElementFactory;
-import org.andy.linearj.Screen.misc.ErrorWindows;
+import org.andy.linearj.Circuit.CircuitElementSimpleFactory;
 
 public final class AddComponentWindowController {
     @FXML
@@ -41,7 +40,7 @@ public final class AddComponentWindowController {
     @FXML
     private Button okButton;
     @FXML
-    private ChoiceBox < String > elementChoiceBox;
+    private ChoiceBox<String> elementChoiceBox;
     @FXML
     private TextField setComponentID;
     @FXML
@@ -52,17 +51,19 @@ public final class AddComponentWindowController {
     private TextField setElementValue;
     @FXML
     private Label setBegWarning, setEndWarning, setValueWarning;
+    @FXML
+    private String genResElm, indVolDCElm, indCurrDCElm, groundElm;
 
-    private ObservableList < ElementDataModel > elementDataModelObservableList;
-    private ObservableList < CircuitElement > circuitElementObservableList;
+    private ObservableList<ElementDataModel> elementDataModelObservableList;
+    private ObservableList<CircuitElement> circuitElementObservableList;
 
-    public void setElementDataModelObservableList(ObservableList < ElementDataModel > elementDataModelObservableList) {
+    public void setElementDataModelObservableList(ObservableList<ElementDataModel> elementDataModelObservableList) {
         if (elementDataModelObservableList != null) {
             this.elementDataModelObservableList = elementDataModelObservableList;
         }
     }
 
-    public void setCircuitElementObservableList(ObservableList < CircuitElement > circuitElementObservableList) {
+    public void setCircuitElementObservableList(ObservableList<CircuitElement> circuitElementObservableList) {
         if (circuitElementObservableList != null) {
             this.circuitElementObservableList = circuitElementObservableList;
         }
@@ -70,8 +71,9 @@ public final class AddComponentWindowController {
 
     @FXML
     private void initialize() {
+
         elementChoiceBox.setOnAction(event -> {
-            if (elementChoiceBox.getSelectionModel().getSelectedItem().charAt(0) == 'G') {
+            if (elementChoiceBox.getSelectionModel().getSelectedItem().equals(groundElm)) {
                 setEndNode.setDisable(true);
                 setElementValue.setDisable(true);
             } else {
@@ -121,26 +123,27 @@ public final class AddComponentWindowController {
     @FXML
     private void okButton() {
         try {
-            var choiceOfElement = elementChoiceBox.getSelectionModel().getSelectedItem().substring(0, 1);
+            var choiceOfElement = elementChoiceBox.getSelectionModel().getSelectedItem().substring(0, 1); //TODO check this statement
             var componentID = setComponentID.getText();
 
+            //TODO Rewwrite this switch statement to increase maintainability (in case new elements are added).
             switch (choiceOfElement) {
                 case "R", "I", "V" -> {
                     var begNodeID = Integer.parseInt(setBegNode.getText());
                     var endNodeID = Integer.parseInt(setEndNode.getText());
                     var componentValue = Double.parseDouble(setElementValue.getText());
-                    circuitElementObservableList.add(CircuitElementFactory.createElement(choiceOfElement, begNodeID, endNodeID, componentValue));
-                    elementDataModelObservableList.add(new ElementDataModel(componentID, begNodeID, endNodeID, componentValue));
+                    circuitElementObservableList.add(CircuitElementSimpleFactory.createElement(choiceOfElement, begNodeID, endNodeID, componentValue));
+                    elementDataModelObservableList.add(ElementDataModelSimpleFactory.createElement(componentID, begNodeID, endNodeID, componentValue));
                 }
                 case "G" -> {
                     var begNodeID = Integer.parseInt(setBegNode.getText());
-                    circuitElementObservableList.add(CircuitElementFactory.createElement(componentID, begNodeID, null, null));
-                    elementDataModelObservableList.add(new ElementDataModel(componentID, begNodeID, 0, 0.0));
+                    circuitElementObservableList.add(CircuitElementSimpleFactory.createElement(componentID, begNodeID, null, null));
+                    elementDataModelObservableList.add(ElementDataModelSimpleFactory.createElement(componentID, begNodeID, 0, 0.0));
                 }
                 default -> ErrorWindows.displayError("Something went wrong while creating objects.");
             }
 
-            Stage currentStage = (Stage) okButton.getScene().getWindow();
+            var currentStage = (Stage) okButton.getScene().getWindow();
             currentStage.close();
         } catch (NumberFormatException e) {
             ErrorWindows.displayError("Invalid or empty arguments detected. Please check and try again.");
@@ -150,37 +153,37 @@ public final class AddComponentWindowController {
     @FXML
     private void setDebugNetlist() {
         //G0
-        circuitElementObservableList.add(CircuitElementFactory.createElement("G1", 0, null, null));
-        elementDataModelObservableList.add(new ElementDataModel("G0", 0, 0, 0.0));
+        circuitElementObservableList.add(CircuitElementSimpleFactory.createElement("G1", 0, null, null));
+        elementDataModelObservableList.add(ElementDataModelSimpleFactory.createElement("G0", 0, 0, 0.0));
         //I1
-        circuitElementObservableList.add(CircuitElementFactory.createElement("I1", 0, 1, 1.0));
-        elementDataModelObservableList.add(new ElementDataModel("I1", 0, 1, 1.0));
+        circuitElementObservableList.add(CircuitElementSimpleFactory.createElement("I1", 0, 1, 1.0));
+        elementDataModelObservableList.add(ElementDataModelSimpleFactory.createElement("I1", 0, 1, 1.0));
         //R2
-        circuitElementObservableList.add(CircuitElementFactory.createElement("R2", 1, 0, 1.0));
-        elementDataModelObservableList.add(new ElementDataModel("R2", 1, 0, 1.0));
+        circuitElementObservableList.add(CircuitElementSimpleFactory.createElement("R2", 1, 0, 1.0));
+        elementDataModelObservableList.add(ElementDataModelSimpleFactory.createElement("R2", 1, 0, 1.0));
         //R3
-        circuitElementObservableList.add(CircuitElementFactory.createElement("R3", 1, 2, 1.0));
+        circuitElementObservableList.add(CircuitElementSimpleFactory.createElement("R3", 1, 2, 1.0));
         elementDataModelObservableList.add(new ElementDataModel("R3", 1, 2, 1.0));
         //R4
-        circuitElementObservableList.add(CircuitElementFactory.createElement("R4", 2, 0, 1.0));
+        circuitElementObservableList.add(CircuitElementSimpleFactory.createElement("R4", 2, 0, 1.0));
         elementDataModelObservableList.add(new ElementDataModel("R4", 2, 0, 1.0));
         //R5
-        circuitElementObservableList.add(CircuitElementFactory.createElement("R5", 2, 3, 1.0));
+        circuitElementObservableList.add(CircuitElementSimpleFactory.createElement("R5", 2, 3, 1.0));
         elementDataModelObservableList.add(new ElementDataModel("R5", 2, 3, 1.0));
         //R6
-        circuitElementObservableList.add(CircuitElementFactory.createElement("R6", 3, 0, 1.0));
+        circuitElementObservableList.add(CircuitElementSimpleFactory.createElement("R6", 3, 0, 1.0));
         elementDataModelObservableList.add(new ElementDataModel("R6", 3, 0, 1.0));
         //R7
-        circuitElementObservableList.add(CircuitElementFactory.createElement("R7", 3, 4, 1.0));
+        circuitElementObservableList.add(CircuitElementSimpleFactory.createElement("R7", 3, 4, 1.0));
         elementDataModelObservableList.add(new ElementDataModel("R7", 3, 4, 1.0));
         //R8
-        circuitElementObservableList.add(CircuitElementFactory.createElement("R8", 4, 0, 1.0));
+        circuitElementObservableList.add(CircuitElementSimpleFactory.createElement("R8", 4, 0, 1.0));
         elementDataModelObservableList.add(new ElementDataModel("R8", 4, 0, 1.0));
         //I9
-        circuitElementObservableList.add(CircuitElementFactory.createElement("I9", 0, 4, 1.0));
+        circuitElementObservableList.add(CircuitElementSimpleFactory.createElement("I9", 0, 4, 1.0));
         elementDataModelObservableList.add(new ElementDataModel("I9", 0, 4, 1.0));
 
-        Stage currentStage = (Stage) okButton.getScene().getWindow();
+        var currentStage = (Stage) okButton.getScene().getWindow();
         currentStage.close();
     }
 

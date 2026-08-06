@@ -22,10 +22,10 @@
  * SOFTWARE.
  */
 
-package org.andy.linearj.Screen.misc.exception;
+package org.andy.linearj.Screen.exception;
 
-public class NonMatchingMatricesException extends RuntimeException {
-    public NonMatchingMatricesException(String message) {
+public class IllegalMatrixException extends RuntimeException {
+    public IllegalMatrixException(String message) {
         super(message);
     }
 }

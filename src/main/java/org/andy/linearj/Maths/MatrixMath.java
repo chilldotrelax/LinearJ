@@ -24,9 +24,9 @@
 
 package org.andy.linearj.Maths;
 
-import org.andy.linearj.Screen.misc.exception.IllegalMatrixException;
-import org.andy.linearj.Screen.misc.exception.MatrixNotEquivalentException;
-import org.andy.linearj.Screen.misc.exception.NonMatchingMatricesException;
+import org.andy.linearj.Screen.exception.IllegalMatrixException;
+import org.andy.linearj.Screen.exception.MatrixNotEquivalentException;
+import org.andy.linearj.Screen.exception.NonMatchingMatricesException;
 import org.ejml.MatrixDimensionException;
 import org.ejml.data.SingularMatrixException;
 import org.ejml.simple.SimpleMatrix;
@@ -35,7 +35,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class MatrixMath {
-    private MatrixMath() {}
+    private MatrixMath() {
+    }
 
     public static double[][] castStringToDouble(String stringToDouble) {
         String[] resolvedString = stringToDouble.substring(1, stringToDouble.length() - 1).split(";");
@@ -43,7 +44,7 @@ public final class MatrixMath {
 
         int count = 0;
 
-        for (String inv: resolvedString) {
+        for (String inv : resolvedString) {
             String[] cleaned = inv.split(" ");
             for (int i = 0; i < cleaned.length; i++) {
                 result[count][i] = Double.parseDouble(cleaned[i]);
@@ -53,23 +54,24 @@ public final class MatrixMath {
         return result;
     }
 
-    public static List < double[][] > castStringToTwoDouble(String stringToTwoDouble) {
-        List < double[][] > result = new ArrayList < > (2);
+    public static List<double[][]> castStringToTwoDouble(String stringToTwoDouble) {
+        List<double[][]> result = new ArrayList<>(2);
         if (stringToTwoDouble.contains("/")) {
             final String[] temp = stringToTwoDouble.split("/");
 
-            for (String matrix: temp) {
+            for (String matrix : temp) {
                 result.add(castStringToDouble(matrix));
             }
 
             return result;
         } else {
-            throw new IllegalMatrixException("Not a valid matrix.");
+            throw new IllegalMatrixException("Not a valid *two* matrix.");
         }
     }
 
-    public static double[][] addMatrix(double[][] a, double[][] b) throws MatrixNotEquivalentException {
+    public static double[][] addMatrix(final double[][] a, final double[][] b) throws MatrixNotEquivalentException {
         double[][] result = new double[a.length][a[0].length];
+
         if (a.length != b.length || a[0].length != b[0].length) {
             throw new MatrixNotEquivalentException("Error: Not an equivalent matrix.");
         } else {
@@ -82,7 +84,7 @@ public final class MatrixMath {
         }
     }
 
-    public static double[][] subtractMatrix(double[][] a, double[][] b) throws MatrixNotEquivalentException {
+    public static double[][] subtractMatrix(final double[][] a, final double[][] b) throws MatrixNotEquivalentException {
         double[][] result = new double[a.length][a[0].length];
 
         if (a.length != b.length || a[0].length != b[0].length) {
@@ -97,7 +99,7 @@ public final class MatrixMath {
         }
     }
 
-    public static double[][] multiplyMatrix(double[][] a, double[][] b) throws NonMatchingMatricesException {
+    public static double[][] multiplyMatrix(final double[][] a, final double[][] b) throws NonMatchingMatricesException {
         double[][] result = new double[a.length][b[0].length];
 
         if (a.length != b[0].length) {
@@ -116,7 +118,7 @@ public final class MatrixMath {
         }
     }
 
-    public static double[][] transposeMatrix(double[][] matrix) {
+    public static double[][] transposeMatrix(final double[][] matrix) {
         double[][] result = new double[matrix.length][matrix[0].length];
 
         if (matrix.length == matrix[0].length) {
@@ -135,8 +137,7 @@ public final class MatrixMath {
         return result;
     }
 
-    //EJWL Library to compute invert & determinant.
-    public static double[][] computeInverse(double[][] matrix) {
+    public static double[][] computeInverse(final double[][] matrix) {
         SimpleMatrix a = new SimpleMatrix(matrix);
         try {
             return a.invert().toArray2();
@@ -147,7 +148,7 @@ public final class MatrixMath {
         }
     }
 
-    public static double computeDeterminant(double[][] matrix) throws ArithmeticException {
+    public static double computeDeterminant(final double[][] matrix) throws ArithmeticException {
         if (matrix.length != matrix[0].length) {
             throw new ArithmeticException("Error: Not a square matrix!");
         } else {
@@ -155,6 +156,10 @@ public final class MatrixMath {
             return a.determinant();
         }
     }
+
+    /*
+       Non-computational helper methods
+     */
 
     public static double[][] reduce2DMatrixToSubmatrix(final double[][] input, final int removeIndex) {
         double[][] result = new double[input.length - 1][input.length - 1]; // N-1 Dimension (row & col)
@@ -190,4 +195,5 @@ public final class MatrixMath {
         }
         return result;
     }
+
 }

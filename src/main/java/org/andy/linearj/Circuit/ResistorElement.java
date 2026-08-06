@@ -24,7 +24,7 @@
 
 package org.andy.linearj.Circuit;
 
-import org.andy.linearj.Screen.misc.exception.NegativeNumberException;
+import org.andy.linearj.Screen.exception.NegativeNumberException;
 
 public final class ResistorElement extends CircuitElement {
     private double resistance;

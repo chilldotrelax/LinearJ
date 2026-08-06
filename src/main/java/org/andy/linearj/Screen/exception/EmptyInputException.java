@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package org.andy.linearj.Screen.misc.exception;
+package org.andy.linearj.Screen.exception;
 
 public class EmptyInputException extends RuntimeException {
     public EmptyInputException(String message) {

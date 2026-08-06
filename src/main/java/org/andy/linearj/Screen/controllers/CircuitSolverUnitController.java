@@ -33,9 +33,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-
-import org.andy.linearj.Circuit.*;
-import org.andy.linearj.Screen.misc.ErrorWindows;
+import org.andy.linearj.Circuit.CircuitElement;
+import org.andy.linearj.Circuit.CircuitNode;
+import org.andy.linearj.Circuit.CircuitSolver;
+import org.andy.linearj.Circuit.GroundElement;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -44,46 +45,53 @@ import java.util.List;
 public final class CircuitSolverUnitController {
     @FXML
     private Button solveCircuitBtn;
+    @FXML
+    private Button solveTheveninBtn;
 
-    private ObservableList < ElementDataModel > elmListInUnit;
-    private ObservableList < CircuitElement > circuitElementObservableListInUnit;
-    private final HashMap < Integer, CircuitNode > circuitNodeHashMap;
+    private ObservableList<ElementDataModel> elmListInUnit;
+    private ObservableList<CircuitElement> circuitElementObservableListInUnit;
+    private final HashMap<Integer, CircuitNode> circuitNodeHashMap;
     private final SimpleStringProperty computationOutput = new SimpleStringProperty();
 
     public SimpleStringProperty computationOutputProperty() {
         return computationOutput;
     }
+
     public CircuitSolverUnitController() {
-        this.circuitNodeHashMap = new HashMap < > ();
+        this.circuitNodeHashMap = new HashMap<>();
     }
 
-    public void setObservableLists(ObservableList < ElementDataModel > elmList, ObservableList < CircuitElement > elementObservableList) {
+    public void setObservableLists(ObservableList<ElementDataModel> elmList, ObservableList<CircuitElement> elementObservableList) {
         this.elmListInUnit = elmList;
         this.circuitElementObservableListInUnit = elementObservableList;
 
-        circuitElementObservableListInUnit.addListener(new ListChangeListener < > () {
+        circuitElementObservableListInUnit.addListener(new ListChangeListener<>() {
             @Override
-            @SuppressWarnings("unchecked") //Fine here, should be safe enough.
-            public void onChanged(Change < ? extends CircuitElement > c) {
+            @SuppressWarnings("unchecked")
+            public void onChanged(Change<? extends CircuitElement> c) {
                 while (c.next()) {
+                    if (circuitNodeHashMap.size() >= 2) {
+                        solveTheveninBtn.setDisable(false);
+                    }
                     if (!circuitElementObservableListInUnit.isEmpty() && c.wasAdded()) {
                         solveCircuitBtn.setDisable(false);
-                        handleAddChange((Change < CircuitElement > ) c);
+                        handleAddChange((Change<CircuitElement>) c);
                     }
                     if (!circuitElementObservableListInUnit.isEmpty() && c.wasRemoved()) {
                         solveCircuitBtn.setDisable(false);
-                        handleRemoveChange((Change < CircuitElement > ) c);
+                        handleRemoveChange((Change<CircuitElement>) c);
                     }
                     if ((circuitElementObservableListInUnit.size() <= 1)) {
                         solveCircuitBtn.setDisable(true);
-                        handleRemoveChange((Change < CircuitElement > ) c);
+                        solveTheveninBtn.setDisable(true);
+                        handleRemoveChange((Change<CircuitElement>) c);
                     }
                 }
             }
         });
     }
 
-    private void handleAddChange(ListChangeListener.Change < CircuitElement > c) {
+    private void handleAddChange(ListChangeListener.Change<CircuitElement> c) {
         CircuitElement elm = (CircuitElement) c.getAddedSubList().toArray()[0];
 
         if (!circuitNodeHashMap.containsKey(elm.getBegNodeID())) {
@@ -102,14 +110,20 @@ public final class CircuitSolverUnitController {
         }
     }
 
-    private void handleRemoveChange(ListChangeListener.Change < CircuitElement > c) {
-        List < CircuitElement > elm = c.getRemoved();
+    private void handleRemoveChange(ListChangeListener.Change<CircuitElement> c) {
+        List<CircuitElement> elm = c.getRemoved();
 
-        if (elm.isEmpty()) {
+        if (elm.isEmpty() || circuitNodeHashMap.isEmpty()) {
             return;
         }
 
-        for (CircuitElement circElm: elm) {
+        // The remove element only supports one element at a time, so this condition is okay to use.
+        if (elm.size() > 1) {
+            circuitNodeHashMap.clear();
+            return;
+        }
+
+        for (CircuitElement circElm : elm) {
             if (circuitNodeHashMap.containsKey(circElm.getBegNodeID())) {
                 circuitNodeHashMap.get(circElm.getBegNodeID()).removeElement(circElm);
             }
@@ -147,6 +161,23 @@ public final class CircuitSolverUnitController {
         } catch (IllegalStateException e) {
             ErrorWindows.displayError("Unable to solve circuit because the circuit has some invalid properties (e.g shorts).");
         }
+    }
 
+    @FXML
+    private void solveTheveninEquivalent() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/andy/linearj/NodePicker.fxml"));
+            Stage nodePickerStage = new Stage();
+
+            nodePickerStage.setTitle("Pick Node");
+            nodePickerStage.setScene(new Scene(loader.load()));
+            nodePickerStage.show();
+
+            NodePickerWindowController nodePickerController = loader.getController();
+            nodePickerController.populateChoiceBoxes(circuitNodeHashMap);
+
+        } catch (IOException ignored) {
+            //
+        }
     }
 }

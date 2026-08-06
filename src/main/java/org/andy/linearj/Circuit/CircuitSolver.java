@@ -27,30 +27,40 @@ package org.andy.linearj.Circuit;
 import javafx.beans.property.SimpleStringProperty;
 import org.andy.linearj.Maths.LUDecomposition;
 import org.andy.linearj.Maths.MatrixMath;
-import org.andy.linearj.Screen.misc.exception.IllegalMatrixException;
+import org.andy.linearj.Screen.exception.IllegalMatrixException;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.*;
+
+/*
+This class implements MNA analysis to compute the node voltages (and current through a voltage source) of any simple DC circuit containing the following elements:
+    1) Independent DC Voltage Source (typically denoted in schematics as two horizontal bars with two terminals)
+    2) Independent DC Current Source (typically denoted in schematics as a circle that contains an arrow that points in the direction of the current flow).
+    3) A simple resistor
+    4) A simple ground element that terminates into earth (has no option for an "end node").
+ */
+
+
+// TODO eliminate this class entirely.
 
 public final class CircuitSolver {
     private final CircuitElement[] elementList;
-    private final HashMap < Integer, CircuitNode > nodeHashMap;
-    private final List < Integer > temporaryListForIndexOnly;
+    private final HashMap<Integer, CircuitNode> nodeHashMap;
+    private final List<Integer> temporaryListForIndexOnly;
     private double[][] resistorMatrix;
     private double[] rightHandVector;
+    private double[] solutionVector;
     private final double[] x;
     private int groundNodeIndex;
 
     //not using javaFX
-    public CircuitSolver(final CircuitElement[] elements, final Map < Integer, CircuitNode > nodes) {
+    public CircuitSolver(final CircuitElement[] elements, final Map<Integer, CircuitNode> nodes) {
         this.elementList = elements;
-        this.nodeHashMap = new HashMap < > (nodes);
-        this.temporaryListForIndexOnly = new ArrayList < > ();
+        this.nodeHashMap = new HashMap<>(nodes);
+        this.temporaryListForIndexOnly = new ArrayList<>();
 
         int numberOfVoltageElementsOffSet = 0;
 
-        for (CircuitElement element: elementList) {
+        for (CircuitElement element : elementList) {
             if (element instanceof VoltageSourceElement) {
                 numberOfVoltageElementsOffSet++;
             }
@@ -70,15 +80,16 @@ public final class CircuitSolver {
 
     //Using javaFX.
     private SimpleStringProperty computationResultProperty;
-    public CircuitSolver(final CircuitElement[] elements, final Map < Integer, CircuitNode > nodes, SimpleStringProperty compResultProp) {
+
+    public CircuitSolver(final CircuitElement[] elements, final Map<Integer, CircuitNode> nodes, SimpleStringProperty compResultProp) {
         this.elementList = elements;
-        this.nodeHashMap = new HashMap < > (nodes); //Check this
+        this.nodeHashMap = new HashMap<>(nodes);
         this.computationResultProperty = compResultProp;
-        this.temporaryListForIndexOnly = new ArrayList < > ();
+        this.temporaryListForIndexOnly = new ArrayList<>();
 
         int numberOfVoltageElementsOffSet = 0;
 
-        for (CircuitElement element: elementList) {
+        for (CircuitElement element : elementList) {
             if (element instanceof VoltageSourceElement) {
                 numberOfVoltageElementsOffSet++;
             }
@@ -98,10 +109,11 @@ public final class CircuitSolver {
         this.x = new double[mapSize];
     }
 
+    // TODO replace instanceof with polymorphism.
     private void stampElement() throws IllegalMatrixException {
-        int offsetsCounter = 1;
+        int offsetsCounter = 0;
 
-        for (CircuitElement element: elementList) {
+        for (CircuitElement element : elementList) {
             switch (element) {
                 case ResistorElement resistorElement ->
                         resistorMatrix = resistorElement.stampSelf(resistorMatrix, temporaryListForIndexOnly.indexOf(resistorElement.getBegNodeID()), temporaryListForIndexOnly.indexOf(resistorElement.getEndNodeID()));
@@ -128,6 +140,8 @@ public final class CircuitSolver {
 
         if (!CircuitValidator.passesStaticCircuitInspection(elementList, nodeHashMap)) {
             throw new IllegalStateException();
+        } else {
+            computationResultProperty.set("Passed circuit inspection; circuit is valid.");
         }
 
         final double[][] twoDInputArray = MatrixMath.reduce2DMatrixToSubmatrix(resistorMatrix, groundNodeIndex);
@@ -137,71 +151,88 @@ public final class CircuitSolver {
         LUDecomposition lu = new LUDecomposition(twoDInputArray);
 
         //Note: solution vector may contain both node voltages & currents across voltage sources.
-        final double[] solutionVector = lu.solve(oneDRightHandVector, oneDBlankSolutionVector);
+        solutionVector = lu.solve(oneDRightHandVector, oneDBlankSolutionVector);
 
-        final Collection < CircuitNode > nodesCollection = nodeHashMap.values();
+        final Collection<CircuitNode> nodesCollection = nodeHashMap.values();
 
         int count = 0;
 
-        for (CircuitNode node: nodesCollection) {
+        for (CircuitNode node : nodesCollection) {
             if (!node.isGroundNode()) {
                 node.setNodeVoltage(solutionVector[count]);
                 count++;
+//                System.out.println("Solution vector: " + Arrays.toString(solutionVector));
+//                System.out.println("Current count: " + count + "solution vector length : " + solutionVector.length + "node hashmap size: " + nodeHashMap.size());
             }
         }
-
-        if (solutionVector.length > nodeHashMap.size() && count == nodeHashMap.size()) {
-            for (CircuitElement elmIsVSS: elementList) {
+        // Since the circuit solver automatically removes ground node, the solution vector will naturally be equal to the size of node hash map. This should
+        // not be the case as for any circuits containing voltage sources, the solution output will not include the voltage current.
+        // To amend this, we create a condition that MUST be met:
+        // 1) if the solution vector's length plus one (the one represents the reference node)
+        if (solutionVector.length + 1 > nodeHashMap.size()) {
+            for (CircuitElement elmIsVSS : elementList) {
                 if (Objects.requireNonNull(elmIsVSS) instanceof VoltageSourceElement voltElm) {
                     voltElm.setCurrent(solutionVector[count]);
                     count++;
                 }
             }
         }
+        reportValues();
+    }
 
+    private void reportValues() {
         if (computationResultProperty == null) {
             // Should be replaced by a logger!
             System.out.println("The node number(s) displayed in the results below are the same as the node ID.");
 
             nodeHashMap.forEach((nodeId, node) -> {
                 if (!node.isGroundNode()) {
-                    System.out.println("The voltage at node " + node.getNodeID() + " (w.r.t ground node " + this.groundNodeIndex + ") is: " + roundValue(node.getNodeVoltage(), 4) + "V");
+                    System.out.println("The voltage at node " + node.getNodeID() + " (w.r.t ground node " + this.groundNodeIndex + ") is: " + roundValue(node.getNodeVoltage()) + "V");
                 }
             });
 
-            for (CircuitElement element: elementList) {
+            for (CircuitElement element : elementList) {
                 if (element instanceof VoltageSourceElement voltageSourceElement) {
-                    System.out.println("The current of the voltage source " + element.getComponentID() + " is: " + roundValue(voltageSourceElement.getVoltageSourceCurrent(), 4) + "A");
+                    System.out.println("The current of the voltage source " + element.getComponentID() + " is: " + roundValue(voltageSourceElement.getVoltageSourceCurrent()) + "A");
                 }
             }
 
         } else {
             computationResultProperty.set("The node number(s) displayed in the results below are the same as the node ID.");
-            computationResultProperty.set("Recall that the voltage of the ground node is always 0 V.");
+            computationResultProperty.set("Recall that the voltage at the ground node is 0 V.");
 
-            // round these values (NO FLOOR)
             nodeHashMap.forEach((nodeId, node) -> {
                 if (!node.isGroundNode()) {
-                    computationResultProperty.set("The voltage at node " + node.getNodeID() + " (w.r.t ground node " + this.groundNodeIndex + ") is: " + roundValue(node.getNodeVoltage(), 4) + "V");
+                    computationResultProperty.set("The voltage at node " + node.getNodeID() + " (w.r.t ground node " + this.groundNodeIndex + ") is: " + roundValue(node.getNodeVoltage()) + "V");
                 }
             });
 
-            for (CircuitElement element: elementList) {
+            for (CircuitElement element : elementList) {
                 if (element instanceof VoltageSourceElement voltageSourceElement) {
-                    computationResultProperty.set("The current of the voltage source " + element.getComponentID() + " is: " + roundValue(voltageSourceElement.getVoltageSourceCurrent(), 4) + "A");
+                    computationResultProperty.set("The current of the voltage source " + element.getComponentID() + " is: " + roundValue(voltageSourceElement.getVoltageSourceCurrent()) + "A");
                 }
             }
         }
-    }
-
-    private static double roundValue(final double input, final int places) {
-        if (places < 0) {
-            throw new IllegalArgumentException();
-        }
-
-        BigDecimal bd = BigDecimal.valueOf(input);
-
-        return bd.setScale(places, RoundingMode.HALF_UP).doubleValue();
 
     }
+
+    public double[] reportSolutionVector() {
+        return solutionVector;
+    }
+
+
+
+//    private static final int PREFERRED_ROUNDING_VALUE = 4;
+//
+//    private static double roundValue(final double input) {
+//        if (CircuitSolver.PREFERRED_ROUNDING_VALUE < 0) {
+//            throw new IllegalArgumentException();
+//        }
+//
+//        BigDecimal bd = BigDecimal.valueOf(input);
+//
+//        return bd.setScale(CircuitSolver.PREFERRED_ROUNDING_VALUE, RoundingMode.HALF_UP).doubleValue();
+//    }
+
+
 }

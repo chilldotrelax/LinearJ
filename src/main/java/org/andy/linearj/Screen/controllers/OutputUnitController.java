@@ -15,12 +15,11 @@ public final class OutputUnitController {
     private TextArea outputBox;
 
     public void setOutputBox(String desiredText) {
-        if (!desiredText.isEmpty()) {
-            LocalTime time = LocalTime.now(ZoneId.systemDefault());
-            DateTimeFormatter formatted = DateTimeFormatter.ofPattern("HH:mm:ss");
-            outputBox.appendText("\n" + "(" + time.format(formatted) + ")" + " " + desiredText);
-            clearBtn.setDisable(false);
-        }
+        LocalTime time = LocalTime.now(ZoneId.systemDefault());
+        DateTimeFormatter formatted = DateTimeFormatter.ofPattern("HH:mm:ss");
+        outputBox.appendText("\n" + "(" + time.format(formatted) + ")" + " " + desiredText);
+        clearBtn.setDisable(false);
+
     }
 
     @FXML

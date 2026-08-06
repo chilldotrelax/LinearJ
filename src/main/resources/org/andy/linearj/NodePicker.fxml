@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import java.lang.String?>
+<AnchorPane prefHeight="178.0" prefWidth="369.0" styleClass="parent-window"
+            stylesheets="@CSSStyleSheets/ParentWindow.css" xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.andy.linearj.Screen.controllers.NodePickerWindowController">
+
+    <HBox alignment="CENTER" layoutX="6.0" layoutY="-2.0" prefHeight="33.0" prefWidth="363.0" spacing="50.0">
+        <Label text="Select Nodes">
+            <font>
+                <Font size="19.0"/>
+            </font>
+        </Label>
+    </HBox>
+
+    <VBox layoutX="14.0" layoutY="38.0" prefHeight="186.0" prefWidth="132.0" spacing="35.0">
+        <Label prefHeight="17.0" prefWidth="132.0" text="Select First Node"/>
+        <Label layoutX="10.0" layoutY="52.0" prefHeight="17.0" prefWidth="128.0" text="Select Second Node"/>
+    </VBox>
+
+    <VBox layoutX="187.0" layoutY="35.0" prefHeight="186.0" prefWidth="132.0" spacing="13.0">
+        <ChoiceBox fx:id="firstNodeChoiceBox" focusTraversable="false" prefWidth="150.0" styleClass="context-menu"
+                   stylesheets="@CSSStyleSheets/ChoiceBox.css" value="Select Node"/>
+
+        <ChoiceBox fx:id="secondNodeChoiceBox" focusTraversable="false" prefWidth="150.0" styleClass="context-menu"
+                   stylesheets="@CSSStyleSheets/ChoiceBox.css" value="Select Node"/>
+    </VBox>
+
+    <HBox alignment="CENTER" layoutX="3.0" layoutY="174.0" prefHeight="33.0" prefWidth="363.0" spacing="50.0">
+        <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#closeWindow"
+                stylesheets="@CSSStyleSheets/buttons.css" text="Cancel">
+            <styleClass>
+                <String fx:value="button_main"/>
+                <String fx:value="button-primary"/>
+            </styleClass>
+        </Button>
+        <Button fx:id="solveTheveninBtn" mnemonicParsing="false" onAction="#solveTheveninBtn" prefHeight="26.0"
+                prefWidth="68.0" stylesheets="@CSSStyleSheets/buttons.css" text="Solve">
+            <styleClass>
+                <String fx:value="button_main"/>
+                <String fx:value="button-primary"/>
+            </styleClass>
+        </Button>
+    </HBox>
+</AnchorPane>

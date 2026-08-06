@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package org.andy.linearj.Screen.misc.exception;
+package org.andy.linearj.Screen.exception;
 
 public class MatrixNotEquivalentException extends Exception {
     public MatrixNotEquivalentException(String err){

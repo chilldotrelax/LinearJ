@@ -22,26 +22,10 @@
  * SOFTWARE.
  */
 
-package org.andy.linearj.Screen.misc;
+package org.andy.linearj.Screen.exception;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-
-@SuppressWarnings("ALL")
-
-public final class ErrorWindows {
-    private ErrorWindows() {
-        //Should never be instantiated
+public class NegativeNumberException extends RuntimeException {
+    public NegativeNumberException(String message) {
+        super(message);
     }
-
-    public static void displayInformative(String dialog) {
-        Alert informativeGenericMSG = new Alert(Alert.AlertType.INFORMATION, dialog);
-        informativeGenericMSG.showAndWait().filter(response -> response == ButtonType.OK);
-    }
-
-    public static void displayError(String dialog) {
-        Alert errorGenericMSG = new Alert(Alert.AlertType.ERROR, dialog);
-        errorGenericMSG.showAndWait().filter(response -> response == ButtonType.OK);
-    }
-
 }

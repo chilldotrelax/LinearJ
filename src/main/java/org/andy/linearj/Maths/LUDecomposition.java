@@ -24,7 +24,7 @@
 
 package org.andy.linearj.Maths;
 
-import org.andy.linearj.Screen.misc.exception.IllegalMatrixException;
+import org.andy.linearj.Screen.exception.IllegalMatrixException;
 import org.ejml.data.SingularMatrixException;
 
 public class LUDecomposition {
@@ -32,7 +32,7 @@ public class LUDecomposition {
     private final double[][] decomposedLU;
     private final int numRows;
 
-    public LUDecomposition(double[][] admittanceMatrix) throws IllegalMatrixException {
+    public LUDecomposition(final double[][] admittanceMatrix) throws IllegalMatrixException {
         this.decomposedLU = new double[admittanceMatrix.length][]; //Output
 
         for (int i = 0; i < admittanceMatrix.length; i++) {
@@ -98,7 +98,7 @@ public class LUDecomposition {
     }
 
     //For A * x = b with n linear equations, return sol vector x.
-    public double[] solve(double[] rightHandSide, double[] x) {
+    public double[] solve(final double[] rightHandSide, double[] x) {
         int ip;
         int ii = 0;
         double sum;

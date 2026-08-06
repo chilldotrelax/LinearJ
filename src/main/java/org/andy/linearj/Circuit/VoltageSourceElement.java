@@ -62,12 +62,12 @@ public final class VoltageSourceElement extends CircuitElement {
         return this.current;
     }
 
-    public double[] stampSelf(double[] rightHandVector, final int preShiftedIndex, final int selfOffset) {
+    public double[] stampSelf(final double[] rightHandVector, final int preShiftedIndex, final int selfOffset) {
         rightHandVector[preShiftedIndex + selfOffset] += this.voltage;
         return rightHandVector;
     }
 
-    public double[][] stampToGlobalMatrix(double[][] resistorMatrix, final int begNode, final int endNode, final int preShiftIndex, final int offset) {
+    public double[][] stampToGlobalMatrix(final double[][] resistorMatrix, final int begNode, final int endNode, final int preShiftIndex, final int offset) {
         resistorMatrix[preShiftIndex + offset][begNode] += 1;
         resistorMatrix[preShiftIndex + offset][endNode] -= 1;
         resistorMatrix[begNode][preShiftIndex + offset] += 1;

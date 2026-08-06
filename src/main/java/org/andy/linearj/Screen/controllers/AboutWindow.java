@@ -25,7 +25,6 @@
 package org.andy.linearj.Screen.controllers;
 
 import javafx.fxml.FXML;
-import org.andy.linearj.Screen.misc.ErrorWindows;
 
 import java.awt.*;
 import java.io.File;

@@ -22,10 +22,21 @@
  * SOFTWARE.
  */
 
-package org.andy.linearj.Screen.misc.exception;
+package org.andy.linearj.Circuit;
 
-public class NegativeNumberException extends RuntimeException {
-    public NegativeNumberException(String message) {
-        super(message);
+public final class CircuitElementSimpleFactory {
+
+    private CircuitElementSimpleFactory() {
+    }
+
+    public static CircuitElement createElement(String compID, Integer nodeBegID, Integer nodeEndID, Double value) {
+        return switch (compID.substring(0, 1)) {
+            case "I" -> new CurrentSourceElement(nodeBegID, nodeEndID, compID, value);
+            case "R" -> new ResistorElement(nodeBegID, nodeEndID, compID, value);
+            case "V" -> new VoltageSourceElement(nodeBegID, nodeEndID, compID, value);
+            case "G" -> new GroundElement(nodeBegID, compID);
+            case null,
+                 default -> throw new IllegalArgumentException();
+        };
     }
 }

@@ -22,22 +22,26 @@
  * SOFTWARE.
  */
 
-package org.andy.linearj.Circuit;
+package org.andy.linearj.Screen.controllers;
 
-public final class CircuitElementFactory {
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
-    private CircuitElementFactory() {
-        //
+@SuppressWarnings("ALL")
+
+public final class ErrorWindows {
+    private ErrorWindows() {
+        //Should never be instantiated
     }
 
-    public static CircuitElement createElement(String compID, Integer nodeBegID, Integer nodeEndID, Double value) {
-        return switch (compID.substring(0, 1)) {
-                case "I" -> new CurrentSourceElement(nodeBegID, nodeEndID, compID, value);
-                case "R" -> new ResistorElement(nodeBegID, nodeEndID, compID, value);
-                case "V" -> new VoltageSourceElement(nodeBegID, nodeEndID, compID, value);
-                case "G" -> new GroundElement(nodeBegID,compID);
-                case null,
-                     default -> throw new IllegalArgumentException("Unexpected value");
-            };
+    public static void displayInformative(String dialog) {
+        Alert informativeGenericMSG = new Alert(Alert.AlertType.INFORMATION, dialog);
+        informativeGenericMSG.showAndWait().filter(response -> response == ButtonType.OK);
     }
+
+    public static void displayError(String dialog) {
+        Alert errorGenericMSG = new Alert(Alert.AlertType.ERROR, dialog);
+        errorGenericMSG.showAndWait().filter(response -> response == ButtonType.OK);
+    }
+
 }

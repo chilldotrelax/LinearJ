@@ -39,20 +39,28 @@ public final class CircuitNode {
         this.isGroundNode = false;
     }
 
-    public final int getNodeID() {
+    public int getNodeID() {
         return nodeID;
     }
-    public final double getNodeVoltage() {
+    public double getNodeVoltage() {
         return nodeVoltage;
     }
-    public final void setNodeVoltage(double volt) {
+    public void setNodeVoltage(double volt) {
         this.nodeVoltage = volt;
     }
-    public final boolean isFloatingNode() {
+    public boolean isFloatingNode() {
         return elementsConnected.size() <= 1;
     }
-    public final boolean isGroundNode() {
+    public boolean isGroundNode() {
         return isGroundNode;
+    }
+
+    public void addElement(CircuitElement particularElement) {
+        if (particularElement instanceof GroundElement) {
+            this.isGroundNode = true;
+        }
+
+        elementsConnected.add(particularElement);
     }
 
     public void removeElement(CircuitElement particularElement) throws IllegalArgumentException {
@@ -63,11 +71,17 @@ public final class CircuitNode {
         }
     }
 
-    public void addElement(CircuitElement particularElement) {
-        if (particularElement instanceof GroundElement) {
-            this.isGroundNode = true;
+    public void replaceElement(CircuitElement particularElement){
+        if (particularElement == null) {throw new IllegalArgumentException();}
+
+        int count = 0;
+        for (CircuitElement elm: elementsConnected){
+            if ((particularElement.isNodeIDEqual(elm.getBegNodeID()) || particularElement.isNodeIDEqual(elm.getEndNodeID()) && (count <= 1))){
+                elementsConnected.remove(elm);
+                elementsConnected.add(particularElement);
+                count++;
+            }
         }
-        elementsConnected.add(particularElement);
     }
 
     public boolean contains(CircuitElement particularElement) {
