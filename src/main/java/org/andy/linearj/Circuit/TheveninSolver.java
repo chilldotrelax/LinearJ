@@ -32,23 +32,23 @@ import java.util.Map;
  * This class implements thevenin analysis to compute the thevenin voltage & resistance.
  */
 
-public class TheveninSolver extends AbstractCircuitSolver {
+public final class TheveninSolver extends AbstractCircuitSolver {
     private final SimpleStringProperty computationResultProperty;
 
     public TheveninSolver(CircuitElement[] input, Map<Integer, CircuitNode> circuitNodeHashMap) {
-        super(input,circuitNodeHashMap);
+        super(input, circuitNodeHashMap);
         this.computationResultProperty = null;
 
     }
 
     public TheveninSolver(CircuitElement[] input, Map<Integer, CircuitNode> circuitNodeHashMap, SimpleStringProperty computationResultPropertyInput) {
-        super(input,circuitNodeHashMap);
+        super(input, circuitNodeHashMap);
         this.computationResultProperty = computationResultPropertyInput;
     }
 
     private void collapseCircuit(int firstNode, int secondNode) {
         final CircuitElement[] elmList = super.getCircuitElementArray();
-        final Map < Integer, CircuitNode > circuitNodeMap =  super.getCircuitNodeMap();
+        final Map<Integer, CircuitNode> circuitNodeMap = super.getCircuitNodeMap();
 
         // Replace voltage source element with short and replace current source with open
         // To do this, we simply replace the voltage element with a resistor with a value of Double.MIN_VALUE.
@@ -62,11 +62,11 @@ public class TheveninSolver extends AbstractCircuitSolver {
 
             // TODO verify validaty of this solution.
             if (elm instanceof VoltageSourceElement) {
-                circuitNodeMap.get(elm.getBegNodeID()).replaceElement(CircuitElementSimpleFactory.createElement(elm.getComponentID(), elm.getBegNodeID(),elm.getEndNodeID(),Double.MIN_VALUE));
-                circuitNodeMap.get(elm.getEndNodeID()).replaceElement(CircuitElementSimpleFactory.createElement(elm.getComponentID(),elm.getBegNodeID(),elm.getEndNodeID(),Double.MIN_VALUE));
+                circuitNodeMap.get(elm.getBegNodeID()).replaceElement(CircuitElementSimpleFactory.createElement(elm.getComponentID(), elm.getBegNodeID(), elm.getEndNodeID(), Double.MIN_VALUE));
+                circuitNodeMap.get(elm.getEndNodeID()).replaceElement(CircuitElementSimpleFactory.createElement(elm.getComponentID(), elm.getBegNodeID(), elm.getEndNodeID(), Double.MIN_VALUE));
             } else if (elm instanceof CurrentSourceElement) {
-                circuitNodeMap.get(elm.getBegNodeID()).replaceElement(CircuitElementSimpleFactory.createElement(elm.getComponentID(),elm.getBegNodeID(),elm.getEndNodeID(),doubMax));
-               circuitNodeMap.get(elm.getEndNodeID()).replaceElement(CircuitElementSimpleFactory.createElement(elm.getComponentID(),elm.getBegNodeID(),elm.getEndNodeID(),doubMax));
+                circuitNodeMap.get(elm.getBegNodeID()).replaceElement(CircuitElementSimpleFactory.createElement(elm.getComponentID(), elm.getBegNodeID(), elm.getEndNodeID(), doubMax));
+                circuitNodeMap.get(elm.getEndNodeID()).replaceElement(CircuitElementSimpleFactory.createElement(elm.getComponentID(), elm.getBegNodeID(), elm.getEndNodeID(), doubMax));
             }
         }
 
@@ -75,17 +75,18 @@ public class TheveninSolver extends AbstractCircuitSolver {
     @Override
     public void solveCircuit() {
         final CircuitElement[] elmList = super.getCircuitElementArray();
-        final Map < Integer, CircuitNode > circuitNodeMap =  super.getCircuitNodeMap();
+        final Map<Integer, CircuitNode> circuitNodeMap = super.getCircuitNodeMap();
 
-        AbstractCircuitSolver mnaSolver = new MNASolver(elmList,circuitNodeMap);
+        AbstractCircuitSolver mnaSolver = new MNASolver(elmList, circuitNodeMap);
 
         // For MNA solver only
-        final double[] solution = mnaSolver.solveCircuit();
+//        final double[] solution = mnaSolver.solveCircuit();
+        // Instead, it should be using the get solution vector method.
     }
 
     @Override
     void reportResultsToConsole() {
-        if (computationResultProperty == null){
+        if (computationResultProperty == null) {
             throw new IllegalStateException();
         }
 

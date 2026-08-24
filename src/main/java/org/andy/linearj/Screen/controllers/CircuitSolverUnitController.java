@@ -33,10 +33,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import org.andy.linearj.Circuit.CircuitElement;
-import org.andy.linearj.Circuit.CircuitNode;
-import org.andy.linearj.Circuit.CircuitSolver;
-import org.andy.linearj.Circuit.GroundElement;
+import org.andy.linearj.Circuit.*;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -118,6 +115,8 @@ public final class CircuitSolverUnitController {
         }
 
         // The remove element only supports one element at a time, so this condition is okay to use.
+        // This basically allows for an easier way of "clearing" without having to define a dedicated method.
+        // Not very nice, but it will have to do for now.
         if (elm.size() > 1) {
             circuitNodeHashMap.clear();
             return;
@@ -154,7 +153,8 @@ public final class CircuitSolverUnitController {
     @FXML
     private void solveDCCircuit() {
         CircuitElement[] elementsList = circuitElementObservableListInUnit.toArray(new CircuitElement[0]);
-        CircuitSolver solve = new CircuitSolver(elementsList, circuitNodeHashMap, computationOutput);
+        // new change
+        AbstractCircuitSolver solve = new MNASolver(elementsList, circuitNodeHashMap, computationOutput);
 
         try {
             solve.solveCircuit();
@@ -180,4 +180,5 @@ public final class CircuitSolverUnitController {
             //
         }
     }
+
 }

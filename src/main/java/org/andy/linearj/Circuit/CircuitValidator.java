@@ -66,6 +66,8 @@ public final class CircuitValidator {
         return (groundNodesInElementArray == 1);
     }
 
+
+    // TODO remove this method, or at least make it much more "deep".
     private static boolean noFloatingNodes(Map < Integer, CircuitNode > circuitNodeMap) {
         final Collection < CircuitNode > nodeCollection = circuitNodeMap.values();
 

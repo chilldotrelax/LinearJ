@@ -14,24 +14,26 @@ public abstract class AbstractCircuitSolver {
     }
 
     protected static final int PREFERRED_ROUNDING_VALUE = 4;
+
     protected static double roundNumbers(final double input) {
 
         if (AbstractCircuitSolver.PREFERRED_ROUNDING_VALUE < 0) {
-                throw new IllegalArgumentException();
-            }
-            BigDecimal bd = BigDecimal.valueOf(input);
-            return bd.setScale(AbstractCircuitSolver.PREFERRED_ROUNDING_VALUE, RoundingMode.HALF_UP).doubleValue();
+            throw new IllegalArgumentException();
+        }
+        BigDecimal bd = BigDecimal.valueOf(input);
+        return bd.setScale(AbstractCircuitSolver.PREFERRED_ROUNDING_VALUE, RoundingMode.HALF_UP).doubleValue();
     }
 
-    protected Map < Integer, CircuitNode > getCircuitNodeMap(){
+    protected Map<Integer, CircuitNode> getCircuitNodeMap() {
         return circuitNodeMap;
     }
 
-    protected CircuitElement[] getCircuitElementArray(){
+    protected CircuitElement[] getCircuitElementArray() {
         return elmList;
     }
 
-    abstract void solveCircuit();
+    public abstract void solveCircuit();
+
     abstract void reportResultsToConsole();
 
 }
