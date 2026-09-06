@@ -5,10 +5,10 @@ import java.math.RoundingMode;
 import java.util.Map;
 
 public abstract class AbstractCircuitSolver {
-    private final CircuitElement[] elmList;
+    private final AbstractCircuitElement[] elmList;
     private final Map<Integer, CircuitNode> circuitNodeMap;
 
-    protected AbstractCircuitSolver(CircuitElement[] elmList, Map<Integer, CircuitNode> circMap) {
+    protected AbstractCircuitSolver(AbstractCircuitElement[] elmList, Map<Integer, CircuitNode> circMap) {
         this.elmList = elmList;
         this.circuitNodeMap = circMap;
     }
@@ -28,8 +28,8 @@ public abstract class AbstractCircuitSolver {
         return circuitNodeMap;
     }
 
-    protected CircuitElement[] getCircuitElementArray() {
-        return elmList;
+    protected AbstractCircuitElement[] getCircuitElementArray() {
+        return elmList.clone();
     }
 
     public abstract void solveCircuit();

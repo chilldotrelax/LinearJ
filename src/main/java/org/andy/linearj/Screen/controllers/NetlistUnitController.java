@@ -32,7 +32,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.SelectionModel;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import org.andy.linearj.Circuit.CircuitElement;
+import org.andy.linearj.Circuit.AbstractCircuitElement;
 
 public final class NetlistUnitController {
     @FXML
@@ -49,7 +49,7 @@ public final class NetlistUnitController {
     private Button clearNetlistBtn, removeElementBtn;
 
     private ObservableList<ElementDataModel> elementDataModelObservableList;
-    private ObservableList<CircuitElement> circuitElementObsList;
+    private ObservableList<AbstractCircuitElement> circuitElementObsList;
 
     private SelectionModel<ElementDataModel> circuitSelectionModel;
 
@@ -59,7 +59,7 @@ public final class NetlistUnitController {
         return clrNetlistOutput;
     }
 
-    public void setObservableLists(ObservableList<ElementDataModel> elmDataModel, ObservableList<CircuitElement> circuitElementObservableList) {
+    public void setObservableLists(ObservableList<ElementDataModel> elmDataModel, ObservableList<AbstractCircuitElement> circuitElementObservableList) {
         this.elementDataModelObservableList = elmDataModel;
         this.circuitElementObsList = circuitElementObservableList;
 

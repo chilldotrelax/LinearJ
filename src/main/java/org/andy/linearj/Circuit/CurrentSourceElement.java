@@ -24,7 +24,7 @@
 
 package org.andy.linearj.Circuit;
 
-public final class CurrentSourceElement extends CircuitElement {
+public final class CurrentSourceElement extends AbstractCircuitElement {
     private double current;
     private String componentID;
 
@@ -37,18 +37,22 @@ public final class CurrentSourceElement extends CircuitElement {
             this.current = current;
         }
     }
+
     @Override
     public String getComponentID() {
         return componentID;
     }
+
     @Override
     public void setComponentID(String newComponentID) {
         componentID = newComponentID;
     }
+
     @Override
     public double getElementValue() {
         return current;
     }
+
     @Override
     public void setElementValue(double newValue) {
         current = newValue;

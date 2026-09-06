@@ -29,16 +29,17 @@ import java.util.Map;
 import java.util.Objects;
 
 public final class CircuitValidator {
-    private CircuitValidator() {}
+    private CircuitValidator() {
+    }
 
-    public static boolean passesStaticCircuitInspection(CircuitElement[] elementsArray, Map < Integer, CircuitNode > circuitNodeMap) {
+    public static boolean passesStaticCircuitInspection(AbstractCircuitElement[] elementsArray, Map<Integer, CircuitNode> circuitNodeMap) {
         int count = 0;
 
         if (circuitAtLeastOneGroundNode(elementsArray)) {
             count += 1;
         }
 
-        for (CircuitElement element: elementsArray) {
+        for (AbstractCircuitElement element : elementsArray) {
             if (!isElmShort(element) && circuitAtLeastOneGroundNode(elementsArray)) {
                 count++;
             }
@@ -51,14 +52,14 @@ public final class CircuitValidator {
         return (count > 0);
     }
 
-    private static boolean isElmShort(CircuitElement element) {
+    private static boolean isElmShort(AbstractCircuitElement element) {
         return (Objects.equals(element.getBegNodeID(), element.getEndNodeID()));
     }
 
-    private static boolean circuitAtLeastOneGroundNode(CircuitElement[] elementsArray) {
+    private static boolean circuitAtLeastOneGroundNode(AbstractCircuitElement[] elementsArray) {
         int groundNodesInElementArray = 0;
 
-        for (CircuitElement element: elementsArray) {
+        for (AbstractCircuitElement element : elementsArray) {
             if (element instanceof GroundElement) {
                 groundNodesInElementArray += 1;
             }
@@ -68,10 +69,10 @@ public final class CircuitValidator {
 
 
     // TODO remove this method, or at least make it much more "deep".
-    private static boolean noFloatingNodes(Map < Integer, CircuitNode > circuitNodeMap) {
-        final Collection < CircuitNode > nodeCollection = circuitNodeMap.values();
+    private static boolean noFloatingNodes(Map<Integer, CircuitNode> circuitNodeMap) {
+        final Collection<CircuitNode> nodeCollection = circuitNodeMap.values();
 
-        for (CircuitNode node: nodeCollection) {
+        for (CircuitNode node : nodeCollection) {
             if (node.isFloatingNode()) {
                 return false;
             }

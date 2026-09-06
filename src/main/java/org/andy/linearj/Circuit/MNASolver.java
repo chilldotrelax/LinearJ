@@ -1,3 +1,27 @@
+/*
+ * MIT License
+ *
+ * Copyright © 2026 Andy Huang
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package org.andy.linearj.Circuit;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -11,7 +35,7 @@ import java.util.*;
 This class implements MNA analysis to compute the node voltages (and current through a voltage source) of any simple DC circuit containing the following elements:
     1) Independent DC Voltage Source (typically denoted in schematics as two horizontal bars with two terminals)
     2) Independent DC Current Source (typically denoted in schematics as a circle that contains an arrow that points in the direction of the current flow).
-    3) A simple resistor
+    3) A simple resistor element
     4) A simple ground element that terminates into earth (has no option for an "end node").
  */
 
@@ -27,8 +51,8 @@ public final class MNASolver extends AbstractCircuitSolver {
 
     private final SimpleStringProperty computationResultProperty;
 
-    // overload 1
-    public MNASolver(final CircuitElement[] elmList, final Map<Integer, CircuitNode> circuitNodeMap) {
+    // overload 1 (Does not contain SimpleStringProperty)
+    public MNASolver(final AbstractCircuitElement[] elmList, final Map<Integer, CircuitNode> circuitNodeMap) {
         super(elmList, circuitNodeMap);
 
         this.computationResultProperty = null;
@@ -36,7 +60,7 @@ public final class MNASolver extends AbstractCircuitSolver {
 
         int numberOfVoltageElementsOffSet = 0;
 
-        for (CircuitElement element : getCircuitElementArray()) {
+        for (AbstractCircuitElement element : getCircuitElementArray()) {
             if (element instanceof VoltageSourceElement) {
                 numberOfVoltageElementsOffSet++;
             }
@@ -56,15 +80,15 @@ public final class MNASolver extends AbstractCircuitSolver {
 
     }
 
-    // overload 2
-    public MNASolver(CircuitElement[] elmList, Map<Integer, CircuitNode> circuitNodeMap, SimpleStringProperty computationResultPropertyInput) {
+    // overload 2 (contains SimpleStringProperty)
+    public MNASolver(AbstractCircuitElement[] elmList, Map<Integer, CircuitNode> circuitNodeMap, SimpleStringProperty computationResultPropertyInput) {
         super(elmList, circuitNodeMap);
         this.computationResultProperty = computationResultPropertyInput;
         this.temporaryListForIndexOnly = new ArrayList<>();
 
         int numberOfVoltageElementsOffSet = 0;
 
-        for (CircuitElement element : getCircuitElementArray()) {
+        for (AbstractCircuitElement element : getCircuitElementArray()) {
             if (element instanceof VoltageSourceElement) {
                 numberOfVoltageElementsOffSet++;
             }
@@ -85,10 +109,14 @@ public final class MNASolver extends AbstractCircuitSolver {
     }
 
     // TODO replace instanceof spam with polymorphism.
+
+    // aka remove the pattern matching! When we loop through the element array, MNASolver should not have
+    // to worry about what the type of each element is; it simply knows that it must call its "stampSelf" method.
+
     private void stampCircuit() {
         int offsetsCounter = 0;
 
-        for (CircuitElement element : getCircuitElementArray()) {
+        for (AbstractCircuitElement element : getCircuitElementArray()) {
             switch (element) {
                 case ResistorElement resistorElement ->
                         resistorMatrix = resistorElement.stampSelf(resistorMatrix, temporaryListForIndexOnly.indexOf(resistorElement.getBegNodeID()), temporaryListForIndexOnly.indexOf(resistorElement.getEndNodeID()));
@@ -97,7 +125,7 @@ public final class MNASolver extends AbstractCircuitSolver {
                 case VoltageSourceElement voltageSourceElement -> {
                     if (offsetsCounter <= resistorMatrix.length - getCircuitNodeMap().size()) {
                         rightHandVector = voltageSourceElement.stampSelf(rightHandVector, getCircuitNodeMap().size(), offsetsCounter);
-                        resistorMatrix = voltageSourceElement.stampToGlobalMatrix(resistorMatrix, temporaryListForIndexOnly.indexOf(voltageSourceElement.getBegNodeID()), temporaryListForIndexOnly.indexOf(voltageSourceElement.getEndNodeID()),getCircuitNodeMap().size(), offsetsCounter);
+                        resistorMatrix = voltageSourceElement.stampToGlobalMatrix(resistorMatrix, temporaryListForIndexOnly.indexOf(voltageSourceElement.getBegNodeID()), temporaryListForIndexOnly.indexOf(voltageSourceElement.getEndNodeID()), getCircuitNodeMap().size(), offsetsCounter);
                         offsetsCounter++;
                     }
                 }
@@ -146,7 +174,7 @@ public final class MNASolver extends AbstractCircuitSolver {
         // To amend this, we create a condition that MUST be met:
         // 1) if the solution vector's length plus one (the one represents the reference node)
         if (solutionVector.length + 1 > getCircuitNodeMap().size()) {
-            for (CircuitElement elmIsVSS : getCircuitElementArray()) {
+            for (AbstractCircuitElement elmIsVSS : getCircuitElementArray()) {
                 if (Objects.requireNonNull(elmIsVSS) instanceof VoltageSourceElement voltElm) {
                     voltElm.setCurrent(solutionVector[count]);
                     count++;
@@ -156,8 +184,13 @@ public final class MNASolver extends AbstractCircuitSolver {
         reportResultsToConsole();
     }
 
+    // TODO make this method visible to TheveninSolver.
+    public double[] reportResultsAsVector() {
+        return Arrays.copyOf(solutionVector, solutionVector.length);
+    }
+
     @Override
-    void reportResultsToConsole() {
+    public void reportResultsToConsole() {
         if (computationResultProperty == null) {
             // Should be replaced by a logger!
             System.out.println("The node number(s) displayed in the results below are the same as the node ID.");
@@ -168,7 +201,7 @@ public final class MNASolver extends AbstractCircuitSolver {
                 }
             });
 
-            for (CircuitElement element : getCircuitElementArray()) {
+            for (AbstractCircuitElement element : getCircuitElementArray()) {
                 if (element instanceof VoltageSourceElement voltageSourceElement) {
                     System.out.println("The current of the voltage source " + element.getComponentID() + " is: " + roundNumbers(voltageSourceElement.getVoltageSourceCurrent()) + "A");
                 }
@@ -184,7 +217,7 @@ public final class MNASolver extends AbstractCircuitSolver {
                 }
             });
 
-            for (CircuitElement element : getCircuitElementArray()) {
+            for (AbstractCircuitElement element : getCircuitElementArray()) {
                 if (element instanceof VoltageSourceElement voltageSourceElement) {
                     computationResultProperty.set("The current of the voltage source " + element.getComponentID() + " is: " + roundNumbers(voltageSourceElement.getVoltageSourceCurrent()) + "A");
                 }
@@ -192,7 +225,4 @@ public final class MNASolver extends AbstractCircuitSolver {
         }
     }
 
-    private double[] reportResultsAsVector() {
-        return solutionVector;
-    }
 }

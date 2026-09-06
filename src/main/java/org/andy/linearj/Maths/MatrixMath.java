@@ -137,6 +137,16 @@ public final class MatrixMath {
         return result;
     }
 
+    // TODO: Add the implementations for these new methods below.
+
+    public static double[][] newComputeInverse(final double[][] matrix) {
+        return null;
+    }
+
+    public static double[][] newComputDeterminant(final double[][] matrix) {
+        return null;
+    }
+
     public static double[][] computeInverse(final double[][] matrix) {
         SimpleMatrix a = new SimpleMatrix(matrix);
         try {

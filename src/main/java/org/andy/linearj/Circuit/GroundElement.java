@@ -1,8 +1,8 @@
 package org.andy.linearj.Circuit;
 
-public final class GroundElement extends CircuitElement {
+public final class GroundElement extends AbstractCircuitElement {
     private String componentID;
-    
+
     public GroundElement(Integer begNodeID, String componentID) {
         super(begNodeID);
         this.componentID = componentID;
@@ -26,10 +26,5 @@ public final class GroundElement extends CircuitElement {
     public void setComponentID(String newComponentID) {
         componentID = newComponentID;
     }
-//
-//    @Override
-//    public String toString(){
-//        return "This is a ground node on node: " + getBegNodeID();
-//    }
 
 }

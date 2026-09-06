@@ -48,7 +48,7 @@ public final class AboutWindow extends PopupWindow {
         } catch (InvalidPathException e) {
             ErrorWindows.displayError("Could not find the file path for LICENSES");
         } catch (IOException e) {
-            ErrorWindows.displayError("Could not find the file LICENSES");
+            ErrorWindows.displayError("Could not find the file LICENSES or some other issue occurred.");
         }
     }
 }

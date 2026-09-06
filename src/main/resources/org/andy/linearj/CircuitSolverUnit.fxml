@@ -17,7 +17,6 @@
         </styleClass>
     </Button>
 
-
     <Button fx:id="solveCircuitBtn" defaultButton="true" disable="true" layoutX="39.0" layoutY="77.0" mnemonicParsing="false" onAction="#solveDCCircuit" prefHeight="26.0" prefWidth="148.0" stylesheets="@CSSStyleSheets/buttons.css" text="Solve Circuit">
         <styleClass>
             <String fx:value="button_main" />
@@ -25,7 +24,14 @@
         </styleClass>
     </Button>
 
-    <Button fx:id="solveTheveninBtn" defaultButton="true" disable="true" mnemonicParsing="false" prefWidth="150.0" stylesheets="@CSSStyleSheets/buttons.css" text="Thevenin Equivalent" onAction="#solveTheveninEquivalent">
+    <Button fx:id="solveTheveninBtn" defaultButton="true" disable="true" mnemonicParsing="false" prefWidth="150.0" stylesheets="@CSSStyleSheets/buttons.css" text="Thévenin Equivalent" onAction="#solveTheveninEquivalent">
+        <styleClass>
+            <String fx:value="button_main" />
+            <String fx:value="button-primary" />
+        </styleClass>
+    </Button>
+
+    <Button fx:id="solveNortonBtn" defaultButton="true" disable="true" mnemonicParsing="false" prefWidth="150.0" stylesheets="@CSSStyleSheets/buttons.css" text="Norton Equivalent">
         <styleClass>
             <String fx:value="button_main" />
             <String fx:value="button-primary" />

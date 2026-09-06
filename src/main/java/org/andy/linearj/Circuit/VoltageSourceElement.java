@@ -24,7 +24,7 @@
 
 package org.andy.linearj.Circuit;
 
-public final class VoltageSourceElement extends CircuitElement {
+public final class VoltageSourceElement extends AbstractCircuitElement {
     private double voltage;
     private double current;
     private String componentID;
@@ -58,6 +58,7 @@ public final class VoltageSourceElement extends CircuitElement {
     public void setCurrent(final double newCurrent) {
         this.current = newCurrent;
     }
+
     public double getVoltageSourceCurrent() {
         return this.current;
     }

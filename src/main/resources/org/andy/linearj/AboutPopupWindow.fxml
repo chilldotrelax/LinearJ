@@ -9,16 +9,16 @@
             xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.andy.linearj.Screen.controllers.AboutWindow">
 
-   <ImageView fitHeight="74.0" fitWidth="305.0" layoutX="54.0" layoutY="14.0" pickOnBounds="true"
-              preserveRatio="true">
-      <Image url="@../../../Assets/applogo_upscaled.png"/>
-   </ImageView>
+    <ImageView fitHeight="74.0" fitWidth="305.0" layoutX="54.0" layoutY="14.0" pickOnBounds="true"
+               preserveRatio="true">
+        <Image url="@../../../Assets/applogo_upscaled.png"/>
+    </ImageView>
 
-   <Label alignment="CENTER" layoutY="88.0" prefHeight="17.0" prefWidth="357.0" text="Version 0.1.0 Alpha"/>
+    <Label alignment="CENTER" layoutY="88.0" prefHeight="17.0" prefWidth="357.0" text="Version 0.1.0 Alpha"/>
 
-   <Label alignment="CENTER" layoutY="132.0" prefHeight="34.0" prefWidth="357.0"
-          text="Copyright 2026 Andy Huang&#10;Licensed under the MIT License.&#10;" wrapText="true"/>
+    <Label alignment="CENTER" layoutY="132.0" prefHeight="34.0" prefWidth="357.0"
+           text="Copyright 2026 Andy Huang&#10;Licensed under the MIT License.&#10;" wrapText="true"/>
 
-   <Hyperlink alignment="CENTER" layoutY="185.0"  prefHeight="23.0" prefWidth="357.0"
-              text="[LICENSE]" underline="true" onAction="#openLicenseFile"/>
+    <Hyperlink alignment="CENTER" layoutY="185.0"  prefHeight="23.0" prefWidth="357.0"
+               text="[LICENSE]" underline="true" onAction="#openLicenseFile"/>
 </AnchorPane>

@@ -26,7 +26,7 @@ package org.andy.linearj.Circuit;
 
 import org.andy.linearj.Screen.exception.NegativeNumberException;
 
-public final class ResistorElement extends CircuitElement {
+public final class ResistorElement extends AbstractCircuitElement {
     private double resistance;
     private String componentID;
 
@@ -60,6 +60,7 @@ public final class ResistorElement extends CircuitElement {
         resistance = newValue;
     }
 
+
     public double[][] stampSelf(double[][] matrix, int begIndex, int endIndex) {
         double conductance = 1 / getElementValue();
 
@@ -70,4 +71,5 @@ public final class ResistorElement extends CircuitElement {
 
         return matrix;
     }
+
 }

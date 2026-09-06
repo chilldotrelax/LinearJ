@@ -46,7 +46,7 @@ public final class CircuitSolverUnitController {
     private Button solveTheveninBtn;
 
     private ObservableList<ElementDataModel> elmListInUnit;
-    private ObservableList<CircuitElement> circuitElementObservableListInUnit;
+    private ObservableList<AbstractCircuitElement> circuitElementObservableListInUnit;
     private final HashMap<Integer, CircuitNode> circuitNodeHashMap;
     private final SimpleStringProperty computationOutput = new SimpleStringProperty();
 
@@ -58,38 +58,38 @@ public final class CircuitSolverUnitController {
         this.circuitNodeHashMap = new HashMap<>();
     }
 
-    public void setObservableLists(ObservableList<ElementDataModel> elmList, ObservableList<CircuitElement> elementObservableList) {
+    public void setObservableLists(ObservableList<ElementDataModel> elmList, ObservableList<AbstractCircuitElement> elementObservableList) {
         this.elmListInUnit = elmList;
         this.circuitElementObservableListInUnit = elementObservableList;
 
         circuitElementObservableListInUnit.addListener(new ListChangeListener<>() {
             @Override
             @SuppressWarnings("unchecked")
-            public void onChanged(Change<? extends CircuitElement> c) {
+            public void onChanged(Change<? extends AbstractCircuitElement> c) {
                 while (c.next()) {
                     if (circuitNodeHashMap.size() >= 2) {
                         solveTheveninBtn.setDisable(false);
                     }
                     if (!circuitElementObservableListInUnit.isEmpty() && c.wasAdded()) {
                         solveCircuitBtn.setDisable(false);
-                        handleAddChange((Change<CircuitElement>) c);
+                        handleAddChange((Change<AbstractCircuitElement>) c);
                     }
                     if (!circuitElementObservableListInUnit.isEmpty() && c.wasRemoved()) {
                         solveCircuitBtn.setDisable(false);
-                        handleRemoveChange((Change<CircuitElement>) c);
+                        handleRemoveChange((Change<AbstractCircuitElement>) c);
                     }
                     if ((circuitElementObservableListInUnit.size() <= 1)) {
                         solveCircuitBtn.setDisable(true);
                         solveTheveninBtn.setDisable(true);
-                        handleRemoveChange((Change<CircuitElement>) c);
+                        handleRemoveChange((Change<AbstractCircuitElement>) c);
                     }
                 }
             }
         });
     }
 
-    private void handleAddChange(ListChangeListener.Change<CircuitElement> c) {
-        CircuitElement elm = (CircuitElement) c.getAddedSubList().toArray()[0];
+    private void handleAddChange(ListChangeListener.Change<AbstractCircuitElement> c) {
+        AbstractCircuitElement elm = (AbstractCircuitElement) c.getAddedSubList().toArray()[0];
 
         if (!circuitNodeHashMap.containsKey(elm.getBegNodeID())) {
             circuitNodeHashMap.put(elm.getBegNodeID(), new CircuitNode(elm.getBegNodeID()));
@@ -107,8 +107,8 @@ public final class CircuitSolverUnitController {
         }
     }
 
-    private void handleRemoveChange(ListChangeListener.Change<CircuitElement> c) {
-        List<CircuitElement> elm = c.getRemoved();
+    private void handleRemoveChange(ListChangeListener.Change<AbstractCircuitElement> c) {
+        List<AbstractCircuitElement> elm = c.getRemoved();
 
         if (elm.isEmpty() || circuitNodeHashMap.isEmpty()) {
             return;
@@ -122,7 +122,7 @@ public final class CircuitSolverUnitController {
             return;
         }
 
-        for (CircuitElement circElm : elm) {
+        for (AbstractCircuitElement circElm : elm) {
             if (circuitNodeHashMap.containsKey(circElm.getBegNodeID())) {
                 circuitNodeHashMap.get(circElm.getBegNodeID()).removeElement(circElm);
             }
@@ -152,7 +152,7 @@ public final class CircuitSolverUnitController {
 
     @FXML
     private void solveDCCircuit() {
-        CircuitElement[] elementsList = circuitElementObservableListInUnit.toArray(new CircuitElement[0]);
+        AbstractCircuitElement[] elementsList = circuitElementObservableListInUnit.toArray(new AbstractCircuitElement[0]);
         // new change
         AbstractCircuitSolver solve = new MNASolver(elementsList, circuitNodeHashMap, computationOutput);
 

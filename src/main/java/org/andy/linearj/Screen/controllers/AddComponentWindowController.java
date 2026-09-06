@@ -31,7 +31,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.andy.linearj.Circuit.CircuitElement;
+import org.andy.linearj.Circuit.AbstractCircuitElement;
 import org.andy.linearj.Circuit.CircuitElementSimpleFactory;
 
 public final class AddComponentWindowController {
@@ -55,7 +55,7 @@ public final class AddComponentWindowController {
     private String genResElm, indVolDCElm, indCurrDCElm, groundElm;
 
     private ObservableList<ElementDataModel> elementDataModelObservableList;
-    private ObservableList<CircuitElement> circuitElementObservableList;
+    private ObservableList<AbstractCircuitElement> circuitElementObservableList;
 
     public void setElementDataModelObservableList(ObservableList<ElementDataModel> elementDataModelObservableList) {
         if (elementDataModelObservableList != null) {
@@ -63,7 +63,7 @@ public final class AddComponentWindowController {
         }
     }
 
-    public void setCircuitElementObservableList(ObservableList<CircuitElement> circuitElementObservableList) {
+    public void setCircuitElementObservableList(ObservableList<AbstractCircuitElement> circuitElementObservableList) {
         if (circuitElementObservableList != null) {
             this.circuitElementObservableList = circuitElementObservableList;
         }

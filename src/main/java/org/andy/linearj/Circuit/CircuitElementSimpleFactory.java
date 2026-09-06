@@ -29,7 +29,7 @@ public final class CircuitElementSimpleFactory {
     private CircuitElementSimpleFactory() {
     }
 
-    public static CircuitElement createElement(String compID, Integer nodeBegID, Integer nodeEndID, Double value) {
+    public static AbstractCircuitElement createElement(String compID, Integer nodeBegID, Integer nodeEndID, Double value) {
         return switch (compID.substring(0, 1)) {
             case "I" -> new CurrentSourceElement(nodeBegID, nodeEndID, compID, value);
             case "R" -> new ResistorElement(nodeBegID, nodeEndID, compID, value);

@@ -31,31 +31,39 @@ public final class CircuitNode {
     private final int nodeID;
     private boolean isGroundNode;
     private double nodeVoltage;
-    private final List < CircuitElement > elementsConnected;
+    private final List<AbstractCircuitElement> elementsConnected;
 
     public CircuitNode(int nodeID) {
         this.nodeID = nodeID;
-        this.elementsConnected = new ArrayList < > ();
+        this.elementsConnected = new ArrayList<>();
         this.isGroundNode = false;
     }
 
     public int getNodeID() {
         return nodeID;
     }
+
     public double getNodeVoltage() {
         return nodeVoltage;
     }
+
     public void setNodeVoltage(double volt) {
         this.nodeVoltage = volt;
     }
+
     public boolean isFloatingNode() {
         return elementsConnected.size() <= 1;
     }
+
     public boolean isGroundNode() {
         return isGroundNode;
     }
 
-    public void addElement(CircuitElement particularElement) {
+    public void addElement(AbstractCircuitElement particularElement) {
+        if (particularElement == null || !particularElement.isNodeIDEqual(nodeID)){
+            return;
+        }
+
         if (particularElement instanceof GroundElement) {
             this.isGroundNode = true;
         }
@@ -63,7 +71,7 @@ public final class CircuitNode {
         elementsConnected.add(particularElement);
     }
 
-    public void removeElement(CircuitElement particularElement) throws IllegalArgumentException {
+    public void removeElement(AbstractCircuitElement particularElement) throws IllegalArgumentException {
         if ((particularElement != null) && (particularElement.getBegNodeID() == nodeID || particularElement.getEndNodeID() == nodeID)) {
             elementsConnected.remove(particularElement);
         } else {
@@ -71,21 +79,37 @@ public final class CircuitNode {
         }
     }
 
-    public void replaceElement(CircuitElement particularElement){
-        if (particularElement == null) {throw new IllegalArgumentException();}
+    public void replaceElement(AbstractCircuitElement newElement) {
+        if (newElement == null) {
+            throw new IllegalArgumentException();
+        }
 
         int count = 0;
-        for (CircuitElement elm: elementsConnected){
-            if ((particularElement.isNodeIDEqual(elm.getBegNodeID()) || particularElement.isNodeIDEqual(elm.getEndNodeID()) && (count <= 1))){
+        for (AbstractCircuitElement elm : elementsConnected) {
+            if ((newElement.isNodeIDEqual(elm.getBegNodeID()) || newElement.isNodeIDEqual(elm.getEndNodeID()) && (count <= 1))) {
                 elementsConnected.remove(elm);
-                elementsConnected.add(particularElement);
+                elementsConnected.add(newElement);
                 count++;
             }
         }
     }
 
-    public boolean contains(CircuitElement particularElement) {
+    public void replaceElementNew (AbstractCircuitElement oldElm , AbstractCircuitElement newElement){
+        if (oldElm == null || newElement == null){
+            throw new IllegalArgumentException();
+        }
+
+        this.removeElement(oldElm);
+        this.addElement(newElement);
+
+    }
+
+    public boolean contains(AbstractCircuitElement particularElement) {
         return elementsConnected.contains(particularElement);
+    }
+
+    public List<AbstractCircuitElement> getElementsConnected(){
+        return List.copyOf(elementsConnected);
     }
 
 }

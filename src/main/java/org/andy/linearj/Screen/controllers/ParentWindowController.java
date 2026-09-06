@@ -27,7 +27,7 @@ package org.andy.linearj.Screen.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import org.andy.linearj.Circuit.CircuitElement;
+import org.andy.linearj.Circuit.AbstractCircuitElement;
 
 public final class ParentWindowController {
     @FXML
@@ -42,7 +42,7 @@ public final class ParentWindowController {
     private MenuBarUnitController menuBarUnitController;
 
     private final ObservableList<ElementDataModel> elementDataModelObservableList;
-    private final ObservableList<CircuitElement> circuitElementObservableList;
+    private final ObservableList<AbstractCircuitElement> circuitElementObservableList;
 
     public ParentWindowController() {
         this.elementDataModelObservableList = FXCollections.observableArrayList();
