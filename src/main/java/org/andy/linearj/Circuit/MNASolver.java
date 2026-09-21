@@ -183,8 +183,7 @@ public final class MNASolver extends AbstractCircuitSolver {
         }
         reportResultsToConsole();
     }
-
-    // TODO make this method visible to TheveninSolver.
+    
     public double[] reportResultsAsVector() {
         return Arrays.copyOf(solutionVector, solutionVector.length);
     }

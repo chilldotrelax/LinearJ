@@ -67,8 +67,9 @@ public class NodePickerWindowController {
             return;
         }
 
+
 //        AbstractCircuitSolver thevSolver = new TheveninSolver(null, null);
-        
+
         closeWindow();
     }
 
