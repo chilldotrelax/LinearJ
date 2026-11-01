@@ -54,6 +54,8 @@ public final class ParentWindowController {
         netlistUnitController.setObservableLists(elementDataModelObservableList, circuitElementObservableList);
         circuitSolverUnitController.setObservableLists(elementDataModelObservableList, circuitElementObservableList);
 
+        // Registers listeners for the computationResultProperty SimpleString.
+
         matrixCalculatorUnitController.computationResultProperty().addListener(((observable, oldValue, newValue) -> {
             outputConsoleController.setOutputBox(newValue);
         }));

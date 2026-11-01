@@ -51,6 +51,7 @@ public final class MatrixMath {
             }
             count++;
         }
+
         return result;
     }
 
@@ -99,6 +100,8 @@ public final class MatrixMath {
         }
     }
 
+    // TODO bug fix: Some matrices do not multiply correctly; check the algorithm once more.
+
     public static double[][] multiplyMatrix(final double[][] a, final double[][] b) throws NonMatchingMatricesException {
         double[][] result = new double[a.length][b[0].length];
 
@@ -143,7 +146,7 @@ public final class MatrixMath {
         return null;
     }
 
-    public static double[][] newComputDeterminant(final double[][] matrix) {
+    public static double[][] newComputeDeterminant(final double[][] matrix) {
         return null;
     }
 

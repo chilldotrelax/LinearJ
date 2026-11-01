@@ -66,10 +66,9 @@ public class NodePickerWindowController {
             ErrorWindows.displayError("You may not choose the same two nodes.");
             return;
         }
-
+        
 
 //        AbstractCircuitSolver thevSolver = new TheveninSolver(null, null);
-
         closeWindow();
     }
 

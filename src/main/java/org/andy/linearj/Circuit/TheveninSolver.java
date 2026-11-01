@@ -31,9 +31,8 @@ import java.util.Map;
  * SOFTWARE.
  */
 
-
 /*
- * This class implements thevenin analysis to compute the thevenin voltage & resistance.
+ * This class implements Thevenin analysis to compute the Thevenin voltage & resistance.
  */
 
 public final class TheveninSolver extends AbstractCircuitSolver {
@@ -49,7 +48,7 @@ public final class TheveninSolver extends AbstractCircuitSolver {
     private final List<AbstractCircuitElement> elmListAsArrayList = new ArrayList<>();
     private final Map<Integer, CircuitNode> circuitNodeMap;
 
-    // overload 1
+    // overload 1 (without SimpleStringProperty)
     public TheveninSolver(
             AbstractCircuitElement[] input,
             Map<Integer, CircuitNode> circuitNodeHashMap,
@@ -65,7 +64,7 @@ public final class TheveninSolver extends AbstractCircuitSolver {
         this.secondNode = secondNode;
     }
 
-    // overload 2
+    // overload 2 (with SimpleStringProperty)
     public TheveninSolver(
             AbstractCircuitElement[] input,
             Map<Integer, CircuitNode> circuitNodeHashMap,
@@ -208,13 +207,6 @@ public final class TheveninSolver extends AbstractCircuitSolver {
                     this.thevResistance = newCombinedParallelResistance;
                 }));
 
-        // Next, some validation to ensure that all the circuit components were replaced correctly.
-//        if (circuitNodeMap.values().iterator(). != 1){
-//
-//        }
-//        else{
-//            ErrorWindows.displayError("Unable to compact circuit!");
-//        }
     }
 
     @Override
